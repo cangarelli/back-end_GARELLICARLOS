@@ -14,16 +14,6 @@ const persistenciaDatos = async (ruta, variableObjeto) => {
     const nuevoArray = JSON.stringify(variableObjeto, null, 2);
     await fs.promises.writeFile(`${ruta}`, nuevoArray);
 };
-const estabilizacionDatos = (array1, array2) => {
-    array1 == array2
-        ? console.log('los datos estan iguales')
-        : (() => {
-              console.log(
-                  'los datos son distintos. Los datos de la ram seran igualados a los de la base de datos'
-              );
-              return array1;
-          })();
-};
 
 // CLASE CONSTRUCTORA
 class ProductManager {
