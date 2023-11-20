@@ -16,7 +16,7 @@ const persistenciaDatos = async (ruta, variableObjeto) => {
 };
 
 // CLASE CONSTRUCTORA
-class ProductManager {
+export class ProductManager {
     constructor(rutaDB) {
         this.products = [];
         this.path = rutaDB;
@@ -122,10 +122,10 @@ class ProductManager {
 }
 
 // Creacion de instancia de clase productArray
-const productArray = new ProductManager('productosEnlistados.json');
+export const productArray = new ProductManager('productosEnlistados.json');
 
 // Código para prueba por consola de funcionalidades requeridas.
-async function controler() {
+export async function controler() {
     await productArray.addProduct({
         title: 'producto prueba',
         description: 'Este es un producto prueba',
