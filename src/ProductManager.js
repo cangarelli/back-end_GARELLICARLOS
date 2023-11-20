@@ -22,15 +22,21 @@ export class ProductManager {
         this.path = rutaDB;
     }
 
-    async getProducts() {
+    async getProducts(limit) {
         // Variables de la funcion y recupero de datos
         const productArray = await recuperarDatos(this.path);
 
         // Actualización de datos
         productArray.length > 0 && (() => (this.products = productArray))();
 
-        //Impresion en consola.
-        console.log(`La lista de productos completa es ${JSON.stringify(productArray)}`);
+        // Search set
+        if (productArray.length > 0) {
+            console.log(`El producto que solicito por id fue ${JSON.stringify(this.products )}`);
+            return this.products ;
+        } else {
+            console.log('No hay productos registrados');
+            return { error: 'El producto solicitado no existe' };
+        }
     }
 
     async addProduct({ title, description, price, thumbnail, code, stock }) {
@@ -62,7 +68,7 @@ export class ProductManager {
               })();
     }
     async getProductById(idDB) {
-        console.log ("aca arranca el Get Product By Id")
+        console.log('aca arranca el Get Product By Id');
 
         // Variables de la funcion y recupero de datos
         const productArray = await recuperarDatos(this.path);
@@ -72,10 +78,14 @@ export class ProductManager {
 
         // Product Search
         const productFound = this.products.filter((producto) => producto.id == idDB);
-        // aSearch set
-        productFound.length > 0
-            ? console.log(`El producto que solicito por id fue ${JSON.stringify(productFound)}`)
-            : console.log('Not found');
+        // Search set
+        if (productFound.length > 0) {
+            console.log(`El producto que solicito por id fue ${JSON.stringify(productFound)}`);
+            return productFound;
+        } else {
+            console.log('Not found');
+            return 'Not found';
+        }
     }
 
     async updateProductById(id, productoObjetc) {
@@ -92,7 +102,7 @@ export class ProductManager {
         // Search set
         productSelect != -1
             ? (async () => {
-                console.log ("ingresa en el de actualizar")
+                  console.log('ingresa en el de actualizar');
                   /* funcion asincrona anonima para ejecutar si hay productSelect*/
                   this.products[productSelect] = { ...this.products[productSelect], ...productoObjetc };
                   await persistenciaDatos(this.path, this.products);
@@ -122,10 +132,57 @@ export class ProductManager {
 }
 
 // Creacion de instancia de clase productArray
-export const productArray = new ProductManager('productosEnlistados.json');
+// const productArray= new  ProductManager('src/productsDB.json');
 
-// Código para prueba por consola de funcionalidades requeridas.
-export async function controler() {
+
+
+
+/* funciones para la generación de la DB
+
+async function generarDB(cantidad) { 
+
+    const titulo = [
+        'jean',
+        'pc',
+        'robot',
+        'remera',
+        'botines',
+        'peluca',
+        'buzo',
+        'camisa',
+        'teclado',
+        'mouse',
+    ];
+    const descripcion = [
+        'azul marino',
+        'i8 y 30TB',
+        'hace la limpieza del hogar',
+        'muy linda',
+        'firmados por gallardo',
+        'estilo libertario',
+        'abrigadito',
+        'de oficina cool',
+        'casi escribe por dictado',
+        'gamer 700',
+    ];
+    for (let i = 0; i < cantidad; i++) {
+        console.log (`entre al ciclo for ${i}`)
+        await productArray.addProduct({
+            title: `${titulo[i]}`,
+            description: `${descripcion[i]}`,
+            price: Number(titulo[i].length*800),
+            thumbnail: 'sin imagen',
+            code: `AW${descripcion[i].length}${titulo[i].length}vevo`,
+            stock: `10`,
+        });
+ 
+    }
+}
+generarDB (10)
+*/
+
+// Código para prueba por consola de funcionalidades requeridas. Entegable 2
+async function controler() {
     await productArray.addProduct({
         title: 'producto prueba',
         description: 'Este es un producto prueba',
@@ -166,7 +223,6 @@ export async function controler() {
     });
     console.log(productArray.products); /*actualización de this.products */
 
-    productArray.deletProductById (1)
+    productArray.deletProductById(1);
     console.log(productArray.products); /* Borrado de un elemento por id*/
 }
-controler();

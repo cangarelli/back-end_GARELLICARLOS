@@ -1,0 +1,92 @@
+[
+  {
+    "title": "jean",
+    "description": "azul marino",
+    "price": 3200,
+    "thumbnail": "sin imagen",
+    "code": "AW114vevo",
+    "stock": "10",
+    "id": 1
+  },
+  {
+    "title": "pc",
+    "description": "i8 y 30TB",
+    "price": 1600,
+    "thumbnail": "sin imagen",
+    "code": "AW92vevo",
+    "stock": "10",
+    "id": 2
+  },
+  {
+    "title": "robot",
+    "description": "hace la limpieza del hogar",
+    "price": 4000,
+    "thumbnail": "sin imagen",
+    "code": "AW265vevo",
+    "stock": "10",
+    "id": 3
+  },
+  {
+    "title": "remera",
+    "description": "muy linda",
+    "price": 4800,
+    "thumbnail": "sin imagen",
+    "code": "AW96vevo",
+    "stock": "10",
+    "id": 4
+  },
+  {
+    "title": "botines",
+    "description": "firmados por gallardo",
+    "price": 5600,
+    "thumbnail": "sin imagen",
+    "code": "AW217vevo",
+    "stock": "10",
+    "id": 5
+  },
+  {
+    "title": "peluca",
+    "description": "estilo libertario",
+    "price": 4800,
+    "thumbnail": "sin imagen",
+    "code": "AW176vevo",
+    "stock": "10",
+    "id": 6
+  },
+  {
+    "title": "buzo",
+    "description": "abrigadito",
+    "price": 3200,
+    "thumbnail": "sin imagen",
+    "code": "AW104vevo",
+    "stock": "10",
+    "id": 7
+  },
+  {
+    "title": "camisa",
+    "description": "de oficina cool",
+    "price": 4800,
+    "thumbnail": "sin imagen",
+    "code": "AW156vevo",
+    "stock": "10",
+    "id": 8
+  },
+  {
+    "title": "teclado",
+    "description": "casi escribe por dictado",
+    "price": 5600,
+    "thumbnail": "sin imagen",
+    "code": "AW247vevo",
+    "stock": "10",
+    "id": 9
+  },
+  {
+    "title": "mouse",
+    "description": "gamer 700",
+    "price": 4000,
+    "thumbnail": "sin imagen",
+    "code": "AW95vevo",
+    "stock": "10",
+    "id": 10
+  }
+]
