@@ -1,5 +1,5 @@
 // Importaciones de modulos propios
-import { ProductManager } from './ProductManager.js';
+const ProductManager = require('./ProductManager.js');
 
 // Variables globales
 const express = require('express');
@@ -7,10 +7,12 @@ const app = express();
 const port = 8080;
 
 //Creación de instancia de clase.
-const productArray= new  ProductManager('src/productsDB.json'); 
+const productArray = new ProductManager('src/productsDB.json');
 
+//config express
+app.use(express.json());
 app.use(
-    express.urlencodedd({ extended: true })
+    express.urlencoded({ extended: true })
 ); /* coso para que funcionen las query y otros datos complejos que todavía no se cuales son */
 
 // Métodos de la API
@@ -19,36 +21,35 @@ app.get('/', (req, res) => {
     res.send('Hello World!... remember call /productos');
 });
 
-app.get('/productos', async (req, res) => {
+app.get('/products', async (req, res) => {
     // recupero de variables dinamicas
     const limit = req.query.limit;
-    console.log(limit);
     // Recupero de datos
-    let listObjetcs = await productArray.getProducts(limit);
+    let listObjetcs = await productArray.getProducts();
 
     // Lógica
     limit != undefined
-        ? (listObjetcs = this.products.filter((producto) => producto.id))
-        : (listObjetcs = this.products);
+        ? (listObjetcs = listObjetcs.slice(0, limit))
+        : console.log('La lista de productos va completa');
 
     // Envio de datos
-    if (listObjetcs > 0) {
-        console.log(`El producto que solicito por id fue ${JSON.stringify(listObjetcs)}`);
+    if (listObjetcs.length > 0) {
         return res.send(listObjetcs);
     } else {
         console.log('No hay productos registrados');
-        return res.send({ error: 'El producto solicitado no existe' });
+        return res.send({ error: 'No hay productos registrados' });
     }
 });
 
-app.get('/productos/:id', async (req, res) => {
-    // recupero de variables dinamicas
+app.get('/products/:id', async (req, res) => {
+    // recupero de vari0ables dinamicas
     const id = req.params.id;
+
     // Recupero de datos
-    let busqueda = await productArray.getProductsById(id);
+    const busqueda = await productArray.getProductById(id);
 
     // Envio de datos
-    if (busqueda == 'not found') {
+    if (busqueda == 'Not found') {
         return res.send({ error: 'El producto solicitado no existe' });
     } else {
         return res.send(busqueda);
@@ -56,5 +57,5 @@ app.get('/productos/:id', async (req, res) => {
 });
 
 app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`);
+    console.log(`server is running on https://localhost:${port}`);
 });

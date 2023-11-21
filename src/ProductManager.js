@@ -16,13 +16,13 @@ const persistenciaDatos = async (ruta, variableObjeto) => {
 };
 
 // CLASE CONSTRUCTORA
-export class ProductManager {
+class ProductManager {
     constructor(rutaDB) {
         this.products = [];
         this.path = rutaDB;
     }
 
-    async getProducts(limit) {
+    async getProducts() {
         // Variables de la funcion y recupero de datos
         const productArray = await recuperarDatos(this.path);
 
@@ -31,8 +31,8 @@ export class ProductManager {
 
         // Search set
         if (productArray.length > 0) {
-            console.log(`El producto que solicito por id fue ${JSON.stringify(this.products )}`);
-            return this.products ;
+            console.log(`La lista de productos completa es${JSON.stringify(this.products)}`);
+            return this.products;
         } else {
             console.log('No hay productos registrados');
             return { error: 'El producto solicitado no existe' };
@@ -68,8 +68,6 @@ export class ProductManager {
               })();
     }
     async getProductById(idDB) {
-        console.log('aca arranca el Get Product By Id');
-
         // Variables de la funcion y recupero de datos
         const productArray = await recuperarDatos(this.path);
 
@@ -130,12 +128,9 @@ export class ProductManager {
             : console.log('Not found product you want to delete');
     }
 }
-
+module.exports = ProductManager;
 // Creacion de instancia de clase productArray
 // const productArray= new  ProductManager('src/productsDB.json');
-
-
-
 
 /* funciones para la generación de la DB
 
