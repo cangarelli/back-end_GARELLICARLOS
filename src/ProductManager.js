@@ -1,7 +1,7 @@
+//Modulos nativos importados
 const fs = require('fs');
 
 // Biblioteca de funciones
-
 const recuperarDatos = async (ruta) => {
     if (fs.existsSync(`${ruta}`)) {
         const productJson = await fs.promises.readFile(`${ruta}`, 'utf-8');
@@ -17,7 +17,13 @@ const persistenciaDatos = async (ruta, variableObjeto) => {
 
 // CLASE CONSTRUCTORA
 class ProductManager {
+    static contador = 0;
+    id;
+
     constructor(rutaDB) {
+        ProductManager.contador++;
+        this.id = ProductManager.contador;
+
         this.products = [];
         this.path = rutaDB;
     }
@@ -129,6 +135,8 @@ class ProductManager {
     }
 }
 module.exports = ProductManager;
+
+
 // Creacion de instancia de clase productArray
 // const productArray= new  ProductManager('src/productsDB.json');
 
