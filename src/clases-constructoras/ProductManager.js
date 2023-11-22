@@ -1,6 +1,6 @@
 //Modulos nativos importados
 const fs = require('fs');
-import { recuperarDatos, persistenciaDatos } from './helpers/helpersBarrel';
+import { recuperarDatos, persistenciaDatos } from '../helpers/helpersBarrel';
 
 // CLASE CONSTRUCTORA
 class ProductManager {
@@ -83,7 +83,10 @@ class ProductManager {
             ? (async () => {
                   console.log('ingresa en el de actualizar');
                   /* funcion asincrona anonima para ejecutar si hay productSelect*/
-                  this.products[productSelect] = { ...this.products[productSelect], ...productoObjetc };
+                  this.products[productSelect] = {
+                      ...this.products[productSelect],
+                      ...productoObjetc,
+                  };
                   await persistenciaDatos(this.path, this.products);
               })()
             : console.log('Not found');

@@ -1,6 +1,6 @@
 // Importaciones de modulos propios
-const ProductManager = require('./ProductManager.js');
-const CarritoManager = require('./CarritoManager.js');
+const ProductManager = require('./clases-constructoras/ProductManager.js');
+const CarritoManager = require('./clases-constructoras/CarritoManager.js');
 
 // Variables globales
 const express = require('express');
@@ -8,8 +8,8 @@ const app = express();
 const port = 8080;
 
 //Creación de instancia de clase.
-const productArray = new ProductManager('src/productsDB.json');
-const carrito = new CarritoManager("src/carritoBackUp.json");
+const productArray = new ProductManager('src/DB-files/productsDB.json');
+const carrito = new CarritoManager('src/DB-files/carritoBackUp.json');
 
 //config express
 app.use(express.json());

@@ -1,6 +1,6 @@
 //Modulos nativos importados
 const fs = require('fs');
-import { recuperarDatos, persistenciaDatos } from './helpers/helpersBarrel';
+import { recuperarDatos, persistenciaDatos } from '../helpers/helpersBarrel';
 
 // CLASE CONSTRUCTORA
 class CarritoManager {
@@ -85,24 +85,7 @@ class CarritoManager {
         }
     }
 
-    async updateProductById(id, productoObjetc, DBP) {
-        console.log('aca arranca el update Product By Id');
-        // Variables de la funcion y recupero de datos
-        this.products = await recuperarDatos(this.path);
-
-        // Product Search
-        const productSelect = this.products.findIndex((producto) => producto.id == id);
-
-        // Search set
-        productSelect != -1
-            ? (async () => {
-                  console.log('ingresa en el de actualizar');
-                  /* funcion asincrona anonima para ejecutar si hay productSelect*/
-                  this.products[productSelect] = { ...this.products[productSelect], ...productoObjetc };
-                  await persistenciaDatos(this.path, this.products);
-              })()
-            : console.log('Not found');
-    }
+    // En estos falta agregar la actualización del stock en productsDB.json. Los de arriba ya lo tienen.
 
     async deletProductById(idDB, DBP) {
         console.log('aca arranca el delet Product By Id');
