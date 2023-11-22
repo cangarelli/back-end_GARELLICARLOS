@@ -1,19 +1,6 @@
 //Modulos nativos importados
 const fs = require('fs');
-
-// Biblioteca de funciones
-const recuperarDatos = async (ruta) => {
-    if (fs.existsSync(`${ruta}`)) {
-        const productJson = await fs.promises.readFile(`${ruta}`, 'utf-8');
-        return JSON.parse(productJson);
-    } else {
-        return [];
-    }
-};
-const persistenciaDatos = async (ruta, variableObjeto) => {
-    const nuevoArray = JSON.stringify(variableObjeto, null, 2);
-    await fs.promises.writeFile(`${ruta}`, nuevoArray);
-};
+import { recuperarDatos, persistenciaDatos } from './helpers/helpersBarrel';
 
 // CLASE CONSTRUCTORA
 class ProductManager {
@@ -30,10 +17,7 @@ class ProductManager {
 
     async getProducts() {
         // Variables de la funcion y recupero de datos
-        const productArray = await recuperarDatos(this.path);
-
-        // Actualización de datos
-        productArray.length > 0 && (() => (this.products = productArray))();
+        this.products = await recuperarDatos(this.path);
 
         // Search set
         if (productArray.length > 0) {
@@ -47,10 +31,7 @@ class ProductManager {
 
     async addProduct({ title, description, price, thumbnail, code, stock }) {
         // Variables de la funcion y recupero de datos
-        const productArray = await recuperarDatos(this.path);
-
-        // Actualización de datos
-        productArray.length > 0 && (() => (this.products = productArray))();
+        this.products = await recuperarDatos(this.path);
 
         // code check
         const exist = this.products.filter((producto) => producto.code == code);
@@ -75,10 +56,7 @@ class ProductManager {
     }
     async getProductById(idDB) {
         // Variables de la funcion y recupero de datos
-        const productArray = await recuperarDatos(this.path);
-
-        // Actualización de datos
-        productArray.length > 0 && (() => (this.products = productArray))();
+        this.products = await recuperarDatos(this.path);
 
         // Product Search
         const productFound = this.products.filter((producto) => producto.id == idDB);
@@ -95,10 +73,7 @@ class ProductManager {
     async updateProductById(id, productoObjetc) {
         console.log('aca arranca el update Product By Id');
         // Variables de la funcion y recupero de datos
-        const productArray = await recuperarDatos(this.path);
-
-        // Actualización de datos
-        productArray.length > 0 && (() => (this.products = productArray))();
+        this.products = await recuperarDatos(this.path);
 
         // Product Search
         const productSelect = this.products.findIndex((producto) => producto.id == id);
@@ -117,10 +92,7 @@ class ProductManager {
     async deletProductById(idDB) {
         console.log('aca arranca el delet Product By Id');
         // Variables de la funcion y recupero de datos
-        const productArray = await recuperarDatos(this.path);
-
-        // Actualización de datos
-        productArray.length > 0 && (() => (this.products = productArray))();
+        this.products = await recuperarDatos(this.path);
 
         // Product Search
         const productSelect = this.products.findIndex((producto) => producto.id == idDB);
@@ -135,7 +107,6 @@ class ProductManager {
     }
 }
 module.exports = ProductManager;
-
 
 // Creacion de instancia de clase productArray
 // const productArray= new  ProductManager('src/productsDB.json');
