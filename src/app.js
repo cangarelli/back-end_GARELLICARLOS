@@ -1,15 +1,19 @@
 // Importaciones de modulos propios
-const ProductManager = require('./clases-constructoras/ProductManager.js');
-const CarritoManager = require('./clases-constructoras/CarritoManager.js');
+const ProductManager = require('./managers/ProductManager.js');
+const CartManager = require('./managers/CartManager.js');
 
-// Variables globales
+// Importación de modulos nativos
 const express = require('express');
 const app = express();
+const userRouter = require('./routes/users.router.js')
+// const { uploader } = require('./helpers/uploader.js')
+
+//Variables globales
 const port = 8080;
 
 //Creación de instancia de clase.
 const productArray = new ProductManager('src/DB-files/productsDB.json');
-const carrito = new CarritoManager('src/DB-files/carritoBackUp.json');
+const cart = new CartManager('src/DB-files/carritoBackUp.json');
 
 //config express
 app.use(express.json());
@@ -20,7 +24,7 @@ app.use(
 // Métodos de la API
 
 app.get('/', (req, res) => {
-    res.send('Hello World!... remember call /productos');
+    res.send('Hello World!... remember call /products');
 });
 
 app.get('/products', async (req, res) => {
@@ -59,5 +63,5 @@ app.get('/products/:id', async (req, res) => {
 });
 
 app.listen(port, () => {
-    console.log(`server is running on https://localhost:${port}`);
+    console.log(`server is running on http://localhost:${port}`);
 });

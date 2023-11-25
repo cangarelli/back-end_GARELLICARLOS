@@ -1,6 +1,8 @@
 //Modulos nativos importados
 const fs = require('fs');
-import { recuperarDatos, persistenciaDatos } from '../helpers/helpersBarrel';
+const recuperarDatos = require('../helpers/recuperarDatos');
+const persistenciaDatos = require ("../helpers/persistenciaDatos")
+// import { recuperarDatos, persistenciaDatos } from '../helpers/helpersBarrel';
 
 // CLASE CONSTRUCTORA
 class ProductManager {
@@ -20,7 +22,7 @@ class ProductManager {
         this.products = await recuperarDatos(this.path);
 
         // Search set
-        if (productArray.length > 0) {
+        if ( this.products.length > 0) {
             console.log(`La lista de productos completa es${JSON.stringify(this.products)}`);
             return this.products;
         } else {
@@ -111,10 +113,9 @@ class ProductManager {
 }
 module.exports = ProductManager;
 
-// Creacion de instancia de clase productArray
-// const productArray= new  ProductManager('src/productsDB.json');
-
 /* funciones para la generación de la DB
+
+const productArray = new ProductManager('src/DB-files/productsDB.json');
 
 async function generarDB(cantidad) { 
 
@@ -157,49 +158,3 @@ async function generarDB(cantidad) {
 }
 generarDB (10)
 */
-
-// Código para prueba por consola de funcionalidades requeridas. Entegable 2
-async function controler() {
-    await productArray.addProduct({
-        title: 'producto prueba',
-        description: 'Este es un producto prueba',
-        price: 200,
-        thumbnail: 'Sin imagen',
-        code: 'abc123',
-        stock: 25,
-    });
-    console.log(productArray.products); /* Agregado de productos con objeto indicado */
-
-    await productArray.addProduct({
-        title: 'producto prueba 2',
-        description: 'Este es un producto prueba',
-        price: 301,
-        thumbnail: 'Sin imagen',
-        code: 'def456',
-        stock: 25,
-    });
-
-    await productArray.getProducts(); /* Obtener lista de productos completa */
-
-    await productArray.getProductById(1); /* Obtener lista de producto seleccionado por id*/
-
-    await productArray.addProduct({
-        title: 'producto prueba 2',
-        description: 'Este es un producto prueba',
-        price: 301,
-        thumbnail: 'Sin imagen',
-        code: 'def456',
-        stock: 25,
-    }); /* control de que no se repita el code*/
-
-    await productArray.updateProductById(1, {
-        title: 'producto prueba - actualización',
-        description: 'Este es un producto prueba de actualización',
-        price: 5001,
-        thumbnail: 'Con imagen',
-    });
-    console.log(productArray.products); /*actualización de this.products */
-
-    productArray.deletProductById(1);
-    console.log(productArray.products); /* Borrado de un elemento por id*/
-}

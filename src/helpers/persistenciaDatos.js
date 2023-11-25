@@ -3,4 +3,4 @@ const persistenciaDatos = async (ruta, variableObjeto) => {
     const nuevoArray = JSON.stringify(variableObjeto, null, 2);
     await fs.promises.writeFile(`${ruta}`, nuevoArray);
 };
-export default persistenciaDatos;
+module.exports = persistenciaDatos;

@@ -8,4 +8,4 @@ const recuperarDatos = async (ruta) => {
     }
 };
 
-export default recuperarDatos;
+module.exports = recuperarDatos;

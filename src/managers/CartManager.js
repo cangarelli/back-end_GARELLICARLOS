@@ -1,15 +1,16 @@
 //Modulos nativos importados
 const fs = require('fs');
-import { recuperarDatos, persistenciaDatos } from '../helpers/helpersBarrel';
+const recuperarDatos = require('../helpers/recuperarDatos');
+const persistenciaDatos = require ("../helpers/persistenciaDatos")
 
 // CLASE CONSTRUCTORA
-class CarritoManager {
+class CartManager {
     static contador = 0;
     id;
 
     constructor(rutaDB) {
-        CarritoManager.contador++;
-        this.id = CarritoManager.contador;
+        CartManager.contador++;
+        this.id = CartManager.contador;
 
         this.products = [];
         this.path = rutaDB;
@@ -66,6 +67,31 @@ class CarritoManager {
             console.log(`Revise la cantidad de ${productSelect.title} que quiere comprar.`);
         }
     }
+    async removeProductById(DBP, id, cantidad) {
+        // Recupero de datos del carrito en carrito virtual
+        this.products = await recuperarDatos(this.path);
+
+        // carrito check
+        const existIndex = this.products.findIndex((producto) => productSelect.id == this.products.id);
+
+        // Actualización de carrito virtual
+        existIndex != -1
+            ? (async () => {
+                  //Si se quitan todos los que hay en el carrito lo borra, sino saca solo la cantidad que se le indica
+                  this.product[existIndex].cantidad == cantidad
+                      ? this.product.splice([existIndex], 1)
+                      : (this.product[existIndex].cantidad -= cantidad);
+                  // Actualiza carrito
+                  await persistenciaDatos(this.path, this.products);
+                  // Actualiza stock
+                  await DBP.updateProductById(id, { stock: stock + cantidad });
+              })()
+            : (() => {
+                  console.log('Not found');
+                  return 'Este producto no esta en el carrito';
+              })();
+    }
+
     async getProductById(idDB) {
         // Variables de la funcion y recupero de datos
         const productArray = await recuperarDatos(this.path);
@@ -104,4 +130,4 @@ class CarritoManager {
             : console.log('Not found product you want to delete');
     }
 }
-module.exports = CarritoManager;
+module.exports = CartManager;
