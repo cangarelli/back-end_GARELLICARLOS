@@ -23,7 +23,7 @@ class ProductManager {
 
         // Search set
         if (this.products.length > 0) {
-            console.log(`La lista de productos completa es${JSON.stringify(this.products)}`);
+            console.log(`succes`);
             return this.products;
         } else {
             console.log('No hay productos registrados');
@@ -34,33 +34,35 @@ class ProductManager {
     async addProduct({ title, description, price, thumbnail, code, stock }) {
         // Variables de la funcion y recupero de datos
         this.products = await recuperarDatos(this.path);
-
         // code check
         const exist = this.products.filter((producto) => producto.code == code);
         // id check
         const idlog = this.products.reduce((idMax, producto) => Math.max(idMax, producto.id), 0);
         // Product set
-        exist.length > 0
-            ? (() => {
-                console.log('El code ingresado ya se encuentra en la base de datos')
-            return 'El code ingresado ya se encuentra en la base de datos'
-            })()
-            : (async () => {
-                  /* funcion asyncronica anonima que agrega nuevo producto al array*/
-                  this.products.push({
-                      title,
-                      description,
-                      price,
-                      thumbnail,
-                      code,
-                      stock,
-                      status: true,
-                      id: idlog + 1 /*seteo id*/,
-                  });
-                  await persistenciaDatos(this.path, this.products);
-                  return "Producto agregado"
-              })();
+        return new Promise(async (resolve, reject) => {
+            exist.length > 0
+                ? (() => {
+                      console.log('El code ingresado ya se encuentra en la base de datos');
+                      resolve('El code ingresado ya se encuentra en la base de datos');
+                  })()
+                : (async () => {
+                      /* funcion asyncronica anonima que agrega nuevo producto al array*/
+                      this.products.push({
+                          title,
+                          description,
+                          price,
+                          thumbnail,
+                          code,
+                          stock,
+                          status: true,
+                          id: idlog + 1 /*seteo id*/,
+                      });
+                      await persistenciaDatos(this.path, this.products);
+                      resolve(true);
+                  })();
+        });
     }
+
     async getProductById(idDB) {
         // Variables de la funcion y recupero de datos
         this.products = await recuperarDatos(this.path);
@@ -84,23 +86,24 @@ class ProductManager {
 
         // Product Search
         const productSelect = this.products.findIndex((producto) => producto.id == id);
-
-        // Search set
-        if (productSelect != -1) {
-            (async () => {
-                console.log('ingresa en el de actualizar');
-                /* funcion asincrona anonima para ejecutar si hay productSelect*/
-                this.products[productSelect] = {
-                    ...this.products[productSelect],
-                    ...productoObjetc,
-                };
-                await persistenciaDatos(this.path, this.products);
-                return true;
-            })();
-        } else {
-            console.log('Not found');
-            return false;
-        }
+        return new Promise((resolve, reject) => {
+            // Search set
+            if (productSelect != -1) {
+                (async () => {
+                    console.log('ingresa en el de actualizar');
+                    /* funcion asincrona anonima para ejecutar si hay productSelect*/
+                    this.products[productSelect] = {
+                        ...this.products[productSelect],
+                        ...productoObjetc,
+                    };
+                    await persistenciaDatos(this.path, this.products);
+                    resolve(true);
+                })();
+            } else {
+                console.log('Not found');
+                resolve(false);
+            }
+        });
     }
 
     async deletProductById(idDB) {
@@ -124,7 +127,6 @@ class ProductManager {
 module.exports = ProductManager;
 
 /* funciones para la generación de la DB
-
 const productArray = new ProductManager();
 
 async function generarDB(cantidad) { 
@@ -161,7 +163,7 @@ async function generarDB(cantidad) {
             price: Number(titulo[i].length*800),
             thumbnail: 'sin imagen',
             code: `AW${descripcion[i].length}${titulo[i].length}vevo`,
-            stock: `10`,
+            stock: 10,
         });
  
     }

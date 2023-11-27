@@ -7,9 +7,8 @@ const ProductManager = require('../managers/ProductManager.js');
 
 //Creacion de array de productos
 const productArray = new ProductManager();
-//MIDDLE
 
-// Configuración
+// Configuración de rutas
 router.get('/', async (req, res) => {
     // recupero de variables dinamicas
     const limit = req.query.limit;
@@ -52,33 +51,33 @@ router.post('/', async (req, res) => {
         description: 'Maravilloso',
         price: 500,
         thumbnail: 'sin imagen',
-        code: tokenGenerator(10),
+        code: 'JORGIN',
         stock: 10,
     });
-    if (agrega === 'Producto agregado') {
-        return res.status(200).res({ status: 'succes', payload: `Producto cargado` });
+    console.log (`El resultado es ${agrega}`)
+    console.log (await productArray.getProducts())
+    if (agrega) {
+        return res.status(200).send({ status: 'succes', payload: `Producto cargado` });
     } else {
         return res
             .status(200)
-            .res({ status: 'error', payload: `El producto ${id} no se pudo actualizar, revise los datos.` });
+            .send({ status: 'error', payload: `El producto no se pudo cargar, revise los datos.` });
     }
 });
 
 // HEHCHO Debe actualizar un producto segun el id
 router.put('/:pid', async (req, res) => {
-    // recupero de vari0ables dinamicas
-    const id = req.params.pid;
-
-    // Recupero de datos
+    // Operaciones con base de datos
     const productData = {};
-    const actualiza = await updateProductById(id, productData);
+    const actualiza = await productArray.updateProductById(req.params.pid, productData);
+
     // Respuesta
     if (actualiza) {
-        return res.status(200).res({ status: 'succes', payload: `El producto ${id} fue actualizado` });
+        return res.status(200).send({ status: 'succes', payload: `El producto ${req.params.pid} fue actualizado` });
     } else {
-        returnres
+        return res
             .status(200)
-            .res({ status: 'error', payload: `El producto ${id} no se pudo actualizar, revise los datos.` });
+            .send({ status: 'error', payload: `El producto ${req.params.pid} no se pudo actualizar, revise los datos.` });
     }
 });
 // HECHO Toma un producto por id y lo elimina del array y la db

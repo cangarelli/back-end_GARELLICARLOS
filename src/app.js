@@ -26,7 +26,7 @@ const port = 8080;
 app.use('/api/products', productsRouter);
 app.use('/api/carts', cartsRouter);
 app.get('/', (req, res) => {
-    res.send('Hello World!... remember call /api/products or /api/cart');
+    res.send('Hello World!... remember call /api/products or /api/carts');
 });
 
 // MANEJO DE ERRORES en el servidor

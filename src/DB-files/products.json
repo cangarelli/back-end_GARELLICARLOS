@@ -5,7 +5,7 @@
     "price": 3200,
     "thumbnail": "sin imagen",
     "code": "AW114vevo",
-    "stock": "10",
+    "stock": 10,
     "status": true,
     "id": 1
   },
@@ -15,7 +15,7 @@
     "price": 1600,
     "thumbnail": "sin imagen",
     "code": "AW92vevo",
-    "stock": "10",
+    "stock": 10,
     "status": true,
     "id": 2
   },
@@ -25,7 +25,7 @@
     "price": 4000,
     "thumbnail": "sin imagen",
     "code": "AW265vevo",
-    "stock": "10",
+    "stock": 10,
     "status": true,
     "id": 3
   },
@@ -35,7 +35,7 @@
     "price": 4800,
     "thumbnail": "sin imagen",
     "code": "AW96vevo",
-    "stock": "10",
+    "stock": 10,
     "status": true,
     "id": 4
   },
@@ -45,7 +45,7 @@
     "price": 5600,
     "thumbnail": "sin imagen",
     "code": "AW217vevo",
-    "stock": "10",
+    "stock": 10,
     "status": true,
     "id": 5
   },
@@ -55,7 +55,7 @@
     "price": 4800,
     "thumbnail": "sin imagen",
     "code": "AW176vevo",
-    "stock": "10",
+    "stock": 10,
     "status": true,
     "id": 6
   },
@@ -65,7 +65,7 @@
     "price": 3200,
     "thumbnail": "sin imagen",
     "code": "AW104vevo",
-    "stock": "10",
+    "stock": 10,
     "status": true,
     "id": 7
   },
@@ -75,7 +75,7 @@
     "price": 4800,
     "thumbnail": "sin imagen",
     "code": "AW156vevo",
-    "stock": "10",
+    "stock": 10,
     "status": true,
     "id": 8
   },
@@ -85,7 +85,7 @@
     "price": 5600,
     "thumbnail": "sin imagen",
     "code": "AW247vevo",
-    "stock": "10",
+    "stock": 10,
     "status": true,
     "id": 9
   },
@@ -95,7 +95,7 @@
     "price": 4000,
     "thumbnail": "sin imagen",
     "code": "AW95vevo",
-    "stock": "10",
+    "stock": 10,
     "status": true,
     "id": 10
   }
