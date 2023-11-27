@@ -1,70 +1,78 @@
 //Modulos nativos importados
 const fs = require('fs');
 const recuperarDatos = require('../helpers/recuperarDatos');
-const persistenciaDatos = require ("../helpers/persistenciaDatos")
+const persistenciaDatos = require('../helpers/persistenciaDatos');
 
 // CLASE CONSTRUCTORA
 class CartManager {
     static contador = 0;
     id;
 
-    constructor(rutaDB) {
+    constructor() {
         CartManager.contador++;
         this.id = CartManager.contador;
 
-        this.products = [];
-        this.path = rutaDB;
+        this.carts = [];
+        this.path = 'src/DB-files/carrito.json';
     }
 
-    async getProducts() {
+    async createCart() {
         // Variables de la funcion y recupero de datos
-        this.products = await recuperarDatos(this.path);
+        this.carts = await recuperarDatos(this.path);
+
+        const idlog = this.carts.reduce((idMax, cart) => Math.max(idMax, cart.id), 0);
+        const newCart = { id: idlog + 1, products: [] };
+
+        this.carts.push(newCart);
+        await persistenciaDatos(this.path, this.carts);
+        return true;
+    }
+
+    async getProductsByCartId(cid) {
+        // Variables de la funcion y recupero de datos
+        this.carts = await recuperarDatos(this.path);
+
+        // Cart Search
+        const cartFound = this.carts.findIndex((cart) => cart.id == cid);
 
         // Search set
-        if (this.products.length > 0) {
-            console.log(`La lista de productos completa es${JSON.stringify(this.products)}`);
-            return this.products;
+        if (cartFound != -1) {
+            console.log(
+                `El producto que solicito por id fue ${JSON.stringify(this.carts[cartFound].products)}`
+            );
+            return this.carts[cartFound].products;
         } else {
-            console.log('No hay productos registrados');
-            return { error: 'No agrego ninungun producto al carrito.' };
+            console.log('Not found');
+            return 'Not found';
         }
     }
 
-    async addProductById(DBP, id, cantidad) {
+    async addProductById(cid, pid) {
         // Recupero de datos del carrito en carrito virtual
-        this.products = await recuperarDatos(this.path);
+        this.carts = await recuperarDatos(this.path);
+        //
+        const cartIndex = this.carts.findIndex((cart) => parseInt(cid) === cart.id);
 
-        // Recupero de producto a cargar.
-        const productSelect = await DBP.getProductById(id);
-
-        // stock check
-        const hayStock = productSelect.stock >= cantidad;
-        console.log(hayStock);
-        hayStock ? console.log('Cantidad disponible') : console.log('cantidad no disponible');
-
-        // carrito check
-        const existIndex = this.products.findIndex((producto) => productSelect.id == this.products.id);
 
         // Product set
-        if (hayStock) {
-            // Actualización de carrito virtual
-            existIndex != -1
-                ? (() => (this.product[existIndex].cantidad += cantidad))()
-                : (() => {
-                      this.products.push(productSelect);
-                      this.product.cantidad = cantidad;
-                      this.product.delete(stock);
-                  })();
-
-            // Actualización de stock en DB
-            productSelect.stock -= cantidad;
-            productSelect.delete(id);
-            await DBP.updateProductById(id, productSelect);
-
-            // Actualización de carrito DB
-            await persistenciaDatos(this.path, this.products);
+        if (cartIndex != -1) {
+            const cart = this.carts[cartIndex].products;
+            if (cart.length > 0) {
+                const productIndex = cart.findIndex((product) => parseInt(pid) === parseInt(product.id));
+                if (productIndex != -1) {
+                    cart[productIndex].quantity++;
+                } else {
+                    cart.push({ id: parseInt(pid), quantity: 1 });
+                }
+                this.carts[cartIndex].products = cart;
+            } else {
+                cart.push({ id: parseInt(pid), quantity: 1 });
+                this.carts[cartIndex].products = cart;
+            }
+            await persistenciaDatos(this.path, this.carts);
+            return true;
         } else {
-            console.log(`Revise la cantidad de ${productSelect.title} que quiere comprar.`);
+            return false;
         }
     }
     async removeProductById(DBP, id, cantidad) {
@@ -90,44 +98,6 @@ class CartManager {
                   console.log('Not found');
                   return 'Este producto no esta en el carrito';
               })();
-    }
-
-    async getProductById(idDB) {
-        // Variables de la funcion y recupero de datos
-        const productArray = await recuperarDatos(this.path);
-
-        // Actualización de datos
-        productArray.length > 0 && (() => (this.products = productArray))();
-
-        // Product Search
-        const productFound = this.products.filter((producto) => producto.id == idDB);
-        // Search set
-        if (productFound.length > 0) {
-            console.log(`El producto que solicito por id fue ${JSON.stringify(productFound)}`);
-            return productFound;
-        } else {
-            console.log('Not found');
-            return 'Not found';
-        }
-    }
-
-    // En estos falta agregar la actualización del stock en productsDB.json. Los de arriba ya lo tienen.
-
-    async deletProductById(idDB, DBP) {
-        console.log('aca arranca el delet Product By Id');
-        // Variables de la funcion y recupero de datos
-        this.products = await recuperarDatos(this.path);
-
-        // Product Search
-        const productSelect = this.products.findIndex((producto) => producto.id == idDB);
-        // Search set
-        productSelect != -1
-            ? (async () => {
-                  /* funcion asincrona anonima para ejecutar si hay productSelect*/
-                  this.products.splice(productSelect, 1);
-                  await persistenciaDatos(this.path, this.products);
-              })()
-            : console.log('Not found product you want to delete');
     }
 }
 module.exports = CartManager;

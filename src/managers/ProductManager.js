@@ -1,7 +1,7 @@
 //Modulos nativos importados
 const fs = require('fs');
 const recuperarDatos = require('../helpers/recuperarDatos');
-const persistenciaDatos = require ("../helpers/persistenciaDatos")
+const persistenciaDatos = require('../helpers/persistenciaDatos');
 // import { recuperarDatos, persistenciaDatos } from '../helpers/helpersBarrel';
 
 // CLASE CONSTRUCTORA
@@ -9,12 +9,12 @@ class ProductManager {
     static contador = 0;
     id;
 
-    constructor(rutaDB) {
+    constructor() {
         ProductManager.contador++;
         this.id = ProductManager.contador;
 
         this.products = [];
-        this.path = rutaDB;
+        this.path = 'src/DB-files/products.json';
     }
 
     async getProducts() {
@@ -22,7 +22,7 @@ class ProductManager {
         this.products = await recuperarDatos(this.path);
 
         // Search set
-        if ( this.products.length > 0) {
+        if (this.products.length > 0) {
             console.log(`La lista de productos completa es${JSON.stringify(this.products)}`);
             return this.products;
         } else {
@@ -41,7 +41,10 @@ class ProductManager {
         const idlog = this.products.reduce((idMax, producto) => Math.max(idMax, producto.id), 0);
         // Product set
         exist.length > 0
-            ? console.log('El code ingresado ya se encuentra en la base de datos')
+            ? (() => {
+                console.log('El code ingresado ya se encuentra en la base de datos')
+            return 'El code ingresado ya se encuentra en la base de datos'
+            })()
             : (async () => {
                   /* funcion asyncronica anonima que agrega nuevo producto al array*/
                   this.products.push({
@@ -51,9 +54,11 @@ class ProductManager {
                       thumbnail,
                       code,
                       stock,
+                      status: true,
                       id: idlog + 1 /*seteo id*/,
                   });
                   await persistenciaDatos(this.path, this.products);
+                  return "Producto agregado"
               })();
     }
     async getProductById(idDB) {
@@ -81,17 +86,21 @@ class ProductManager {
         const productSelect = this.products.findIndex((producto) => producto.id == id);
 
         // Search set
-        productSelect != -1
-            ? (async () => {
-                  console.log('ingresa en el de actualizar');
-                  /* funcion asincrona anonima para ejecutar si hay productSelect*/
-                  this.products[productSelect] = {
-                      ...this.products[productSelect],
-                      ...productoObjetc,
-                  };
-                  await persistenciaDatos(this.path, this.products);
-              })()
-            : console.log('Not found');
+        if (productSelect != -1) {
+            (async () => {
+                console.log('ingresa en el de actualizar');
+                /* funcion asincrona anonima para ejecutar si hay productSelect*/
+                this.products[productSelect] = {
+                    ...this.products[productSelect],
+                    ...productoObjetc,
+                };
+                await persistenciaDatos(this.path, this.products);
+                return true;
+            })();
+        } else {
+            console.log('Not found');
+            return false;
+        }
     }
 
     async deletProductById(idDB) {
@@ -102,20 +111,21 @@ class ProductManager {
         // Product Search
         const productSelect = this.products.findIndex((producto) => producto.id == idDB);
         // Search set
-        productSelect != -1
-            ? (async () => {
-                  /* funcion asincrona anonima para ejecutar si hay productSelect*/
-                  this.products.splice(productSelect, 1);
-                  await persistenciaDatos(this.path, this.products);
-              })()
-            : console.log('Not found product you want to delete');
+        if (productSelect != -1) {
+            this.products.splice(productSelect, 1);
+            await persistenciaDatos(this.path, this.products);
+            return true;
+        } else {
+            console.log('Not found product you want to delete');
+            return false;
+        }
     }
 }
 module.exports = ProductManager;
 
 /* funciones para la generación de la DB
 
-const productArray = new ProductManager('src/DB-files/productsDB.json');
+const productArray = new ProductManager();
 
 async function generarDB(cantidad) { 
 
