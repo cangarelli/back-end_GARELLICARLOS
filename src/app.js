@@ -15,6 +15,7 @@ app.engine(
         },
     })
 );
+
 app.set('view engine', 'hbs'); /* Seteo de motor a utilizar */
 app.set('views', __dirname + '/views'); /* Definición de ruta donde estan las plantillas */
 //^^^^ CONFIGURACION DE HALDELBARS ^^^^

@@ -1,13 +1,15 @@
 // Importación de modulos nativos
 const { Router } = require('express');
 const router = Router();
+// Modulos para que interprete el body del request
 const bodyParser = require('body-parser');
-
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
+
 // Importaciones de modulos propios
 const ProductManager = require('../../managers/ProductManager.js');
-const formManager = require('../../public/js/formManager.js');
+const { uploader } = require('../../helpers/uploader.js');
+
 
 //Creacion de array de productos
 const productArray = new ProductManager();
@@ -48,13 +50,25 @@ router.get('/:pid', async (req, res) => {
 });
 
 //HECHO Debe agregar un nuevo producto
-router.post('/', async (req, res) => {
-    // SETEO DE PRODUCTO
-    console.log (req.body)
+router.post('/' ,async (req, res) => {
+    /* Proximamente Multer
+    //datos del body.
+    const postData = req.body
 
+    // Utiliza el middleware de Multer 
+    await uploader.single('image')(req, res, async (err) => {
+        if (err) {
+            console.error('Error al cargar el archivo:', err);
+            return;
+        }
+    });
+    // Agrega la ruta del archivo junto con el nombre al objeto info
+    const filePath = `${req.file.path}/${req.file.filename}`;
+    */
+    
+    // SETEO DE PRODUCTO
     const agrega = await productArray.addProduct(req.body);
-    console.log(`El resultado es ${agrega}`);
-    console.log(await productArray.getProducts());
+    // Respuesta de servidor
     if (agrega) {
         return res.status(200).send({ status: 'succes', payload: `Producto cargado` });
     } else {

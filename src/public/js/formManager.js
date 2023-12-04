@@ -27,9 +27,9 @@ function addProductForm(id) {
     <label for="stock">Unidades disponibles:</label>
     <input type="text" name="stock" id="stock">
 </div>
-    <div class="form__box">
-    <label for="foto">Carga una imagen del producto</label>
-    <input type="image" name="foto" id="thumbnail">
+<div class="form__box">
+    <label for="imageDir">Carga una imagen del producto</label>
+    <input type="text" name="imageDir" id="thumbnail">
 </div>
 <input type="submit" value="cargar-producto">`;
     father.appendChild(formulario);
@@ -66,9 +66,9 @@ function updateProductForm(id, idProd) {
     <label for="stock">Unidades disponibles:</label>
     <input type="text" name="stock" id="stock">
 </div>
-    <div class="form__box">
-    <label for="foto">Carga una imagen del producto</label>
-    <input type="image" name="foto" id="thumbnail">
+<div class="form__box">
+    <label for="imageDir">Carga una imagen del producto</label>
+    <input type="text" name="imageDir" id="thumbnail">
 </div>
 <input type="submit" value="update-producto" id=${idProd}>`;
     father.appendChild(formulario);
@@ -93,13 +93,15 @@ const productFormManager = (action, id, idProd) => {
 const formDataManager = (nodos) => {
     const dataSource = nodos.reduce((obj, nodo) => {
         const mark = document.getElementById(nodo);
-        if (mark.value) {obj[nodo] = mark.value};
+        if (mark.value) {
+            obj[nodo] = mark.value;
+        }
         return obj;
     }, {});
     console.log(dataSource);
     return dataSource;
 };
-async function formFetchtData({route, info, method}) {
+async function formFetchtData({ route, info, method }) {
     await fetch(route, {
         method: method,
         headers: {

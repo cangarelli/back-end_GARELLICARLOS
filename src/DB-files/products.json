@@ -1,6 +1,6 @@
 [
   {
-    "title": "Jean",
+    "title": "JEAN",
     "description": "azul marino",
     "price": 3200,
     "thumbnail": "sin imagen",
@@ -98,14 +98,5 @@
     "stock": 10,
     "status": true,
     "id": 10
-  },
-  {
-    "title": "Auto control remoto",
-    "description": "El juguete de las navidades",
-    "price": "100000",
-    "code": "kvdsb",
-    "stock": "2",
-    "status": true,
-    "id": 11
   }
 ]
