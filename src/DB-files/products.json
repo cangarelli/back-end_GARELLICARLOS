@@ -1,6 +1,6 @@
 [
   {
-    "title": "jean",
+    "title": "Jean",
     "description": "azul marino",
     "price": 3200,
     "thumbnail": "sin imagen",
@@ -10,7 +10,7 @@
     "id": 1
   },
   {
-    "title": "pc",
+    "title": "PC",
     "description": "i8 y 30TB",
     "price": 1600,
     "thumbnail": "sin imagen",
@@ -20,12 +20,12 @@
     "id": 2
   },
   {
-    "title": "robot",
+    "title": "Robot",
     "description": "hace la limpieza del hogar",
     "price": 4000,
     "thumbnail": "sin imagen",
     "code": "AW265vevo",
-    "stock": 10,
+    "stock": "5",
     "status": true,
     "id": 3
   },
@@ -100,10 +100,10 @@
     "id": 10
   },
   {
-    "title": "Bicicleta",
-    "description": "Mountain Bike con freno de discos",
-    "price": "130000",
-    "code": "MBcfdd",
+    "title": "Auto control remoto",
+    "description": "El juguete de las navidades",
+    "price": "100000",
+    "code": "kvdsb",
     "stock": "2",
     "status": true,
     "id": 11

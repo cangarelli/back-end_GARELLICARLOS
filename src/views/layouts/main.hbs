@@ -16,6 +16,12 @@
         {{{body}}}
     </div>
 </body>
+{{#if realTime}}
 <script src="/socket.io/socket.io.js"></script>
+<script>exist = true </script>
+{{else}}
+<script> exist = false </script>
+{{/if}}
+<script src="/js/formManager.js"></script>
 <script type="module" src="/js/eventListeners.js"></script>
 </html>

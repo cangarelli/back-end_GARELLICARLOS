@@ -1,11 +1,10 @@
 // Función que cree y función que borre formulario al hacer un click. Requiere que sea una función de escucha?
-function addProductForm() {
+function addProductForm(id) {
     const father = document.getElementById('root');
     const formulario = document.createElement('form');
     formulario.className = 'form';
-    // formulario.action =
     formulario.method = 'post';
-    formulario.id = 'newProductForm';
+    formulario.id = id;
     formulario.innerHTML = `
     <button type="button" value="close">X</button>
     <div class="form__box">
@@ -32,34 +31,77 @@ function addProductForm() {
     <label for="foto">Carga una imagen del producto</label>
     <input type="image" name="foto" id="thumbnail">
 </div>
-<input type="submit" value="Cargar producto">`;
+<input type="submit" value="cargar-producto">`;
     father.appendChild(formulario);
 }
 function deleteElement(id) {
     const elementSelect = document.getElementById(id);
     elementSelect != null && elementSelect.remove();
 }
-
-const productFormManager = (action) => {
-    if (action === 'create') {
-        const existe = document.getElementById('newProductForm');
-        existe === null && addProductForm();
-    } else if (action === 'close') {
-        deleteElement('newProductForm');
+function updateProductForm(id, idProd) {
+    const father = document.getElementById('root');
+    const formulario = document.createElement('form');
+    formulario.className = 'form';
+    formulario.method = 'post';
+    formulario.id = id;
+    formulario.innerHTML = `
+    <button type="button" value="close-update">X</button>
+    <div class="form__box">
+    <label for="nombre">Nombre del producto:</label>
+    <input type="text" name="nombre" id="title">
+</div>
+<div class="form__box">
+    <label for="descripcion">Descripcion del producto:</label>
+    <input type="text" name="descripcion" id="description">
+</div>
+<div class="form__box">
+    <label for="precio">Cada unidad del producto cuesta:</label>
+    <input type="text" name="precio" id="price">
+</div>
+<div class="form__box">
+    <label for="serialNumber">Ingrese en numero de serie del producto:</label>
+    <input type="text" name="serialNumber" id="code">
+</div>
+<div class="form__box">
+    <label for="stock">Unidades disponibles:</label>
+    <input type="text" name="stock" id="stock">
+</div>
+    <div class="form__box">
+    <label for="foto">Carga una imagen del producto</label>
+    <input type="image" name="foto" id="thumbnail">
+</div>
+<input type="submit" value="update-producto" id=${idProd}>`;
+    father.appendChild(formulario);
+}
+const productFormManager = (action, id, idProd) => {
+    switch (action) {
+        case 'create':
+            const existe = document.getElementById(id);
+            existe === null && addProductForm(id);
+            break;
+        case 'close':
+            deleteElement(id);
+            break;
+        case 'create-update':
+            updateProductForm(id, idProd);
+            break;
+        case 'close-update':
+            deleteElement(id);
+            break;
     }
 };
 const formDataManager = (nodos) => {
-    const dataSource = nodos.reduce((key, nodo) => {
+    const dataSource = nodos.reduce((obj, nodo) => {
         const mark = document.getElementById(nodo);
-        key[nodo] = mark.value;
-        return key;
+        if (mark.value) {obj[nodo] = mark.value};
+        return obj;
     }, {});
     console.log(dataSource);
     return dataSource;
 };
-async function formPostData(info, route) {
+async function formFetchtData({route, info, method}) {
     await fetch(route, {
-        method: 'POST',
+        method: method,
         headers: {
             'Content-Type': 'application/json',
         },
@@ -68,11 +110,12 @@ async function formPostData(info, route) {
         .then((response) => response.json())
         .then((data) => {
             console.log('Respuesta del servidor:', data);
-            // Hacer algo con la respuesta del servidor
+            // CHEQUEO RESPUESTA DEL SERVER
         })
         .catch((error) => {
             console.error('Error al enviar la solicitud:', error);
         });
 }
-module.exports = { productFormManager, formDataManager, formPostData };
-// export default productFormManager;
+
+// module.exports = productFormManager;
+// // export { productFormManager, formDataManager, formFetchtData };

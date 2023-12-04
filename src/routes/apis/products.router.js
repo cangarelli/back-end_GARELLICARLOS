@@ -67,7 +67,7 @@ router.post('/', async (req, res) => {
 // HEHCHO Debe actualizar un producto segun el id
 router.put('/:pid', async (req, res) => {
     // Operaciones con base de datos
-    const productData = {};
+    const productData = req.body
     const actualiza = await productArray.updateProductById(req.params.pid, productData);
 
     // Respuesta

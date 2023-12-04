@@ -11,13 +11,10 @@ app.engine(
     handelbars.engine({
         extname: '.hbs',
         helpers: {
-          root: () => path.join(__dirname, '/public'),
+            root: () => path.join(__dirname, '/public'),
         },
-      })
-    // handelbars.engine({ extname: '.hbs' })
-); /* Referencia al motor */
-
-
+    })
+);
 app.set('view engine', 'hbs'); /* Seteo de motor a utilizar */
 app.set('views', __dirname + '/views'); /* Definición de ruta donde estan las plantillas */
 //^^^^ CONFIGURACION DE HALDELBARS ^^^^
@@ -28,7 +25,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
 
 // ^^^^ RENDERIZADOS DE HANDELBARS ^^^^
 
@@ -65,18 +61,25 @@ const serverHTTP = app.listen(port, () => {
 
 // Importación
 const { Server } = require('socket.io');
+const ProductManager = require('./managers/ProductManager.js');
+const manejadorDatos = new ProductManager();
 
 // Function eventlisteners
 const serverSocket = new Server(serverHTTP);
-serverSocket.on("connection", socket =>{
-    console.log ("cliente conectado")
-    socket.on("upLoadFormData", (data) => {
-        console.log (data)
-    })
-
+serverSocket.on('connection', (socket) => {
+    console.log('cliente conectado');
+    socket.on('upLoadFormData', (data) => {
+        console.log(data);
+    });
+    socket.on('update-product-db', async (data) => {
+        if (data === 'change done') {
+            const newProductList = await manejadorDatos.getProducts()
+            serverSocket.emit('actualizar-pagina', newProductList);
+        }
+    });
     // socket.emit ("para el actual")
     // socket.broadcast.emit ("para todos menos el actual")
     // serverSocket.emit("para todos")
-    let arrayMensajes = []
-    socket.emit ("enviar-mensajes-cliente", arrayMensajes)
-})
+    let arrayMensajes = [];
+    socket.emit('enviar-mensajes-cliente', arrayMensajes);
+});

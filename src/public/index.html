@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <!-- CSS -->
     <link rel="stylesheet" href="/css/style.css">
 
@@ -11,22 +10,11 @@
 </head>
 
 <body>
-    <h1>Carga tu nuevo producto </h1>
-    <form action="/api/products" method="post" enctype="multipart/form-data">
-        <label for="title">Nombre del producto:</label>
-        <input type="text" name="title" id="title">
-        <label for="description">Descripció del producto:</label>
-        <input type="text" name="description" id="description">
-        <label for="price">Precio del producto:</label>
-        <input type="number" name="price" id="price">
-        <label for="thumbnail">Carga una imagen del producto</label>
-        <input type="file" name="thumbnail" id="thumbnail">
-        <label for="code">Asignale un codigo al producto</label>
-        <input type="text" name="code" id="code">
-        <label for="stock">Stock del producto:</label>
-        <input type="number" name="stock" id="number">
-        <button type="submit">Cargar producto</button>
-    </form>
+    <h1>Web Static View</h1>
+    
+    <a href="/views/prod">HACIA LA VISTA CON HANDLEBARS</a>
+
+
     
 </body>
 </html>
