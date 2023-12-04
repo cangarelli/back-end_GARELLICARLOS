@@ -1,25 +1,48 @@
-
 // Importación de modulos nativos
 const express = require('express');
 const app = express();
-const userRouter = require('./routes/users.router.js');
-// const { uploader } = require('./helpers/uploader.js')
+const bodyParser = require('body-parser');
+const path = require('path');
+
+//!!CONFIGURACION DE HANDELBARS!!
+const handelbars = require('express-handlebars'); /* Inmportación de motor de plantillas */
+app.engine(
+    'hbs',
+    handelbars.engine({
+        extname: '.hbs',
+        helpers: {
+          root: () => path.join(__dirname, '/public'),
+        },
+      })
+    // handelbars.engine({ extname: '.hbs' })
+); /* Referencia al motor */
+
+
+app.set('view engine', 'hbs'); /* Seteo de motor a utilizar */
+app.set('views', __dirname + '/views'); /* Definición de ruta donde estan las plantillas */
+//^^^^ CONFIGURACION DE HALDELBARS ^^^^
 
 //config express
 app.use(express.json());
-app.use(
-    express.urlencoded({ extended: true })
-); 
-/* coso para que funcionen las query y otros datos complejos que todavía no se cuales son */
-// app.use(express.static("/static",__dirname+"public"))
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(__dirname + '/public'));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 
-// Importacion de rutas
-const productsRouter = require('./routes/products.router.js');
-const cartsRouter = require('./routes/carts.router.js');
+// ^^^^ RENDERIZADOS DE HANDELBARS ^^^^
+
+// Importacion de rutas de expres
+const productsRouter = require('./routes/apis/products.router.js');
+const cartsRouter = require('./routes/apis/products.router.js');
+const userRouter = require('./routes/apis/users.router.js');
+const viewsRouter = require('./routes/views.routes.js');
 
 //Variables globales
 const port = 8080;
+
+// !!RENDERIZADOS DE HANDELBARS!!
+app.use('/views', viewsRouter);
 
 // Métodos de la API
 /* rutas de la api */
@@ -31,10 +54,29 @@ app.get('/', (req, res) => {
 
 // MANEJO DE ERRORES en el servidor
 app.use((err, req, res, next) => {
-    console.error (err.stack)
-    res.status (500).send("error de server")
-})
+    console.error(err.stack);
+    res.status(500).send('error de server');
+});
 
-app.listen(port, () => {
+const serverHTTP = app.listen(port, () => {
     console.log(`server is running on http://localhost:${port}`);
 });
+// Configuración de serverSocket
+
+// Importación
+const { Server } = require('socket.io');
+
+// Function eventlisteners
+const serverSocket = new Server(serverHTTP);
+serverSocket.on("connection", socket =>{
+    console.log ("cliente conectado")
+    socket.on("upLoadFormData", (data) => {
+        console.log (data)
+    })
+
+    // socket.emit ("para el actual")
+    // socket.broadcast.emit ("para todos menos el actual")
+    // serverSocket.emit("para todos")
+    let arrayMensajes = []
+    socket.emit ("enviar-mensajes-cliente", arrayMensajes)
+})

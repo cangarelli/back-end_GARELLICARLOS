@@ -1,9 +1,13 @@
 // Importación de modulos nativos
 const { Router } = require('express');
 const router = Router();
+const bodyParser = require('body-parser');
 
+router.use(bodyParser.urlencoded({ extended: false }));
+router.use(bodyParser.json());
 // Importaciones de modulos propios
-const ProductManager = require('../managers/ProductManager.js');
+const ProductManager = require('../../managers/ProductManager.js');
+const formManager = require('../../public/js/formManager.js');
 
 //Creacion de array de productos
 const productArray = new ProductManager();
@@ -46,16 +50,11 @@ router.get('/:pid', async (req, res) => {
 //HECHO Debe agregar un nuevo producto
 router.post('/', async (req, res) => {
     // SETEO DE PRODUCTO
-    const agrega = await productArray.addProduct({
-        title: '¡Que producto!',
-        description: 'Maravilloso',
-        price: 500,
-        thumbnail: 'sin imagen',
-        code: 'JORGIN',
-        stock: 10,
-    });
-    console.log (`El resultado es ${agrega}`)
-    console.log (await productArray.getProducts())
+    console.log (req.body)
+
+    const agrega = await productArray.addProduct(req.body);
+    console.log(`El resultado es ${agrega}`);
+    console.log(await productArray.getProducts());
     if (agrega) {
         return res.status(200).send({ status: 'succes', payload: `Producto cargado` });
     } else {
@@ -73,11 +72,14 @@ router.put('/:pid', async (req, res) => {
 
     // Respuesta
     if (actualiza) {
-        return res.status(200).send({ status: 'succes', payload: `El producto ${req.params.pid} fue actualizado` });
-    } else {
         return res
             .status(200)
-            .send({ status: 'error', payload: `El producto ${req.params.pid} no se pudo actualizar, revise los datos.` });
+            .send({ status: 'succes', payload: `El producto ${req.params.pid} fue actualizado` });
+    } else {
+        return res.status(200).send({
+            status: 'error',
+            payload: `El producto ${req.params.pid} no se pudo actualizar, revise los datos.`,
+        });
     }
 });
 // HECHO Toma un producto por id y lo elimina del array y la db

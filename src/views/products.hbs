@@ -1,0 +1,12 @@
+<h1> Hola {{name}}</h1>
+<div class="gondola">
+    {{#each products}}
+        <div class="gondola__productCard">
+            <h1>{{this.title}}</h1>
+            <h2>Cuesta ${{this.price}}</h2>
+            <p>Qudan: {{this.stock}}</p>
+            <p>{{this.description}}</p>
+            <button value="update"{{this.id}}>Update</button>
+        </div>
+    {{/each}}
+</div>

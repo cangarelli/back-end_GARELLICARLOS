@@ -5,8 +5,8 @@ const router = Router();
 const fs = require('fs');
 
 // Importaciones de modulos propios
-const CartManager = require('../managers/CartManager.js');
-const ProductManager = require('../managers/ProductManager.js');
+const CartManager = require('../../managers/CartManager.js');
+const ProductManager = require('../../managers/ProductManager.js');
 
 //Variables globales
 const productManager = new ProductManager();
@@ -43,7 +43,9 @@ router.post('/:cid/product/:pid', async (req, res) => {
                 .status(200)
                 .send({ status: 'succes', payload: `El producto ${pid} agregado al carrito ${cid}` });
         } else {
-            return res.status(200).send({ status: 'error', mesagge: `El carrito ${cid} solicitado no existe` });
+            return res
+                .status(200)
+                .send({ status: 'error', mesagge: `El carrito ${cid} solicitado no existe` });
         }
     } else {
         return res
@@ -51,7 +53,6 @@ router.post('/:cid/product/:pid', async (req, res) => {
             .send({ status: 'error', payload: `El producto ${pid} no se encuentra en el catalogo` });
     }
 });
-
 
 // exportación de rutas como modulo
 module.exports = router;

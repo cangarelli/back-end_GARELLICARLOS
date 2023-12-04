@@ -1,0 +1,70 @@
+*{ 
+    text-decoration: none;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    background-repeat: no-repeat;
+}
+body{
+    background-color: black;
+    margin: 20 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white
+}
+#root{
+    max-width: 80%;
+}
+
+.form{
+ background-color: white;
+ color: black;
+
+ margin: 20px 0px; 
+ padding: 20px;
+ border-radius: 10px;
+
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ justify-content: center;
+
+ transform-origin: center center;
+ translate: 0% -50%;
+ position: absolute;
+ left: 25%;
+ top: 50%;
+ 
+ box-shadow: 8px 8px 16px red;
+}
+.form__box{
+display: flex;
+align-items: center;
+justify-content: center;
+margin: 5px 0px;
+}
+button {
+    margin: 5px;
+    padding: 10px;
+}
+.gondola{
+    background-color: lightskyblue;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.gondola__productCard{
+    background-color: white;
+    color: black;
+   
+    margin: 5px 5px; 
+    padding: 20px;
+   border-radius: 10px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;}

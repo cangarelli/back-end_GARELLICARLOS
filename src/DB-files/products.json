@@ -98,5 +98,14 @@
     "stock": 10,
     "status": true,
     "id": 10
+  },
+  {
+    "title": "Bicicleta",
+    "description": "Mountain Bike con freno de discos",
+    "price": "130000",
+    "code": "MBcfdd",
+    "stock": "2",
+    "status": true,
+    "id": 11
   }
 ]
