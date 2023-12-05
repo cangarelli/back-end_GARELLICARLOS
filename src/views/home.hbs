@@ -9,8 +9,11 @@
             <h1>{{this.title}}</h1>
             <h2>Cuesta ${{this.price}}</h2>
             <p>Qudan: {{this.stock}}</p>
-            <p>{{this.description}}</p>e
-            <button value="create-update" id={{this.id}}>Update</button>
+            <p>{{this.description}}</p>
+            <div>
+                <button value="create-update" id={{this.id}}>Update</button>
+                <button value="delete" id={{this.id}}>Eliminar</button>
+            </div>
         </div>
     {{/each}}
 </div>

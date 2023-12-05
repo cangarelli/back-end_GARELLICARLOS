@@ -10,7 +10,6 @@ router.use(bodyParser.json());
 const ProductManager = require('../../managers/ProductManager.js');
 const { uploader } = require('../../helpers/uploader.js');
 
-
 //Creacion de array de productos
 const productArray = new ProductManager();
 
@@ -50,7 +49,7 @@ router.get('/:pid', async (req, res) => {
 });
 
 //HECHO Debe agregar un nuevo producto
-router.post('/' ,async (req, res) => {
+router.post('/', async (req, res) => {
     /* Proximamente Multer
     //datos del body.
     const postData = req.body
@@ -65,7 +64,7 @@ router.post('/' ,async (req, res) => {
     // Agrega la ruta del archivo junto con el nombre al objeto info
     const filePath = `${req.file.path}/${req.file.filename}`;
     */
-    
+
     // SETEO DE PRODUCTO
     const agrega = await productArray.addProduct(req.body);
     // Respuesta de servidor
@@ -81,7 +80,7 @@ router.post('/' ,async (req, res) => {
 // HEHCHO Debe actualizar un producto segun el id
 router.put('/:pid', async (req, res) => {
     // Operaciones con base de datos
-    const productData = req.body
+    const productData = req.body;
     const actualiza = await productArray.updateProductById(req.params.pid, productData);
 
     // Respuesta
