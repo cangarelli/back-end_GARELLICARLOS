@@ -1,95 +1,78 @@
-// Función que cree y función que borre formulario al hacer un click. Requiere que sea una función de escucha?
-function addProductForm(id) {
+// Funciones de 1ª orden para manejar el DOM
+function formWindowMaker({formId, optionsObjectsArray, buttonValue, prodId}) {
+    //Seleccionar nodo padre
     const father = document.getElementById('root');
-    const formulario = document.createElement('form');
-    formulario.className = 'form';
-    formulario.method = 'post';
-    formulario.id = id;
-    formulario.innerHTML = `
-    <button type="button" value="close">X</button>
-    <div class="form__box">
-    <label for="nombre">Nombre del producto:</label>
-    <input type="text" name="nombre" id="title">
-</div>
-<div class="form__box">
-    <label for="descripcion">Descripcion del producto:</label>
-    <input type="text" name="descripcion" id="description">
-</div>
-<div class="form__box">
-    <label for="precio">Cada unidad del producto cuesta:</label>
-    <input type="text" name="precio" id="price">
-</div>
-<div class="form__box">
-    <label for="serialNumber">Ingrese en numero de serie del producto:</label>
-    <input type="text" name="serialNumber" id="code">
-</div>
-<div class="form__box">
-    <label for="stock">Unidades disponibles:</label>
-    <input type="text" name="stock" id="stock">
-</div>
-<div class="form__box">
-    <label for="imageDir">Carga una imagen del producto</label>
-    <input type="text" name="imageDir" id="thumbnail">
-</div>
-<input type="submit" value="cargar-producto">`;
-    father.appendChild(formulario);
-}
+
+    //Crear Ventana de formulario
+    const windowForm = document.createElement("form")
+    windowForm.className = 'form';
+    windowForm.method = 'post';
+    windowForm.id = formId;
+    windowForm.innerHTML= `<button type="button" value="close">X</button>`
+    father.appendChild(windowForm)
+
+    // Crear opciones de Menu
+    optionsObjectsArray.forEach(element => {
+        const formOption = document.createElement ("div")
+        formOption.className= "form__box"
+        formOption.innerHTML= `
+        <label for="${element.id}">${element.label}</label>
+        <input type="${element.type}" name="${element.id}" id="${element.id}"">
+        `
+        windowForm.appendChild(formOption)
+    });
+
+    //Crear botonera
+    const button = document.createElement ("button")
+    button.type= `submit`
+    button.value= `${buttonValue}`
+    button.id= `${prodId}`
+    button.innerHTML= `OK`
+    windowForm.appendChild(button)
+};
+
 function deleteElement(id) {
     const elementSelect = document.getElementById(id);
     elementSelect != null && elementSelect.remove();
-}
-function updateProductForm(id, idProd) {
-    const father = document.getElementById('root');
-    const formulario = document.createElement('form');
-    formulario.className = 'form';
-    formulario.method = 'post';
-    formulario.id = id;
-    formulario.innerHTML = `
-    <button type="button" value="close-update">X</button>
-    <div class="form__box">
-    <label for="nombre">Nombre del producto:</label>
-    <input type="text" name="nombre" id="title">
-</div>
-<div class="form__box">
-    <label for="descripcion">Descripcion del producto:</label>
-    <input type="text" name="descripcion" id="description">
-</div>
-<div class="form__box">
-    <label for="precio">Cada unidad del producto cuesta:</label>
-    <input type="text" name="precio" id="price">
-</div>
-<div class="form__box">
-    <label for="serialNumber">Ingrese en numero de serie del producto:</label>
-    <input type="text" name="serialNumber" id="code">
-</div>
-<div class="form__box">
-    <label for="stock">Unidades disponibles:</label>
-    <input type="text" name="stock" id="stock">
-</div>
-<div class="form__box">
-    <label for="imageDir">Carga una imagen del producto</label>
-    <input type="text" name="imageDir" id="thumbnail">
-</div>
-<input type="submit" value="update-producto" id=${idProd}>`;
-    father.appendChild(formulario);
-}
+};
+
+// Funcion de 2ª orden para manejar el DOM
 const productFormManager = (action, id, idProd) => {
+    const formUserCreateObjetc = [
+        {type: "text", id: "name",  label:"Nombre"},
+        {type: "text", id: "lastName",  label:"Apelido"},
+        {type: "email", id: "email", label:"Coreo electronico"},
+        {type: "password", id: "password", label:"Crea tu contraseña"},
+    ]
+    const formProductManagerObjetc = [ 
+        {type: "text", id: "title", label: "Ingresa el nombre del producto"},
+        {type: "number", id: "price", label: "Ingresa el precio del producto"},
+        {type: "text", id: "description", label: "Describi brevemente el producto"},
+        {type: "number", id: "stock", label: "Stock"},
+        {type: "text", id: "code", label: "Ingresa el codigo del producto"},
+        {type: "text", id: "thumbnail", label: "Ingresa la ruta a una img de tu producto"},
+    ]
     switch (action) {
         case 'create':
             const existe = document.getElementById(id);
-            existe === null && addProductForm(id);
+            existe === null && formWindowMaker({formId: id, optionsObjectsArray: formProductManagerObjetc, buttonValue: "cargar-producto"});
             break;
         case 'close':
+            console.log (id)
             deleteElement(id);
             break;
         case 'create-update':
-            updateProductForm(id, idProd);
+            const existeUpdate = document.getElementById(id);
+            existeUpdate === null && formWindowMaker({formId: id, optionsObjectsArray: formProductManagerObjetc, buttonValue: "update-producto",  prodId: idProd});
             break;
-        case 'close-update':
-            deleteElement(id);
+        case "create-user":
+            const existeCreateUser = document.getElementById(id);
+            existeCreateUser === null && formWindowMaker ({formId: id, optionsObjectsArray: formUserCreateObjetc, buttonValue: "create-user"});
             break;
     }
 };
+
+// Funcion de 3º orden para procesar la información
 const formDataManager = (nodos) => {
     const dataSource = nodos.reduce((obj, nodo) => {
         const mark = document.getElementById(nodo);
@@ -98,9 +81,11 @@ const formDataManager = (nodos) => {
         }
         return obj;
     }, {});
-    console.log(dataSource);
+    
     return dataSource;
 };
+
+// Funciones de 4º orden para enviar la información
 async function formFetchtData({ route, info, method }) {
     await fetch(route, {
         method: method,
@@ -117,7 +102,11 @@ async function formFetchtData({ route, info, method }) {
         .catch((error) => {
             console.error('Error al enviar la solicitud:', error);
         });
-}
+};
 
-// module.exports = productFormManager;
-// // export { productFormManager, formDataManager, formFetchtData };
+async function upLoadProduct({ apiRoute, method, formId }) {
+    const updatableData = ['title', 'price', 'description', 'stock', 'code', 'thumbnail'];
+    const updateData = formDataManager(updatableData);
+    await formFetchtData({ route: apiRoute, info: updateData, method: method });
+    deleteElement(formId);
+};

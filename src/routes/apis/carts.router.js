@@ -5,8 +5,8 @@ const router = Router();
 const fs = require('fs');
 
 // Importaciones de modulos propios
-const CartManager = require('../../managers/CartManager.js');
-const ProductManager = require('../../managers/ProductManager.js');
+const CartManager = require('../../dao/managers/CartManager.js');
+const ProductManager = require('../../dao/managers/ProductManager.js');
 
 //Variables globales
 const productManager = new ProductManager();

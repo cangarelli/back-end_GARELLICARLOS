@@ -2,7 +2,7 @@
   {
     "title": "JEAN",
     "description": "azul marino",
-    "price": 3200,
+    "price": "5000",
     "thumbnail": "sin imagen",
     "code": "AW114vevo",
     "stock": 10,
@@ -12,7 +12,7 @@
   {
     "title": "PC",
     "description": "i8 y 30TB",
-    "price": 1600,
+    "price": "160000",
     "thumbnail": "sin imagen",
     "code": "AW92vevo",
     "stock": 10,
@@ -30,7 +30,7 @@
     "id": 3
   },
   {
-    "title": "remera",
+    "title": "Remera",
     "description": "muy linda",
     "price": 4800,
     "thumbnail": "sin imagen",
@@ -40,7 +40,7 @@
     "id": 4
   },
   {
-    "title": "botines",
+    "title": "Botines",
     "description": "firmados por gallardo",
     "price": 5600,
     "thumbnail": "sin imagen",
@@ -50,7 +50,7 @@
     "id": 5
   },
   {
-    "title": "peluca",
+    "title": "Peluca",
     "description": "estilo libertario",
     "price": 4800,
     "thumbnail": "sin imagen",
@@ -60,7 +60,7 @@
     "id": 6
   },
   {
-    "title": "buzo",
+    "title": "Buzo",
     "description": "abrigadito",
     "price": 3200,
     "thumbnail": "sin imagen",
@@ -70,7 +70,7 @@
     "id": 7
   },
   {
-    "title": "camisa",
+    "title": "Camisa",
     "description": "de oficina cool",
     "price": 4800,
     "thumbnail": "sin imagen",
@@ -80,7 +80,7 @@
     "id": 8
   },
   {
-    "title": "teclado",
+    "title": "Teclado",
     "description": "casi escribe por dictado",
     "price": 5600,
     "thumbnail": "sin imagen",
@@ -90,9 +90,9 @@
     "id": 9
   },
   {
-    "title": "mouse",
+    "title": "Mouse",
     "description": "gamer 700",
-    "price": 4000,
+    "price": "4500",
     "thumbnail": "sin imagen",
     "code": "AW95vevo",
     "stock": 10,

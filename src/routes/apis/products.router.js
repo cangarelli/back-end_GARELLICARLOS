@@ -7,7 +7,7 @@ router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
 
 // Importaciones de modulos propios
-const ProductManager = require('../../managers/ProductManager.js');
+const ProductManager = require('../../dao/managers/ProductManager.js');
 const { uploader } = require('../../helpers/uploader.js');
 
 //Creacion de array de productos

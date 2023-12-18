@@ -1,0 +1,12 @@
+<div class="chat">
+    <div class="chat__box">
+        {{#each messagesList}}
+            <p>{{messagesList.user}}: {{messagesList.message}}</p>
+        {{/each}}
+    </div>
+
+    <form class="chat_letter" action="">
+        <input type="text" name="chatBox" id="chatBox">
+    </form>
+    <script src="/js/chatManager.js"></script>
+</div>

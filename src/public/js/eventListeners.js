@@ -30,29 +30,22 @@ onePage.addEventListener('click', async (e) => {
     if (e.target.value.length > 0) {
         e.preventDefault();
     }
-    console.log(e.target.value);
     switch (e.target.value) {
         case 'create':
             productFormManager(e.target.value, 'newProductForm');
             break;
         case 'close':
-            productFormManager(e.target.value, 'newProductForm');
+            productFormManager(e.target.value, e.target.parentNode.id);
             break;
         case 'cargar-producto':
-            const nodos = ['title', 'price', 'description', 'stock', 'code', 'thumbnail'];
-            const loadingProduct = formDataManager(nodos);
-            await formFetchtData({ route: '/api/products/', info: loadingProduct, method: 'POST' });
+            await upLoadProduct({ apiRoute: `/api/products/`, method: 'POST', formId: e.target.parentNode.id});
             socket = !undefined && socket.emit('update-product-db', 'change done');
             break;
         case 'create-update':
             productFormManager(e.target.value, 'updateForm', e.target.id);
             break;
-        case 'close-update':
-            productFormManager(e.target.value, 'updateForm');
         case 'update-producto':
-            const updatableData = ['title', 'price', 'description', 'stock', 'code', 'thumbnail'];
-            const updateData = formDataManager(updatableData);
-            await formFetchtData({ route: `/api/products/${e.target.id}`, info: updateData, method: 'PUT' });
+            await upLoadProduct({ apiRoute: `/api/products/${e.target.id}`, method: 'PUT', formId: e.target.parentNode.id });
             socket = !undefined && socket.emit('update-product-db', 'change done');
             break;
         case 'delete':
@@ -61,3 +54,5 @@ onePage.addEventListener('click', async (e) => {
             break;
     }
 });
+
+
