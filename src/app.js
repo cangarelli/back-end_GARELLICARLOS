@@ -10,6 +10,10 @@
     app.use(express.static(__dirname + '/public'));
     app.use(bodyParser.urlencoded({ extended: false }));
     app.use(bodyParser.json());
+    //Variables globales
+        const port = 8080;
+        app.locals.port = port;
+
 
 
 // Configuracion mongose
@@ -63,8 +67,7 @@
         res.status(500).send('error de server');
     });
 
-//Variables globales
-    const port = 8080;
+
 // Creacion de servidor HTTP
     const serverHTTP = app.listen(port, () => {
         console.log(`server is running on http://localhost:${port}`);
@@ -89,22 +92,21 @@
 
     // Configuración de Eventlisteners de socket.io
         serverSocket.on('connection', (socket) => {
-            console.log('cliente conectado');
-            socket.on('upLoadFormData', (data) => {
+            console.log('server connected');
+            socket.on('conection', (data) => {
                 console.log(data);
             });
             socket.on('update-product-db', async (data) => {
                 if (data === 'change done') {
                     const newProductList = await apiCaller ({ route:`http://localhost:${port}/api/products/`, method: "GET" })
-                    serverSocket.emit('actualizar-pagina', newProductList);
+                    serverSocket.emit('update-productList', newProductList);
                 }
             });
             socket.on('message', async (data) => {
-                if (data.length > 0) {
-                    const messageList = await apiCaller ({ route: `http://localhost:${port}/api/chat/`, method: "GET"})
-                    messageList.push(data)
-                    await apiCaller ({ route: `http://localhost:${port}/api/chat/`, info: messageList, method: "PUT"})
-                }
+                const messageList = await apiCaller ({ route: `http://localhost:${port}/api/chat/`, method: "GET"})
+                serverSocket.emit('update-chat', messageList);
+                socket.emit ("loadUser", data)
+                
             })
             // socket.emit ("para el actual")
             // socket.broadcast.emit ("para todos menos el actual")

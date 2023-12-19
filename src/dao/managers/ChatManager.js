@@ -28,6 +28,7 @@ class ChatManager {
         if (this.messagesList.length > 0 ) {
             return this.messagesList
          } else {
+            console.log ("no hay mensajes")
                 return { error: 'Aún no se han enviado mensajes' }
         } 
     }

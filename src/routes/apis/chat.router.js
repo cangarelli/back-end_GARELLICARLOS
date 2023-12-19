@@ -13,20 +13,21 @@ const ChatManager = require ("../../dao/managers/ChatManager.js")
 const chatBot = new ChatManager();
 
 // Recuperar mensajes
-router.get ("/", async (res, req) => {
+router.get ("/", async (req, res) => {
     // Recuperar datos
     const messagesList = await chatBot.deliverMessagges()
+    const keys = Object.keys(messagesList);
+
     // Enviar datos
-    if (messagesList.includes ({ error: 'Aún no se han enviado mensajes' })) {
-        res.status(200).send({ status: 'succes', payload: messagesList });
+    if (keys.includes("error")) {
+        return res.send({ status: 'failed', payload: "No massages load" });
     } else {
-        return  res.status(200).send({ status: 'failed', payload: "No massages load" });
+        return res.send({ status: 'succes', payload: messagesList });  
     }
-    
 })
 
 // Recibir mensajes
-router.post ("/", async (res, req) => {
+router.post ("/", async (req, res) => {
     // Recuperar datos del request
     const message = req.body
     // Chequearlos

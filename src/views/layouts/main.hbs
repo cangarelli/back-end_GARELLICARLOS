@@ -11,17 +11,14 @@
         <header>
             <div class="navBar">
                 <button value="create">Agregar producto</button>
+                <button  ><a href="/views/prod">Home</a></button>
+                <button disabled id="chatButton"><a href="/views/chatApp">Contacto</a></button>
             </div>
         </header>
         {{{body}}}
     </div>
 </body>
-{{#if realTime}}
 <script src="/socket.io/socket.io.js"></script>
-<script>exist = true </script>
-{{else}}
-<script> exist = false </script>
-{{/if}}
 <script src="/js/formManager.js"></script>
 <script type="module" src="/js/eventListeners.js"></script>
 </html>

@@ -1,14 +1,9 @@
-<div>
-    <h1> Vista de actualización manual</h1>
-    <a href="/views/realtimeproducts">Hacia Vista de real time</a>
-</div>
-
 <div class="gondola">
     {{#each products}}
         <div class="gondola__productCard">
             <h1>{{this.title}}</h1>
             <h2>Cuesta ${{this.price}}</h2>
-            <p>Qudan: {{this.stock}}</p>
+            <p>Quedan: {{this.stock}}</p>
             <p>{{this.description}}</p>
             <div>
                 <button value="create-update" id={{this.id}}>Update</button>

@@ -23,7 +23,6 @@ class ProductManager {
 
         // Search set
         if (this.products.length > 0) {
-            console.log(`succes`);
             return this.products;
         } else {
             console.log('No hay productos registrados');

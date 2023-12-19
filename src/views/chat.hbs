@@ -1,12 +1,18 @@
 <div class="chat">
     <div class="chat__box">
         {{#each messagesList}}
-            <p>{{messagesList.user}}: {{messagesList.message}}</p>
+        <div class="chat__box--userMessage">
+            <p>{{this.user}}:</p>
+            <p>{{this.message}}</p>
+        </div>
         {{/each}}
     </div>
 
-    <form class="chat_letter" action="">
-        <input type="text" name="chatBox" id="chatBox">
+    <form class="chat__postman">
+        <input type="text" name="chatBox" class="chat__postman--letter" id="chatBox">
+        <input type="button" value="Enviar">
     </form>
-    <script src="/js/chatManager.js"></script>
 </div>
+    <script> let user = "{{user}}"</script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/js/chatManager.js"></script>

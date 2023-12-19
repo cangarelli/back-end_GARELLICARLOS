@@ -87,6 +87,8 @@ const formDataManager = (nodos) => {
 
 // Funciones de 4º orden para enviar la información
 async function formFetchtData({ route, info, method }) {
+    console.log(method)
+    console.log(info)
     await fetch(route, {
         method: method,
         headers: {

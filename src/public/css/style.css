@@ -17,7 +17,7 @@ body{
 }
 a {
     display: inline-block;
-    color: white;
+    color: black;
 
 }
 #root{
@@ -75,18 +75,39 @@ button {
     align-items: center;
     justify-content: center;
 }
-
-.message {
+.chat{
+    background-color: lightskyblue;
+    height: 90vh;
+    width: 70vw;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-around;
+}
+.chat__box {
+    background-color: white;
+    height: 85vh;
+    overflow: scroll;
+    width: 95%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
     justify-content: center;
 }
-.message__box{
-    background-color: white;
-    height: 50vh;
+.chat__box--userMessage{
+    width: max-content;
+    
+    display: flex;
+    flex-direction: column;
+    text-align: end;
+
+    margin: 10px;
+
+    color: black;
 }
-.message__letter{
-    background-color: white;
-    height: max-content;
-}
+/* .chat__box--otherMessage {}
+
+.chat__postman{}
+.chat__postman--letter{} */
+
