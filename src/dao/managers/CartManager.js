@@ -21,7 +21,7 @@ class CartManager {
         this.carts = await recuperarDatos(this.path);
 
         const idlog = this.carts.reduce((idMax, cart) => Math.max(idMax, cart.id), 0);
-        const newCart = { id: idlog + 1, products: [] };
+        const newCart = { id: idlog + 1, productsId: [] };
 
         this.carts.push(newCart);
         await persistenciaDatos(this.path, this.carts);

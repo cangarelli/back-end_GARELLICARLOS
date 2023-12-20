@@ -7,6 +7,8 @@ const fs = require('fs');
 // Importaciones de modulos propios
 const CartManager = require('../../dao/managers/CartManager.js');
 const ProductManager = require('../../dao/managers/ProductManager.js');
+const { cartsModel } = require ("../../dao/models/carts.model.js")
+
 
 //Variables globales
 const productManager = new ProductManager();

@@ -1,19 +1,39 @@
 const {Schema, model} = require('mongoose')
 
-const productsCollection = 'Usuarios'
+const productsCollection = 'Products'
 
-const productsSchema = Schema({
-    /* COMPLETAR ESQUEMA
-    first_name: {
+const productsSchema = new Schema({
+    title: {
         type: String,
         required: true
     },
-    last_name: String,
-    email: {
+    description: {
+        type: String,
+        required: true
+    },
+    price: {
+        type: Number,
+        required: true
+    },
+    stock: {
+        type: Number,
+        required: true
+    },
+    code: {
         type: String,
         required: true,
         unique: true
-    }*/
+    },
+    thumbnail: {
+        type: String,
+        required: true
+    },
+    status: {
+        type: Boolean,
+        required: true
+    }
+    
+
 })
 
 const productsModel = model(productsCollection, productsSchema)

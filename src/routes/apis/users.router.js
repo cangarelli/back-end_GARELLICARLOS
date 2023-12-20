@@ -8,7 +8,7 @@ router.use(bodyParser.json());
 
 //Importacion de modulos propios
 const userModel = require ("../../dao/models/user.model")
-//mongodb+srv://agarelli91:5d8a6fsFWa6@anlugamescluster.mgh6ee1.mongodb.net/?retryWrites=true&w=majority
+
 // Configuración de rutas
 
 router.get("/", async (req, res) => {

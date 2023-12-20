@@ -8,12 +8,67 @@ router.use(bodyParser.json());
 
 // Importaciones de modulos propios
 const ProductManager = require('../../dao/managers/ProductManager.js');
+const { productsModel } = require ("../../dao/models/products.model.js")
 const { uploader } = require('../../helpers/uploader.js');
 
 //Creacion de array de productos
 const productArray = new ProductManager();
 
 // Configuración de rutas
+// DATA MANAGERS MONGOOSE
+router.get ("/mongo", async (req, res) => {
+    const products = await productsModel.find({})
+    res.send({status: "succes", payload: products})
+})
+router.post ("/mongo", async (req, res) => {
+    try {
+        const {title, price, description, stock, code, thumbnail} = req.body
+        const result = await productsModel.create({
+            title, price , description, stock, code, thumbnail, status: true
+        })
+        res.send({status: "succes", payload: result})
+    } catch (error){
+        console.log (error)
+        res.send({status: "fail", payload: error})
+    }
+})
+/* CARGADO DE FILE DB EN MONGO DB
+router.post ("/armado", async (req, res) => {
+    let listObjetcs = await productArray.getProducts();
+    listObjetcs.forEach(async (product) => {
+        delete product.id
+        console.log (product)
+        const result = await productsModel.create(product)  
+    })
+    console.log ("datos cargados?")
+
+    return res.status(200).send({ status: 'succes', payload: listObjetcs });
+})*/
+
+router.put ("/mongo/:pid", async (req, res) => {
+    try {
+        const {prodId} = req.params
+        const {title, price, description, stock, code, thumbnail, status} = req.body
+        const productToUpdate = {title, price , description, stock, code, thumbnail, status}
+        const result = await productsModel.updateOne({_id: prodId, productToUpdate})
+        res.send({status: "succes", payload: result})
+    } catch (error){
+        console.log (error)
+    }
+})
+router.delete ("/mongo/:pid", async (req, res) => {
+    try {
+        const {prodId} = req.params
+        const {title, price, description, stock, code, thumbnail, status} = req.body
+        const productToUpdate = {title, price , description, stock, code, thumbnail, status}
+        const result = await productsModel.updateOne({_id: prodId, productToUpdate})
+        res.send({status: "succes", payload: result})
+    } catch (error){
+        console.log (error)
+    }
+})
+
+// DATA MANAGERS FILE FS
 router.get('/', async (req, res) => {
     // recupero de variables dinamicas
     const limit = req.query.limit;

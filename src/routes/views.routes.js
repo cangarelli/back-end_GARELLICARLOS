@@ -32,12 +32,4 @@ router.get("/chatApp/", async (req, res) => {
     //Renderizado
     res.render("chat", {messagesList, user:nombre} )
 })
-router.get("/chatApp/:user", async (req, res) => {
-    //Recupero de mensajes
-    const messagesList = await apiCaller ({ route: `http://localhost:${req.app.locals.port}/api/chat/`, method: "GET" })
-    console.log (req.params.user)
-    let nombre = req.params.user
-    //Renderizado
-    res.render("chat", {messagesList, user:nombre} )
-})
 module.exports = router;

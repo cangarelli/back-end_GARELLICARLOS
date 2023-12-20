@@ -1,19 +1,16 @@
 const {Schema, model} = require('mongoose')
 
-const messageCollection = 'Usuarios'
+const messageCollection = 'messages'
 
 const MessageSchema = Schema({
-    /* COMPLETAR ESQUEMA
-    first_name: {
+    user: {
         type: String,
         required: true
     },
-    last_name: String,
-    email: {
+    message: {
         type: String,
-        required: true,
-        unique: true
-    }*/
+        required: true
+    }
 })
 
 const messagesModel = model(messageCollection, MessageSchema)

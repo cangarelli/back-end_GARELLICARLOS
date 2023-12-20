@@ -16,14 +16,9 @@
 
 
 
-// Configuracion mongose
-    // Importación de modulo mongoose.connect con destructuring
-        const { connect } = require("mongoose")
-    // Cración de conección
-        const connectDB = async () => {
-            await connect("mongodb+srv://agarelli91:5d8a6fsFWa6@anlugamescluster.mgh6ee1.mongodb.net/ecommerce?retryWrites=true&w=majority")
-            console.log ("Base de datos conectada")
-        }
+// Activación de mongoose
+    const connectDB = require ("./config/config.js")
+    connectDB  ();
 
 
 
@@ -46,7 +41,7 @@
 
 // Importacion de rutas de expres
     const productsRouter = require('./routes/apis/products.router.js');
-    const cartsRouter = require('./routes/apis/products.router.js');
+    const cartsRouter = require('./routes/apis/carts.router.js');
     const userRouter = require('./routes/apis/users.router.js');
     const viewsRouter = require('./routes/views.routes.js');
     const chatRouter = require ("./routes/apis/chat.router.js")
@@ -80,9 +75,9 @@
         const { Server } = require('socket.io');
         const io = require("socket.io")
 
-
     // Importación y generación de instancias de data managers
         const apiCaller = require ("./helpers/apiCaller.js")
+
     // Configuración Sockey.io
         app.set('socketio', io);
         const serverSocket = new Server(serverHTTP);
