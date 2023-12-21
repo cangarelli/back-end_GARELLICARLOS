@@ -9,10 +9,10 @@ const apiCaller = require('../helpers/apiCaller');
 
 router.get('/prod', async (req, res) => {
     /*render hace que envie lo va a buscar a los archivos hbs en la carpeta viwews*/
-    const productslist = await apiCaller ({ route:`http://localhost:${req.app.locals.port}/api/products/`, method: "GET" })
+    const result = await apiCaller ({ route:`http://localhost:${req.app.locals.port}/api/products/mongo`, method: "GET" })
 
     //Renderizado
-    res.render('home', { products: productslist });
+    res.render('home', { products: result });
 });
 
 /* RUTAS FUERA DE USO

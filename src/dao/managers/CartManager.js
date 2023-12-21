@@ -21,7 +21,7 @@ class CartManager {
         this.carts = await recuperarDatos(this.path);
 
         const idlog = this.carts.reduce((idMax, cart) => Math.max(idMax, cart.id), 0);
-        const newCart = { id: idlog + 1, productsId: [] };
+        const newCart = { id: idlog + 1, products: [] };
 
         this.carts.push(newCart);
         await persistenciaDatos(this.path, this.carts);
@@ -53,7 +53,6 @@ class CartManager {
         //
         const cartIndex = this.carts.findIndex((cart) => parseInt(cid) === cart.id);
 
-
         // Product set
         if (cartIndex != -1) {
             const cart = this.carts[cartIndex].products;
@@ -75,6 +74,7 @@ class CartManager {
             return false;
         }
     }
+    
     async removeProductById(DBP, id, cantidad) {
         // Recupero de datos del carrito en carrito virtual
         this.products = await recuperarDatos(this.path);

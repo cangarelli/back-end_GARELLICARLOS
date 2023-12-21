@@ -99,7 +99,8 @@
             });
             socket.on('message', async (data) => {
                 const messageList = await apiCaller ({ route: `http://localhost:${port}/api/chat/`, method: "GET"})
-                serverSocket.emit('update-chat', messageList);
+                console.log (messageList)
+                serverSocket.emit('update-chat', messageList.payload);
                 socket.emit ("loadUser", data)
                 
             })

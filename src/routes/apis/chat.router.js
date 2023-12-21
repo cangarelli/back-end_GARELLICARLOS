@@ -16,17 +16,15 @@ const chatBot = new ChatManager();
 router.get ("/", async (req, res) => {
     // Recuperar datos File sysmtem
     const messagesList = await chatBot.deliverMessagges()
-    const keys = Object.keys(messagesList);
-
-    // Recuperar datos Mongoose
-    const mongoMessages = await messagesModel.find({})
-    console.log(mongoMessages)
-
-    // Enviar datos
-    if (keys.includes("error")) {
-        return res.send({ status: 'failed', payload: "No massages load" });
-    } else {
-        return res.send({ status: 'succes', payload: mongoMessages });  
+ 
+    try {  
+        // Recuperar datos Mongoose
+        const mongoMessages = await messagesModel.find({})
+        console.log(mongoMessages)
+        return res.send({ status: 'succes', payload: mongoMessages});  
+    } catch (error) {
+        console.log ("Hubo un error", error)
+        return res.send({ status: 'failed', payload: error });
     }
 })
 
@@ -36,13 +34,18 @@ router.post ("/", async (req, res) => {
     const message = req.body
     // Chequearlos
 
-    // Cargar datos FileSystem
-    await chatBot.reciveMesagge(message)
-    // Cargar datos Mongoose
-    await messagesModel.create(message)
+    try {
+        // Cargar datos FileSystem
+        await chatBot.reciveMesagge(message)
+        // Cargar datos Mongoose
+        await messagesModel.create(message)
+        // Enviar respuesta
+        return res.status(200).send({ status: 'succes', payload: "mensaje cargado" })
+    } catch (error) {
+        console.log ("Hubo un eror: ", error)
+        return res.status(200).send({ status: 'failed', payload: error })
+    }
 
-    // Enviar respuesta
-    res.status(200).send({ status: 'succes', payload: "mensaje cargado" })
 })
 
 // Exportación de rutas

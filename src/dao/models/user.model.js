@@ -12,6 +12,15 @@ const UsersSchema = Schema({
         type: String,
         required: true,
         unique: true
+    },
+    password: {
+        type: String,
+        required: true
+    },
+    cartID: {
+        type: String,
+        required: true,
+        unique: true
     }
 })
 

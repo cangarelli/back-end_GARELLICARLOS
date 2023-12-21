@@ -1,13 +1,14 @@
 <div class="gondola">
     {{#each products}}
-        <div class="gondola__productCard">
+        <div class="gondola__productCard" >
             <h1>{{this.title}}</h1>
             <h2>Cuesta ${{this.price}}</h2>
             <p>Quedan: {{this.stock}}</p>
             <p>{{this.description}}</p>
-            <div>
-                <button value="create-update" id={{this.id}}>Update</button>
-                <button value="delete" id={{this.id}}>Eliminar</button>
+            <div id={{this._id}}>
+                <button value="create-update">Update</button>
+                <button value="delete">Eliminar</button>
+                <button value="add-to-cart">Agregar al carrito</button>
             </div>
         </div>
     {{/each}}

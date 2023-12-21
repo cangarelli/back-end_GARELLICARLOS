@@ -15,10 +15,11 @@ socket.on('update-productList', (data) => {
         <h2>Cuesta ${element.price}</h2>
         <p>Qudan: ${element.stock}</p>
         <p>${element.description}</p>
-        <div>
-            <button value="create-update" id=${element.id}>Update</button>
-            <button value="delete" id=${element.id}>Eliminar</button>
-        </div>`;
+        <div id=${element.id}>
+            <button value="create-update">Update</button>
+            <button value="delete">Eliminar</button>
+            <button value="add-to-cart">Agregar al carrito</button>
+        </div>`
         gondola[0].appendChild(productCard);
     });
 });
@@ -47,27 +48,41 @@ onePage.addEventListener('click', async (e) => {
         e.preventDefault();
     }
     switch (e.target.value) {
+        // Create
         case 'create':
             productFormManager(e.target.value, 'newProductForm');
-            break;
-        case 'close':
-            productFormManager(e.target.value, e.target.parentNode.id);
             break;
         case 'cargar-producto':
             await upLoadProduct({ apiRoute: `/api/products/`, method: 'POST', formId: e.target.parentNode.id});
             socket = !undefined && socket.emit('update-product-db', 'change done');
             break;
+        // Update
         case 'create-update':
-            productFormManager(e.target.value, 'updateForm', e.target.id);
+            productFormManager(e.target.value, 'updateForm', e.target.parentNode.id);
             break;
         case 'update-producto':
             await upLoadProduct({ apiRoute: `/api/products/${e.target.id}`, method: 'PUT', formId: e.target.parentNode.id });
             socket = !undefined && socket.emit('update-product-db', 'change done');
             break;
+        // Delete
         case 'delete':
-            await formFetchtData({ route: `/api/products/${e.target.id}`, method: 'DELETE' });
+            await formFetchtData({ route: `/api/products/${e.target.parentNode.id}`, method: 'DELETE' });
             socket = !undefined && socket.emit('update-product-db', 'change done');
             break;
+        // Add to cart
+        case "add-to-cart":
+            let intenta = await formFetchtData({ route: `/api/products/mongo/${e.target.parentNode.id}`, method: 'GET' });
+            await formFetchtData({ route: `/api/carts/658388103a44d83d3749d1d6/product/${e.target.parentNode.id}`, method: 'POST' });
+            console.log ("data product", intenta)
+            intenta.stock = intenta.stock - 1
+            await formFetchtData({ route: `/api/products/mongo/${e.target.parentNode.id}`,info: intenta, method: 'PUT' });
+            socket = !undefined && socket.emit('update-product-db', 'change done');
+            break;
+        // Pop Up Global 
+        case 'close':
+            productFormManager(e.target.value, e.target.parentNode.id);
+            break;
+        // CHAT APP
         case 'Enviar':
             const info = {user, message: chatLetter.value}
             await formFetchtData({ route: `/api/chat/`, info, method: "POST"})
