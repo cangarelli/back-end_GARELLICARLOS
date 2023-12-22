@@ -53,7 +53,7 @@ onePage.addEventListener('click', async (e) => {
             productFormManager(e.target.value, 'newProductForm');
             break;
         case 'cargar-producto':
-            await upLoadProduct({ apiRoute: `/api/products/`, method: 'POST', formId: e.target.parentNode.id});
+            await upLoadProduct({ apiRoute: `/api/products/mongo`, method: 'POST', formId: e.target.parentNode.id});
             socket = !undefined && socket.emit('update-product-db', 'change done');
             break;
         // Update
@@ -61,12 +61,12 @@ onePage.addEventListener('click', async (e) => {
             productFormManager(e.target.value, 'updateForm', e.target.parentNode.id);
             break;
         case 'update-producto':
-            await upLoadProduct({ apiRoute: `/api/products/${e.target.id}`, method: 'PUT', formId: e.target.parentNode.id });
+            await upLoadProduct({ apiRoute: `/api/products/mongo/${e.target.id}`, method: 'PUT', formId: e.target.parentNode.id });
             socket = !undefined && socket.emit('update-product-db', 'change done');
             break;
         // Delete
         case 'delete':
-            await formFetchtData({ route: `/api/products/${e.target.parentNode.id}`, method: 'DELETE' });
+            await formFetchtData({ route: `/api/products/mongo/${e.target.parentNode.id}`, method: 'DELETE' });
             socket = !undefined && socket.emit('update-product-db', 'change done');
             break;
         // Add to cart

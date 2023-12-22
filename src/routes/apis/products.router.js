@@ -19,15 +19,15 @@ const mongoProductManager = new ProductMongoManager();
 // DATA MANAGERS MONGOOSE
 router.get ("/mongo", async (req, res) => {
     const response = await mongoProductManager.getProducts()
-    return send(response)
+    return res.send(response)
 })
 router.get ("/mongo/:pid", async (req, res) => {
     const response = await mongoProductManager.getProductsById(req.params.pid)
-    return send(response)
+    return res.send(response)
 })
 router.post ("/mongo", async (req, res) => {
     const response = await mongoProductManager.createProduct(req.body)
-    return (response)
+    return res.send(response)
 })
 /* CARGADO DE FILE DB EN MONGO DB
 router.post ("/armado", async (req, res) => {
@@ -42,22 +42,15 @@ router.post ("/armado", async (req, res) => {
     return res.status(200).send({ status: 'succes', payload: listObjetcs });
 })*/
 
-router.put ("/mongo/:pid", async (req, res) => {
+router.put ("/mongo/:pid/", async (req, res) => {
   const responseAdd = await mongoProductManager.addProduct(req.params.pid, req.params.body)
-  return res(responseAdd)
+  return res.send(responseAdd)
 })
-/* DELETE CON MONGO NO PIDEN
+
 router.delete ("/mongo/:pid", async (req, res) => {
-    try {
-        const {prodId} = req.params
-        const {title, price, description, stock, code, thumbnail, status} = req.body
-        const productToUpdate = {title, price , description, stock, code, thumbnail, status}
-        const result = await productsModel.updateOne({_id: prodId, productToUpdate})
-        res.send({status: "succes", payload: result})
-    } catch (error){
-        console.log (error)
-    }
-})*/
+    const response = await mongoProductManager.deleteProduct(req.params.pid)
+    return res.send(response)
+})
 
 // DATA MANAGERS FILE FS
 router.get('/', async (req, res) => {

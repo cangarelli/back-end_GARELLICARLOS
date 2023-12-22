@@ -48,18 +48,16 @@ class ProductMongoManager {
             return ({status: "error", payload: error})
         }
     }
-    /*DELETE NO HABIA QUE HACER
+
     async deleteProduct (pid) {
         try {
-            const {prodId} = req.params
-            const {title, price, description, stock, code, thumbnail, status} = req.body
-            const productToUpdate = {title, price , description, stock, code, thumbnail, status}
-            const result = await productsModel.updateOne({_id: prodId, productToUpdate})
-            res.send({status: "succes", payload: result})
+            const response = await productsModel.deleteOne({ _id: pid })
+            return ({status: "succes", payload: response})
         } catch (error){
             console.log (error)
+            return ({status: "succes", payload: error})
         }
-    }*/
+    }
 }
 
 module.exports = ProductMongoManager;

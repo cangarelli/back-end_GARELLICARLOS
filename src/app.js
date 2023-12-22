@@ -93,7 +93,7 @@
             });
             socket.on('update-product-db', async (data) => {
                 if (data === 'change done') {
-                    const newProductList = await apiCaller ({ route:`http://localhost:${port}/api/products/`, method: "GET" })
+                    const newProductList = await apiCaller ({ route:`http://localhost:${port}/api/products/mongo`, method: "GET" })
                     serverSocket.emit('update-productList', newProductList);
                 }
             });

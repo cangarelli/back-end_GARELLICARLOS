@@ -3,7 +3,7 @@ const {Schema, model} = require('mongoose')
 const messageCollection = 'messages'
 
 const MessageSchema = Schema({
-    user: {
+    userMail: {
         type: String,
         required: true
     },
