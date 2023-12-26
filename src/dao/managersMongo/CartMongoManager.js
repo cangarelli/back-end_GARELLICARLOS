@@ -16,9 +16,9 @@ class CartMongoManager {
             return ({ status: 'error', payload: 'cart not created' });
         }
     }
-    async gecCartById (cid) {
+    async getCartById (cid) {
         try {
-            const cart = await cartsModel.findById(cid)
+            const cart = await cartsModel.findOne({_id: cid})
             console.log (cart)
             return ({ status: 'succes', payload: cart });
         } catch (error) {

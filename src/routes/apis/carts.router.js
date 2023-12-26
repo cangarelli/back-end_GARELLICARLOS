@@ -21,14 +21,27 @@ router.post('/', async (req, res) => {
 });
 //HECHO Listar los productos que aparezcan en el carrito con el cid de params
 router.get('/:cid', async (req, res) => {
-    const response = await mongoCartManager.getCartById(req.params.cid)
-    return res.send(response)
+    try {
+        const response = await mongoCartManager.getCartById(req.params.cid)
+        return res.send(response)   
+    } catch (error) {
+        console.log (error)
+        return res.send({status: "error", payload: error})
+    }
+
 });
-// HECHO Agregar productos al arreglo producs del carrito agregandose como un objeto. Product id y quantity
+// HECHO Actualizar un producto del carrito
 router.post('/:cid/product/:pid', async (req, res) => { 
     const response = await mongoCartManager.addProductToCart(req.params.pid, req.params.cid)
     return res.send(response)
 });
+
+// Actualizar todo el carrito
+router.post('/:cid/product/:pid', async (req, res) => {})
+// Borrar un producto del carrito
+router.delete('/:cid/product/:pid', async (req, res) => {})
+// Borrar todos los productos el carrito
+router.delete('/:cid', async (req, res) => {})
 
 // exportación de rutas como modulo
 module.exports = router;

@@ -1,0 +1,17 @@
+<div class="cart">
+    <button value="clear-cart">Vaciar el carrito</button>
+    {{#each products}}
+        <div class="cart__productCard" >
+            <h1>{{this.product.title}}</h1>
+            <h2>Cuesta ${{this.product.price}}</h2>
+            <p>En el carrito: {{this.quantity}}</p>
+            <p>Quedan: {{this.product.stock}}</p>
+            <p>{{this.product.description}}</p>
+            <div id={{this.product._id}}>
+                <button value="substract-of-cart">Agregar uno</button>
+                <button value="delete-of-cart">Quitar producto del carrito</button>
+                <button value="add-to-cart">Quitar uno</button>
+            </div>
+        </div>
+    {{/each}}
+</div>

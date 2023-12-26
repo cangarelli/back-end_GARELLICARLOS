@@ -1,16 +1,43 @@
 // Modulos importados
 const { productsModel } = require ("../models/products.model.js")
 
+// Funciones de procesamiento de request data
+function selectorQuery(query1, query2, query3, query4) {
+    const response = []
+    // Manejo del $match
+    if ( query1 != undefined && query2 == undefined) {
+        response.push ({$match:{category: query1}})
+    } else if (query1 == undefined && query2 != undefined)  {
+        response.push ({$match:{status: query2}})
+    } else if (query1 != undefined && query2 != undefined) {
+        response.push ({$match:{category: query1, status: query2}})
+    } else {
+        response.push ({$match: {}})
+    }
+    // Manejo del $sort
+    if (query3 != undefined) {
+        response.push ({$sort: {price: Number(query3)}})
+    }
+    // Manejo del limit
+    if (query4 != undefined) {
+        response.push ({$limit: Number(query4)})
+    }
+
+    // Respuesta
+    return (response)
+}
+
+
 // CLASE CONSTRUCTORA
 class ProductMongoManager {
     constructor() {}
-    async getProducts () {
+    async getProducts ({category, disponibility, order, limit}) {   
         try {
-            const products = await productsModel.find({})
-            return ({status: "succes", payload: products})
+            const products = await productsModel.aggregate(selectorQuery(category, disponibility, order, limit))
+            return (products)
         } catch (error) {
             console.log (error)
-            return ({ status: 'error', payload: 'No hay productos registrados'});
+            return (error);
         }
     }
     async getProductsById (pid) {
@@ -25,9 +52,9 @@ class ProductMongoManager {
     }
     async createProduct (productArray) {
         try {
-            const {title, price, description, stock, code, thumbnail} = productArray
+            const {title, price, category, description, stock, code, thumbnail} = productArray
             const result = await productsModel.create({
-                title, price , description, stock, code, thumbnail, status: true
+                title, price, category, description, stock, code, thumbnail, status: true
             })
             return ({status: "succes", payload: result})
         } catch (error){
@@ -37,11 +64,7 @@ class ProductMongoManager {
     }
     async updateProduct (pid, productArray) {
         try {
-            const {prodId} = req.params
-            const {title, price, description, stock, code, thumbnail, status} = productArray
-            const productToUpdate = {title, price , description, stock, code, thumbnail, status}
-            const result = await productsModel.updateOne({_id: pid, productToUpdate})
-            console.log (result)
+            const result = await productsModel.updateOne({_id: pid}, productArray)
            return ({status: "succes", payload: result})
         } catch (error){
             console.log (error)

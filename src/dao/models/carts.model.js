@@ -4,7 +4,7 @@ const cartsCollection = 'carts'
 
 const CartsSchema = Schema({
     products: [{
-        prodId: {
+        product: {
             type: String,
             required: true
         },
@@ -13,6 +13,10 @@ const CartsSchema = Schema({
             default: 1
         }
     }]
+})
+
+CartsSchema.pre("findOne", function () {
+    this.populate("products.product")
 })
 
 const cartsModel = model(cartsCollection, CartsSchema)

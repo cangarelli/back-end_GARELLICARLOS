@@ -47,10 +47,11 @@ const productFormManager = (action, id, idProd) => {
     const formProductManagerObjetc = [ 
         {type: "text", id: "title", label: "Ingresa el nombre del producto"},
         {type: "number", id: "price", label: "Ingresa el precio del producto"},
+        {type: "text", id: "category", label: "Ingresa la categoria del tu producto"},
         {type: "text", id: "description", label: "Describi brevemente el producto"},
         {type: "number", id: "stock", label: "Stock"},
         {type: "text", id: "code", label: "Ingresa el codigo del producto"},
-        {type: "text", id: "thumbnail", label: "Ingresa la ruta a una img de tu producto"},
+        {type: "text", id: "thumbnail", label: "Ingresa la ruta a una img del producto"},
     ]
     switch (action) {
         case 'create':
@@ -81,7 +82,6 @@ const formDataManager = (nodos) => {
         }
         return obj;
     }, {});
-    
     return dataSource;
 };
 
@@ -107,7 +107,7 @@ async function formFetchtData({ route, info, method }) {
 };
 
 async function upLoadProduct({ apiRoute, method, formId }) {
-    const updatableData = ['title', 'price', 'description', 'stock', 'code', 'thumbnail'];
+    const updatableData = ['title', 'price', "category", 'description', 'stock', 'code', 'thumbnail'];
     const updateData = formDataManager(updatableData);
     await formFetchtData({ route: apiRoute, info: updateData, method: method });
     deleteElement(formId);

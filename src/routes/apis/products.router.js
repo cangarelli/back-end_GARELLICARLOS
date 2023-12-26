@@ -1,30 +1,65 @@
 // Importación de modulos nativos
-const { Router } = require('express');
-const router = Router();
+    const { Router } = require('express');
+    const router = Router();
+
 // Modulos para que interprete el body del request
-const bodyParser = require('body-parser');
-router.use(bodyParser.urlencoded({ extended: false }));
-router.use(bodyParser.json());
+    const bodyParser = require('body-parser');
+    router.use(bodyParser.urlencoded({ extended: false }));
+    router.use(bodyParser.json());
 
 // Importaciones de modulos propios
-const ProductManager = require('../../dao/managers/ProductManager.js');
-const { uploader } = require('../../helpers/uploader.js');
-const ProductMongoManager = require('../../dao/managersMongo/ProductMongoManager.js');
+    const ProductManager = require('../../dao/managers/ProductManager.js');
+    const { uploader } = require('../../helpers/uploader.js');
+    const ProductMongoManager = require('../../dao/managersMongo/ProductMongoManager.js');
 
 //Creacion de array de productos
-const productArray = new ProductManager();
-const mongoProductManager = new ProductMongoManager();
+    const productArray = new ProductManager();
+    const mongoProductManager = new ProductMongoManager();
 
 // Configuración de rutas
 // DATA MANAGERS MONGOOSE
+
+/* TRAER TODOS LOS PRODUCTOS -->  AGREGAR CONDICIONALES DE PARAMS */
 router.get ("/mongo", async (req, res) => {
-    const response = await mongoProductManager.getProducts()
-    return res.send(response)
+    const {category, disponibility, order, limit} = req.query
+    try {
+        const response = await mongoProductManager.getProducts({category, disponibility, order, limit})
+        return res.send({
+            status:"success",
+            payload: response,
+            totalPages: "Total de páginas",
+            prevPage: "Página anterior",
+            nextPage: "Página siguiente",
+            page: "Página actual",
+            hasPrevPage: "Indicador para saber si la página previa existe",
+            hasNextPage: "Indicador para saber si la página siguiente existe",
+            prevLink: "Link directo a la página previa (null si hasPrevPage=false)",
+            nextLink: "Link directo a la página siguiente (null si hasNextPage=false)"
+        }
+        )
+    } catch (error) {
+        console.log (error)
+        return res.send({
+            status:"error",
+            payload: error,
+            totalPages: "Total de páginas",
+            prevPage: "Página anterior",
+            nextPage: "Página siguiente",
+            page: "Página actual",
+            hasPrevPage: "Indicador para saber si la página previa existe",
+            hasNextPage: "Indicador para saber si la página siguiente existe",
+            prevLink: "Link directo a la página previa (null si hasPrevPage=false)",
+            nextLink: "Link directo a la página siguiente (null si hasNextPage=false)"
+        })
+    }
+
 })
+/* TRAER UN PRODUCTO SELECCIONADO -----------------------------> OK*/
 router.get ("/mongo/:pid", async (req, res) => {
     const response = await mongoProductManager.getProductsById(req.params.pid)
     return res.send(response)
 })
+/* ACTUALIZAR LISTA DE PRODCTOS -------------------------------> OK*/
 router.post ("/mongo", async (req, res) => {
     const response = await mongoProductManager.createProduct(req.body)
     return res.send(response)
@@ -42,17 +77,25 @@ router.post ("/armado", async (req, res) => {
     return res.status(200).send({ status: 'succes', payload: listObjetcs });
 })*/
 
+/* ACTUALIZAR UN SOLO PRODUCTO DE LA LISTA --------------------> OK*/
 router.put ("/mongo/:pid/", async (req, res) => {
-  const responseAdd = await mongoProductManager.addProduct(req.params.pid, req.params.body)
+  const responseAdd = await mongoProductManager.updateProduct(req.params.pid, req.body)
   return res.send(responseAdd)
 })
-
+/* BORRAR UN SOLO PRODUCTO DE LA LISTA ------------------------> OK*/
 router.delete ("/mongo/:pid", async (req, res) => {
     const response = await mongoProductManager.deleteProduct(req.params.pid)
     return res.send(response)
 })
 
-// DATA MANAGERS FILE FS
+
+
+
+
+
+
+    /* DATA MANAGERS FILE FS
+// -------------------------------------- GET
 router.get('/', async (req, res) => {
     // recupero de variables dinamicas
     const limit = req.query.limit;
@@ -86,10 +129,9 @@ router.get('/:pid', async (req, res) => {
         return res.status(200).send({ status: 'succes', payload: busqueda });
     }
 });
-
-//HECHO Debe agregar un nuevo producto
+//-------------------------------------- POST
 router.post('/', async (req, res) => {
-    /* Proximamente Multer
+    // Proximamente Multer
     //datos del body.
     const postData = req.body
 
@@ -102,7 +144,7 @@ router.post('/', async (req, res) => {
     });
     // Agrega la ruta del archivo junto con el nombre al objeto info
     const filePath = `${req.file.path}/${req.file.filename}`;
-    */
+    
 
     // SETEO DE PRODUCTO
     const agrega = await productArray.addProduct(req.body);
@@ -115,8 +157,7 @@ router.post('/', async (req, res) => {
             .send({ status: 'error', payload: `El producto no se pudo cargar, revise los datos.` });
     }
 });
-
-// HEHCHO Debe actualizar un producto segun el id
+//--------------------------------------- PUT
 router.put('/:pid', async (req, res) => {
     // Operaciones con base de datos
     const productData = req.body;
@@ -134,7 +175,7 @@ router.put('/:pid', async (req, res) => {
         });
     }
 });
-// HECHO Toma un producto por id y lo elimina del array y la db
+// -------------------------------------- DELETE
 router.delete('/:pid', async (req, res) => {
     // Llamado al método y realización de actividad.
     const borra = await productArray.deletProductById(req.params.pid);
@@ -146,6 +187,7 @@ router.delete('/:pid', async (req, res) => {
               .status(200)
               .send({ status: 'error', payload: 'No se encuentra el producto que desea eliminar' });
 });
+*/
 
 // exportación de rutas como modulo
 module.exports = router;

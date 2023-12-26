@@ -17,7 +17,7 @@
 
 
 // Activación de mongoose
-    const connectDB = require ("./config/config.js")
+    const connectDB = require ("./config/mongoose-config.js")
     connectDB  ();
 
 
@@ -73,30 +73,31 @@
 
     // Importación de modulos de Socket.io
         const { Server } = require('socket.io');
-        const io = require("socket.io")
-
     // Importación y generación de instancias de data managers
         const apiCaller = require ("./helpers/apiCaller.js")
 
     // Configuración Sockey.io
-        app.set('socketio', io);
         const serverSocket = new Server(serverHTTP);
 
-    // Variables del chat
-    const messageList = [];
-
+    // Configuración x
+    const io = require("socket.io")
+    app.set('socketio', io);
+    
     // Configuración de Eventlisteners de socket.io
         serverSocket.on('connection', (socket) => {
             console.log('server connected');
             socket.on('conection', (data) => {
                 console.log(data);
             });
+            // RealTime
             socket.on('update-product-db', async (data) => {
-                if (data === 'change done') {
-                    const newProductList = await apiCaller ({ route:`http://localhost:${port}/api/products/mongo`, method: "GET" })
-                    serverSocket.emit('update-productList', newProductList);
-                }
+            if (data === 'change done') {
+                const newProductList = await apiCaller ({ route:`http://localhost:${port}/api/products/mongo`, method: "GET" })
+                serverSocket.emit('update-productList', newProductList);
+            }
             });
+
+            // Chat
             socket.on('message', async (data) => {
                 const messageList = await apiCaller ({ route: `http://localhost:${port}/api/chat/`, method: "GET"})
                 console.log (messageList)
@@ -107,6 +108,5 @@
             // socket.emit ("para el actual")
             // socket.broadcast.emit ("para todos menos el actual")
             // serverSocket.emit("para todos")
-            let arrayMensajes = [];
-            socket.emit('enviar-mensajes-cliente', arrayMensajes);
+
         });

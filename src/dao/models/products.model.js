@@ -1,9 +1,13 @@
-const {Schema, model} = require('mongoose')
-
+const {Schema, model, default: mongoose} = require('mongoose')
+const mongoosePaginate = require ("mongoose-paginate-v2")
 const productsCollection = 'Products'
 
 const productsSchema = new Schema({
     title: {
+        type: String,
+        required: true
+    },
+    category: {
         type: String,
         required: true
     },
@@ -35,6 +39,8 @@ const productsSchema = new Schema({
     
 
 })
+
+productsSchema.plugin(mongoosePaginate)
 
 const productsModel = model(productsCollection, productsSchema)
 

@@ -9,10 +9,14 @@ const apiCaller = require('../helpers/apiCaller');
 
 router.get('/prod', async (req, res) => {
     /*render hace que envie lo va a buscar a los archivos hbs en la carpeta viwews*/
-    const result = await apiCaller ({ route:`http://localhost:${req.app.locals.port}/api/products/mongo`, method: "GET" })
+    try {
+        const result = await apiCaller ({ route:`http://localhost:${req.app.locals.port}/api/products/mongo`, method: "GET" })
+        //Renderizado
+        res.render('home', { products: result });
+    } catch (error) {
+        console.log (error)
+    }
 
-    //Renderizado
-    res.render('home', { products: result });
 });
 
 /* RUTAS FUERA DE USO
@@ -31,5 +35,26 @@ router.get("/chatApp/", async (req, res) => {
     const nombre = false
     //Renderizado
     res.render("chat", {messagesList, user:nombre} )
+})
+router.get("/cart/:cartid", async (req, res) => {
+    
+    try {
+        //Taer carrito usando populate de mongo
+        const cart = await apiCaller ({ route:`http://localhost:${req.app.locals.port}/api/carts/658388103a44d83d3749d1d6`, method: "GET" })
+        console.log (cart)
+        const result = cart.map ((products) => {
+            return (
+            {product: products.product, quantity: products.quantity})
+        })
+        console.log (result)
+        // Renderizado de pagina
+        res.render("cart", { products: result })
+    } catch (error) {
+        
+    }
+    
+
+    //Renderizado
+
 })
 module.exports = router;
