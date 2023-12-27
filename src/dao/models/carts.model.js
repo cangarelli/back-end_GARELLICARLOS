@@ -5,8 +5,8 @@ const cartsCollection = 'carts'
 const CartsSchema = Schema({
     products: [{
         product: {
-            type: String,
-            required: true
+            type: Schema.Types.ObjectId,
+            ref: 'Products'
         },
         quantity: {
             type: Number,

@@ -1,7 +1,7 @@
 // Funciones de 1ª orden para manejar el DOM
 function formWindowMaker({formId, optionsObjectsArray, buttonValue, prodId}) {
     //Seleccionar nodo padre
-    const father = document.getElementById('root');
+    const father = document.getElementById('mainRoot');
 
     //Crear Ventana de formulario
     const windowForm = document.createElement("form")

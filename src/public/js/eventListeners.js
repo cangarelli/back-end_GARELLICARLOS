@@ -39,19 +39,41 @@ socket.on("update-chat", async data => {
 })
 
 // NODOS DE DE EVENTOS
-const onePage = document.getElementById('root');
+const onePageMain = document.getElementById('mainRoot');
+const onePageHeader = document.getElementById("headerRoot")
 const chatLetter = document.querySelector("#chatBox")
 
 // MANEJO DE EVENTOS DEL SITIO WEB
-onePage.addEventListener('click', async (e) => {
-    if (e.target.value.length > 0) {
+
+
+// MANEJO DE EVENTOS DE LA NAV BAR
+onePageHeader.addEventListener('click', async (e) => {
+    console.log (e.target.value)
+    if (e.target.value != undefined) {
         e.preventDefault();
     }
+
+    switch (e.target.value) {  
+
+        case "pull":
+
+            break;
+    }
+})
+
+// MANEJO DE EVENTOS DEL MAIN
+onePageMain.addEventListener('click', async (e) => {
+    console.log (e.target.value)
+    if (e.target.value != undefined) {
+        e.preventDefault();
+    }
+    // console.log (e.target.value)
     switch (e.target.value) {
-        // Create
+        // Create Product
         case 'create':
             productFormManager(e.target.value, 'newProductForm');
             break;
+        //Form create product
         case 'cargar-producto':
             await upLoadProduct({ apiRoute: `/api/products/mongo`, method: 'POST', formId: e.target.parentNode.id});
             socket = !undefined && socket.emit('update-product-db', 'change done');

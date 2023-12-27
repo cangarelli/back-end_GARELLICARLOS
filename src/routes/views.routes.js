@@ -37,24 +37,18 @@ router.get("/chatApp/", async (req, res) => {
     res.render("chat", {messagesList, user:nombre} )
 })
 router.get("/cart/:cartid", async (req, res) => {
-    
+    const {cartid} = req.params
+    console.log ("CartView check 0", cartid)
     try {
         //Taer carrito usando populate de mongo
-        const cart = await apiCaller ({ route:`http://localhost:${req.app.locals.port}/api/carts/658388103a44d83d3749d1d6`, method: "GET" })
-        console.log (cart)
-        const result = cart.map ((products) => {
-            return (
-            {product: products.product, quantity: products.quantity})
-        })
-        console.log (result)
-        // Renderizado de pagina
-        res.render("cart", { products: result })
-    } catch (error) {
-        
-    }
-    
+        const cart = await apiCaller ({ route:`http://localhost:${req.app.locals.port}/api/carts/${cartid}`, method: "GET" })
+        console.log ("cartView Check", cart)
 
-    //Renderizado
+        // Renderizado de pagina
+        res.render("cart", { products: cart })
+    } catch (error) {
+        console.log (error)
+    }
 
 })
 module.exports = router;

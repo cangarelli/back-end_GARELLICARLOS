@@ -23,6 +23,7 @@ router.post('/', async (req, res) => {
 router.get('/:cid', async (req, res) => {
     try {
         const response = await mongoCartManager.getCartById(req.params.cid)
+        console.log ("cartRoute Check", response, "6582efef5e2bfa870a2fb63e")
         return res.send(response)   
     } catch (error) {
         console.log (error)

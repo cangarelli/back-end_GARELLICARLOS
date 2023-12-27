@@ -19,11 +19,12 @@ class CartMongoManager {
     async getCartById (cid) {
         try {
             const cart = await cartsModel.findOne({_id: cid})
-            console.log (cart)
-            return ({ status: 'succes', payload: cart });
+            console.log ("mongoManager Check", cart)
+            console.log (cart.products)
+            return ({ status: 'succes', payload: cart.products });
         } catch (error) {
             console.log (error)
-            return ({ status: 'error', payload: 'The cart choose dosent exist' });
+            return ({ status: 'error', payload: error });
         }
     }
     async addProductToCart (pid, cid){
@@ -31,25 +32,30 @@ class CartMongoManager {
             // Carga de datos
             const hay = await productsModel.findById(pid)
             const virtualCart = await cartsModel.findById(cid)
+            console.log ("check virtualcart", virtualCart)
             // Chequeo si hay stock del producto.
             if (hay.stock > 0) {
                 // Si hay stock me fijo si ya hay de ese producto en el carrito
                 let existingProduct = -1
                 const {products} = virtualCart
+                console.log ("check products", products)
+
                 products.length > 0 && (() =>  {
-                    existingProduct = products.findIndex(product => product.prodId === pid)
+                    existingProduct = products.findIndex(products => products.product._id.equals(pid))
                 })(); 
+                console.log ("check existingProducts", existingProduct)
                 // Si ya hay en el carrito agrego 1 al paquete
                 if (existingProduct != -1) {
                     const newQuantity = products[existingProduct].quantity += 1
                     const result = await cartsModel.updateOne(
-                        { _id: cid, "products.prodId": pid },
+                        { _id: cid, "products.product": pid },
                         { $set: { "products.$.quantity": newQuantity } })
-                    return res.send({ status: 'succes', payload: result });
+                        console.log ("check primer if result", result)
+                    return ({ status: 'succes', payload: result });
                 // Si no hay agrego uno creando el paquete
                 } else {
                     try {
-                        products.push({prodId: pid, quantity: 1})
+                        products.push({product: pid, quantity: 1})
                         const result = await cartsModel.findOneAndUpdate(
                             { _id: cid},
                             {products},
@@ -66,7 +72,7 @@ class CartMongoManager {
         // Si falla, falla.
         } catch (error) {
             console.log (error)
-            return res.send({ status: 'error', payload: error });
+            return ({ status: 'error', payload: error });
         }
     }
     async removeProductOfCart (pid, cid){
