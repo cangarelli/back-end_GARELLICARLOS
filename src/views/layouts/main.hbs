@@ -10,12 +10,29 @@
          <header id="headerRoot">
             <div class="navBar">
                 
-                <button><a href="/views/prod">Home</a></button>
+                <button><a href="/views/products">Home</a></button>
                 <button><a href="/views/cart/658388103a44d83d3749d1d6">Al carrito</a></button>
                 <button id="chatButton"><a href="/views/chatApp">Contacto</a></button>
-                <div className='list__item' >
+                {{#if categorysList}}
+                <form action="" id="searchOptionsMenu">
+                    <div>
+                        {{#each categorysList}}
+                            <label for={{this}}>{{this}}</label>
+                            <input type="checkbox" name={{this}} id={{this}}>
+                        {{/each}}
+                    </div>
+                    <div>
+                        <label for="orderHigh">Mayor precio</label>
+                        <input type="radio" name="orderHeigh" id="orderHeigh">
+                        <label for="orderLow">Menor precio</label>
+                        <input type="radio" name="orderLow" id="orderLow">
+                        <label for="disponibility">Solo disponibles</label>
+                        <input type="radio" name="disponibility" id="status">
+                    </div>
 
-
+                    <input type="button" value="Filtar busqueda">
+                </form>
+                {{/if}}
                     {{!-- <div className='item__button' value="pull" onClick=(() => {hasClass ? setHasClass (false) : setHasClass (true)}())>
                         <h1></h1>
                         <img id="Item__button--img"className="item_button__arrow--toggledIn" "item_button__arrow--toggledOut"src="" alt="Icono flecha del menu desplegable" />
@@ -40,6 +57,7 @@
     </div>
 </body>
 <script src="/socket.io/socket.io.js"></script>
+<script src="/js/frontHelpers.js"></script>
 <script src="/js/formManager.js"></script>
 <script type="module" src="/js/eventListeners.js"></script>
 </html>

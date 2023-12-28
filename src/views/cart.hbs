@@ -8,9 +8,11 @@
             <p>Quedan: {{this.product.stock}}</p>
             <p>{{this.product.description}}</p>
             <div id={{this.product._id}}>
-                <button value="substract-of-cart">Agregar uno</button>
+                <button value="substract-of-cart">Quitar uno</button>
                 <button value="delete-of-cart">Quitar producto del carrito</button>
-                <button value="add-to-cart">Quitar uno</button>
+                <label for="quantity">Ingresa la cantidad que queres agregar</label>
+                <input type="number" name="quantity" id="quantity{{this.product._id}}">
+                <button value="add-to-cart">Agregar</button>
             </div>
         </div>
     {{/each}}

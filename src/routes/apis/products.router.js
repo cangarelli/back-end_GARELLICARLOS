@@ -56,8 +56,13 @@ router.get ("/mongo", async (req, res) => {
 })
 /* TRAER UN PRODUCTO SELECCIONADO -----------------------------> OK*/
 router.get ("/mongo/:pid", async (req, res) => {
-    const response = await mongoProductManager.getProductsById(req.params.pid)
-    return res.send(response)
+    try {
+        const response = await mongoProductManager.getProductsById(req.params.pid)
+        return res.send(response)
+    } catch (error) {
+        console.log (error)
+    }
+
 })
 /* ACTUALIZAR LISTA DE PRODCTOS -------------------------------> OK*/
 router.post ("/mongo", async (req, res) => {

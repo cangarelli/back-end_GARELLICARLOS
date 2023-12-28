@@ -43,7 +43,7 @@ class ProductMongoManager {
     async getProductsById (pid) {
         try {
             const products = await productsModel.findOne({_id: pid})
-            console.log ("coso", products)
+            console.log ("Manager is get product by id check", products)
             return ({status: "succes", payload: products})
         } catch (error) {
             console.log (error)

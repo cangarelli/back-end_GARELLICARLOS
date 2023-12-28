@@ -42,29 +42,49 @@ socket.on("update-chat", async data => {
 const onePageMain = document.getElementById('mainRoot');
 const onePageHeader = document.getElementById("headerRoot")
 const chatLetter = document.querySelector("#chatBox")
-
+const searchOptionMenu = document.getElementById("searchOptionMenu")
 // MANEJO DE EVENTOS DEL SITIO WEB
 
 
 // MANEJO DE EVENTOS DE LA NAV BAR
+/* En proceso... 
+
 onePageHeader.addEventListener('click', async (e) => {
-    console.log (e.target.value)
-    if (e.target.value != undefined) {
-        e.preventDefault();
-    }
 
-    switch (e.target.value) {  
-
+    switch (e.target.id) {  
         case "pull":
 
             break;
     }
 })
+onePageHeader.addEventListener('change', async (e) => {
+    const optionsChecked = {}
+    console.log (e.target.id)
+    console.log (e.target.value)
+    console.log (e.target.checked)
+    switch (e.target.checked) {  
+        case true:
+            console.log ("check case true", e.target.id)
+            const option = optionSelector (e.target.id)
+            console.log ("check option in case", option)
+            Object.assign(optionsChecked, {category: option})
+            
+            break;
+        case false:
+            OptionSelector  (e.target.id)
+            break;
+    }
+    console.log (optionsChecked)
+    // queryMaker ({category: `${e.target.id}`, status, order, limit})
+})
+*/
 
 // MANEJO DE EVENTOS DEL MAIN
 onePageMain.addEventListener('click', async (e) => {
     console.log (e.target.value)
+    console.log (e.target.value != "on") 
     if (e.target.value != undefined) {
+        console.log ("entra")
         e.preventDefault();
     }
     // console.log (e.target.value)
@@ -104,18 +124,27 @@ onePageMain.addEventListener('click', async (e) => {
             break;
         // CART Cases
         case "clear-cart": 
+            let clearing = await await formFetchtData({ route: `/api/carts/658388103a44d83d3749d1d6`, method: 'DELETE' });
+            console.log ("clear cart check", clearing)
+
             break;
         case "substract-of-cart":
             break;
         case "add-to-cart":
-            let intenta = await formFetchtData({ route: `/api/products/mongo/${e.target.parentNode.id}`, method: 'GET' });
-            await formFetchtData({ route: `/api/carts/658388103a44d83d3749d1d6/product/${e.target.parentNode.id}`, method: 'POST' });
-            console.log ("data product", intenta)
-            intenta.stock = intenta.stock - 1
-            await formFetchtData({ route: `/api/products/mongo/${e.target.parentNode.id}`,info: intenta, method: 'PUT' });
-            socket = !undefined && socket.emit('update-product-db', 'change done');
+            const quantityNode = document.querySelector(`#quantity${e.target.parentNode.id}`)
+            let data
+            if (quantityNode) {
+                if (quantityNode.value > 0) {
+                    data = {quantity: quantityNode.value}
+                }
+            } 
+            await formFetchtData({ route: `/api/carts/658388103a44d83d3749d1d6/product/${e.target.parentNode.id}`, info: data, method: 'PUT' });
+            // socket = !undefined && socket.emit('update-product-db', 'change done');
             break;
         case "delete-of-cart":
+            let deleting = await await formFetchtData({ route: `/api/carts/658388103a44d83d3749d1d6/product/${e.target.parentNode.id}`, method: 'DELETE' });
+            console.log ("delete of cart check", deleting)
+
             break;
     }
 });

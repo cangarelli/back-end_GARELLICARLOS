@@ -16,6 +16,7 @@ class CartMongoManager {
             return ({ status: 'error', payload: 'cart not created' });
         }
     }
+    // GET CART BY ID WORKING
     async getCartById (cid) {
         try {
             const cart = await cartsModel.findOne({_id: cid})
@@ -27,7 +28,8 @@ class CartMongoManager {
             return ({ status: 'error', payload: error });
         }
     }
-    async addProductToCart (pid, cid){
+    // ADD PRODUCTS TO CART WORKING
+    async addProductToCart (pid, cid, quantity){
         try { // Falta quitar del stock del array de productos cuando suma.
             // Carga de datos
             const hay = await productsModel.findById(pid)
@@ -46,7 +48,10 @@ class CartMongoManager {
                 console.log ("check existingProducts", existingProduct)
                 // Si ya hay en el carrito agrego 1 al paquete
                 if (existingProduct != -1) {
-                    const newQuantity = products[existingProduct].quantity += 1
+                    
+                    const newQuantity = quantity ?
+                        parseInt(products[existingProduct].quantity) + parseInt(quantity)
+                        :  parseInt(products[existingProduct].quantity) + 1
                     const result = await cartsModel.updateOne(
                         { _id: cid, "products.product": pid },
                         { $set: { "products.$.quantity": newQuantity } })
@@ -55,7 +60,7 @@ class CartMongoManager {
                 // Si no hay agrego uno creando el paquete
                 } else {
                     try {
-                        products.push({product: pid, quantity: 1})
+                        products.push({product: pid, quantity: Number(1)})
                         const result = await cartsModel.findOneAndUpdate(
                             { _id: cid},
                             {products},
@@ -105,6 +110,34 @@ class CartMongoManager {
         } catch (error) {
             console.log (error)
             return res.send({ status: 'error', payload: error });
+        }
+    }
+    // EMPTY CART WORKING
+    async emptyCart (cid){
+        try {
+            const cart = await cartsModel.updateOne(
+                {_id: cid},
+                {$set: {products: []}},
+                {new: true})
+            console.log ("empty cart Check", cart)
+            console.log (cart.products)
+            return ({ status: 'succes', payload: cart.products });
+        } catch (error) {
+            console.log (error)
+            return ({ status: 'error', payload: error });
+        }
+    }
+    // Quitar producto del carrito Working
+    async deleteProductById (pid, cid) {
+        try {
+            const cart = await cartsModel.findOneAndUpdate(
+                {_id: cid},
+                {$pull: {products: {product: pid}}},
+                {new: true})
+            return ({ status: 'succes', payload: cart.products });
+        } catch (error) {
+            console.log (error)
+            return ({ status: 'error', payload: error });
         }
     }
 }

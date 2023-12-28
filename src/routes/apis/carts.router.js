@@ -31,18 +31,39 @@ router.get('/:cid', async (req, res) => {
     }
 
 });
-// HECHO Actualizar un producto del carrito
-router.post('/:cid/product/:pid', async (req, res) => { 
-    const response = await mongoCartManager.addProductToCart(req.params.pid, req.params.cid)
+// HECHO Actualizar un producto del carrito ------------------------------ OK
+router.put('/:cid/product/:pid', async (req, res) => { 
+    console.log ("chek body", req.body)
+    const {quantity} = req.body
+    console.log ("check quantity", quantity)
+    const response = await mongoCartManager.addProductToCart(req.params.pid, req.params.cid, quantity)
     return res.send(response)
 });
 
-// Actualizar todo el carrito
-router.post('/:cid/product/:pid', async (req, res) => {})
+// Actualizar todo el carrito ------------------------------ OK
+router.put("/:cid", async (req, res) => {})
 // Borrar un producto del carrito
-router.delete('/:cid/product/:pid', async (req, res) => {})
-// Borrar todos los productos el carrito
-router.delete('/:cid', async (req, res) => {})
+router.delete('/:cid/product/:pid', async (req, res) => {
+    
+    try {
+        const response = await mongoCartManager.deleteProductById (req.params.pid, req.params.cid)
+        return res.send(response)
+    } catch (error) {
+        console.log (error)
+        return res.send(error)
+    }
+})
+// Borrar todos los productos el carrito ------------------------------ OK
+router.delete('/:cid', async (req, res) => {
+    try {
+        const response = await mongoCartManager.emptyCart (req.params.cid)
+        console.log ("check router clear cart", response )
+        return res.send(response)
+    } catch (error) {
+        console.log (error)
+        return res.send(error)
+    }
+})
 
 // exportación de rutas como modulo
 module.exports = router;

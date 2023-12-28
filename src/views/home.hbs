@@ -1,5 +1,8 @@
 <div class="home">
+    <div class="home__buttonery">
     <button value="create">Agregar producto</button>
+    </div>
+    
     <div class="gondola">
     {{#each products}}
         <div class="gondola__productCard" >
@@ -10,6 +13,7 @@
             <div id={{this._id}}>
                 <button value="create-update">Update</button>
                 <button value="delete">Eliminar</button>
+                <button><a href="/views/product/{{this._id}}">Ver detalle</a></button>
                 <button value="add-to-cart">Agregar al carrito</button>
             </div>
         </div>
