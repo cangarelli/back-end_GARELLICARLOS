@@ -14,6 +14,7 @@
                 <button><a href="/views/cart/658388103a44d83d3749d1d6">Al carrito</a></button>
                 <button id="chatButton"><a href="/views/chatApp">Contacto</a></button>
                 {{#if categorysList}}
+                
                 <form action="" id="searchOptionsMenu">
                     <div>
                         {{#each categorysList}}
@@ -29,8 +30,7 @@
                         <label for="disponibility">Solo disponibles</label>
                         <input type="radio" name="disponibility" id="status">
                     </div>
-
-                    <input type="button" value="Filtar busqueda">
+                    <input type="button" value="Filter Search">
                 </form>
                 {{/if}}
                     {{!-- <div className='item__button' value="pull" onClick=(() => {hasClass ? setHasClass (false) : setHasClass (true)}())>

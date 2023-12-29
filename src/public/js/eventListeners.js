@@ -47,16 +47,27 @@ const searchOptionMenu = document.getElementById("searchOptionMenu")
 
 
 // MANEJO DE EVENTOS DE LA NAV BAR
-/* En proceso... 
+// /* En proceso... 
 
 onePageHeader.addEventListener('click', async (e) => {
 
-    switch (e.target.id) {  
+    switch (e.target.value) {  
         case "pull":
+
+            break;
+        case "Filter Search":
+            const form = document.getElementById("searchOptionsMenu")
+            const nodos = nodosIdGeter(form);
+            
+            console.log ("chequeo de nodos en filter search", nodos)
+            console.log (nodos)
+            const filters = formDataManager (nodos)
+            console.log ("chequeo de filltros uplads en filter search", filters)
 
             break;
     }
 })
+/* Metodo de change event listener
 onePageHeader.addEventListener('change', async (e) => {
     const optionsChecked = {}
     console.log (e.target.id)

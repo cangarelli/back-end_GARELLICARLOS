@@ -15,6 +15,33 @@ const queryMaker = ({category, status, order, limit}) => {
     // Retorna la query
     return response
 }
+function nodosIdGeter(Father) {
+    // Armar arrays de hijos del formulario donde estan los option div
+    const boxNodos = Array.from(Father.childNodes);
+
+    // Armar array de nodos de los elementos que estan dentro de los option div
+    const optionsNodos = []
+    boxNodos.forEach ((nodo)=> {
+        const geter = Array.from(nodo.childNodes);
+        optionsNodos.push (geter)
+    })
+    // Recuperar los id de esos nodos y ponerlos en un solo arrays
+    const fullIdArrays = optionsNodos.map((nodo) => {
+        const listMaker = []
+        nodo.forEach ((nodito)=>{
+            if (nodito.id != undefined && nodito.id.length > 1 ) {
+                listMaker.push (nodito.id)
+            }  
+        })
+        return listMaker});
+
+    const leanIdArrays = fullIdArrays.filter ((element) => element.length > 0)
+    const concat = [].concat(...leanIdArrays)
+    
+    // Retorno de datos.
+    return concat
+}
+
 
 const optionSelector = (option) => {
     let optionRead 
