@@ -11,7 +11,20 @@ router.get('/products', async (req, res) => {
     /*render hace que envie lo va a buscar a los archivos hbs en la carpeta viwews*/
     try {
         const result = await apiCaller ({ route:`http://localhost:${req.app.locals.port}/api/products/mongo`, method: "GET" })
-        const categorysArray = result.reduce((array, prod ) => {
+        console.log ("checkeo result en views", result)
+        const {            
+            docs,
+            totalPages,
+            prevPage,
+            nextPage,
+            page,
+            hasPrevPage,
+            hasNextPage,
+            nextLink,
+            prevLink
+        }  = result
+        console.log ("HASTA ACA ANDA EL DOCS?", docs)
+        const categorysArray = docs.reduce((array, prod ) => {
             if (!array.includes(prod.category)) {
                 console.log ("chek in")
                 array.push (prod.category) ;
@@ -21,7 +34,16 @@ router.get('/products', async (req, res) => {
         console.log(categorysArray)
 
         //Renderizado
-        res.render('home', { products: result, categorysList: categorysArray});
+        res.render('home', { 
+            products: docs, 
+            categorysList: categorysArray, 
+            prevPage,
+            nextPage,
+            page,
+            hasPrevPage,
+            hasNextPage,
+            nextLink,
+            prevLink });
     } catch (error) {
         console.log (error)
     }

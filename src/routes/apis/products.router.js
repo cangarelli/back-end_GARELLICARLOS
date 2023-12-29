@@ -11,6 +11,9 @@
     const ProductManager = require('../../dao/managers/ProductManager.js');
     const { uploader } = require('../../helpers/uploader.js');
     const ProductMongoManager = require('../../dao/managersMongo/ProductMongoManager.js');
+    const paginateQueryMaker = require('../../helpers/paginateQueryMaker.js');
+    const { paginateSubDocs } = require('mongoose-paginate-v2');
+    const linkQueryMaker = require('../../helpers/linkQueryMaker.js');
 
 //Creacion de array de productos
     const productArray = new ProductManager();
@@ -21,35 +24,47 @@
 
 /* TRAER TODOS LOS PRODUCTOS -->  AGREGAR CONDICIONALES DE PARAMS */
 router.get ("/mongo", async (req, res) => {
-    const {category, disponibility, order, limit} = req.query
+    let {category, disponibility, order, limit, onPage} = req.query
+    limit = limit || 3 
     try {
-        const response = await mongoProductManager.getProducts({category, disponibility, order, limit})
+        const result = await mongoProductManager.getProducts({category: category, disponibility: disponibility, order: order, limit: limit, onPage: onPage})
+        console.log ("check result", result)
+        const {
+            docs,
+            totalPages,
+            prevPage,
+            nextPage,
+            page,
+            hasPrevPage,
+            hasNextPage
+        } = result 
+        console.log ("check Page", nextPage, prevPage)
+        const nextLink = `/api/products/mongo${linkQueryMaker(
+            {category: category, disponibility: disponibility, order: order, limit: limit, thePage: nextPage}
+            )})`
+            const prevLink = `/api/products/mongo${linkQueryMaker(
+                {category: category, disponibility: disponibility, order: order, limit: limit, thePage: prevPage}
+                )})`
+        console.log (prevLink, nextLink)
+        console.log ("check docs of product.router", docs)
+        
         return res.send({
             status:"success",
-            payload: response,
-            totalPages: "Total de páginas",
-            prevPage: "Página anterior",
-            nextPage: "Página siguiente",
-            page: "Página actual",
-            hasPrevPage: "Indicador para saber si la página previa existe",
-            hasNextPage: "Indicador para saber si la página siguiente existe",
-            prevLink: "Link directo a la página previa (null si hasPrevPage=false)",
-            nextLink: "Link directo a la página siguiente (null si hasNextPage=false)"
-        }
-        )
+            docs,
+            totalPages,
+            prevPage,
+            nextPage,
+            page,
+            hasPrevPage,
+            hasNextPage,
+            prevLink: prevLink,
+            nextLink: nextLink 
+        })
     } catch (error) {
         console.log (error)
         return res.send({
             status:"error",
             payload: error,
-            totalPages: "Total de páginas",
-            prevPage: "Página anterior",
-            nextPage: "Página siguiente",
-            page: "Página actual",
-            hasPrevPage: "Indicador para saber si la página previa existe",
-            hasNextPage: "Indicador para saber si la página siguiente existe",
-            prevLink: "Link directo a la página previa (null si hasPrevPage=false)",
-            nextLink: "Link directo a la página siguiente (null si hasNextPage=false)"
         })
     }
 

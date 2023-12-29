@@ -18,5 +18,14 @@
             </div>
         </div>
     {{/each}}
+    <div>
+        {{#if hasPrevPage}}
+        <a href="{{prevLink}}">Pagina previa</a>
+        {{/if}}
+        <h1>{{page}}</h1>
+        {{#if hasNextPage}}
+        <a href="{{nextLink}}">Pagina siguiente</a>
+        {{/if}}
+    </div>
     </div>
 </div>

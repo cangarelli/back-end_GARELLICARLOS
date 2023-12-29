@@ -1,4 +1,5 @@
 // Modulos importados
+const paginateQueryMaker = require("../../helpers/paginateQueryMaker.js")
 const { productsModel } = require ("../models/products.model.js")
 
 // Funciones de procesamiento de request data
@@ -31,10 +32,13 @@ function selectorQuery(query1, query2, query3, query4) {
 // CLASE CONSTRUCTORA
 class ProductMongoManager {
     constructor() {}
-    async getProducts ({category, disponibility, order, limit}) {   
+    async getProducts ({category, disponibility, order, limit, page}) {   
         try {
-            const products = await productsModel.aggregate(selectorQuery(category, disponibility, order, limit))
-            return (products)
+            const querys = paginateQueryMaker({category, disponibility, order, limit, page})
+            console.log ("check query", querys)
+            const result= await productsModel.paginate(querys.filter, querys.pagination)
+            console.log ("check product Manager", result)
+            return (result)
         } catch (error) {
             console.log (error)
             return (error);
