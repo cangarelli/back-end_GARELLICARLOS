@@ -3,15 +3,21 @@ const { Router } = require('express');
 const router = Router();
 //Importacion de modulos propios
 const apiCaller = require('../helpers/apiCaller');
+const linkQueryMaker = require('../helpers/linkQueryMaker');
 
 
 // SETEO DE RUTAS
 
 router.get('/products', async (req, res) => {
     /*render hace que envie lo va a buscar a los archivos hbs en la carpeta viwews*/
+    const {category, disponibility, order, limit, onPage} = req.query
+    console.log ("chequeo query views", category, disponibility, order, limit, onPage)
+    const querys = linkQueryMaker(
+        {category: category, disponibility: disponibility, order: order, limit: limit, thePage: onPage})
+        console.log (querys)
     try {
-        const result = await apiCaller ({ route:`http://localhost:${req.app.locals.port}/api/products/mongo`, method: "GET" })
-        console.log ("checkeo result en views", result)
+        const data = await apiCaller ({ route:`http://localhost:${req.app.locals.port}/api/products/mongo${querys}`, method: "GET" })
+        console.log ("checkeo result en views", data)
         const {            
             docs,
             totalPages,
@@ -22,7 +28,7 @@ router.get('/products', async (req, res) => {
             hasNextPage,
             nextLink,
             prevLink
-        }  = result
+        }  = data
         console.log ("HASTA ACA ANDA EL DOCS?", docs)
         const categorysArray = docs.reduce((array, prod ) => {
             if (!array.includes(prod.category)) {
