@@ -9,9 +9,10 @@ const linkQueryMaker = require('../helpers/linkQueryMaker');
 // SETEO DE RUTAS
 
 router.get('/products', async (req, res) => {
-    /*render hace que envie lo va a buscar a los archivos hbs en la carpeta viwews*/
+
     // SETEO DE PARAMETROS DE QUERYS
     let {category, status, order, limit, onPage} = req.query
+    // Seteo de queryroutes
     limit = limit || 4
     const querys = linkQueryMaker(
         {category: category, disponibility: status, order: order, limit: limit, thePage: onPage})
@@ -32,14 +33,9 @@ router.get('/products', async (req, res) => {
         }  = data
 
         // SETEO DE CATEGORIAS PARA SEARCH BAR
-        const alldata = await apiCaller ({ route:`http://localhost:${req.app.locals.port}/api/products/mongo`, method: "GET" })
-        const categorysArray = alldata.docs.reduce((array, prod ) => {
-            if (!array.includes(prod.category)) {
-                console.log ("chek in")
-                array.push (prod.category) ;
-            }
-            return array
-        }, []);
+        const categorysArray = await apiCaller ({ route:`http://localhost:${req.app.locals.port}/api/products/mongo/category`, method: "GET" })
+
+        console.log ("views.router check categorysArray", categorysArray)
 
 
         //Renderizado

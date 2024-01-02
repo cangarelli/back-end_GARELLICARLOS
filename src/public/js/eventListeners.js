@@ -86,6 +86,10 @@ onePageHeader.addEventListener('change', async (e) => {
     console.log (e.target.checked)
     switch (e.target.checked) {  
         case true:
+            if (e.target.id == "orderHeigh" || e.target.id == "orderLow") {
+                e.target.nextElementSibling.checked = false
+            }
+        
             console.log ("check case true", e.target.id)
             const option = optionSelector (e.target.id)
             console.log ("check option in case", option)

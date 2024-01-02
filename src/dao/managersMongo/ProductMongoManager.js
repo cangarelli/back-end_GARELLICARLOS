@@ -33,12 +33,29 @@ function selectorQuery(query1, query2, query3, query4) {
 class ProductMongoManager {
     constructor() {}
     async getProducts ({category, disponibility, order, limit, page}) {   
+
+        // CREO ARRAY DE CATEGORIES A PARTIR DEL STRING DEL QUERY
+        let categoriesArray 
+        if (category != undefined) {
+            categoriesArray = category.split(',');
+        }
         try {
-            const querys = paginateQueryMaker({category, disponibility, order, limit, page})
-            console.log ("check query", querys)
+            // CREO PARAMETROS PARA PAGINATE
+            const querys = paginateQueryMaker({category: categoriesArray, disponibility, order, limit, page})
+            // HAGO LA BUSQUEDA
             const result= await productsModel.paginate(querys.filter, querys.pagination)
             console.log ("check product Manager", result)
+            // ENVIO EL RESULTADO
             return (result)
+        } catch (error) {
+            console.log (error)
+            return (error);
+        }
+    }
+    async getOneKeyData (key) {
+        try {
+            const keyData = await productsModel.distinct(key);
+            return (keyData)
         } catch (error) {
             console.log (error)
             return (error);

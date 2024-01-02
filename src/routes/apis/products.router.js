@@ -25,10 +25,12 @@
 /* TRAER TODOS LOS PRODUCTOS -->  AGREGAR CONDICIONALES DE PARAMS */
 router.get ("/mongo", async (req, res) => {
     let {category, disponibility, order, limit, onPage} = req.query
-    
+   
     try {
-        const result = await mongoProductManager.getProducts({category: category, disponibility: disponibility, order: order, limit: limit, page: onPage})
 
+        // Request de data
+        const result = await mongoProductManager.getProducts({category: category, disponibility: disponibility, order: order, limit: limit, page: onPage})
+        // Destructuring
         const {
             docs,
             totalPages,
@@ -38,7 +40,7 @@ router.get ("/mongo", async (req, res) => {
             hasPrevPage,
             hasNextPage
         } = result 
-   
+        // Creacion de querys
         const nextLink = `/views/products${linkQueryMaker(
             {category: category, disponibility: disponibility, order: order, limit: limit, thePage: nextPage}
             )}`
@@ -70,6 +72,22 @@ router.get ("/mongo", async (req, res) => {
 
 })
 /* TRAER UN PRODUCTO SELECCIONADO -----------------------------> OK*/
+
+router.get("/mongo/:key", async (req, res) =>{
+
+    try {
+        const keyData = await mongoProductManager.getOneKeyData(req.params.key)
+        return (res.status(200).send({
+            status:"success",
+            payload: keyData
+        }))
+    } catch (error) {
+        console.log (error)
+        return res.send({
+            status:"error",
+            payload: error,
+    })}
+})
 router.get ("/mongo/:pid", async (req, res) => {
     try {
         const response = await mongoProductManager.getProductsById(req.params.pid)
