@@ -68,7 +68,7 @@ onePageHeader.addEventListener('click', async (e) => {
             categoryParameters.length > 0 ? categoryParameters : categoryParameters = undefined
             orderParameters.length > 0 ? orderParameters : orderParameters = undefined
             disponibility.length > 0 ? disponibility : disponibility = undefined
-            
+
             // Creacion de la query
             const query = queryMaker ({categorie: categoryParameters, status: disponibility, order: orderParameters}) 
 
@@ -80,17 +80,17 @@ onePageHeader.addEventListener('click', async (e) => {
 
 onePageHeader.addEventListener('change', async (e) => {
     if (e.target.checked == true) {
-        if (e.target.id == "orderHeigh") { // Bloquea orderLow
-            const orderLowCheckbox = document.querySelector('#orderLow');
-            if (orderLowCheckbox.checked == true){
-                orderLowCheckbox.checked = false
-            } 
+        let orderCheckbox 
+
+        if (e.target.id == ".orderHeigh") { // Bloquea orderLow
+            orderCheckbox = document.querySelector('#orderLow');
         } else if (e.target.id == "orderLow") { // Bloquea orderHeigh
-            const orderLowCheckbox = document.querySelector('#orderHeigh');
-            if (orderLowCheckbox.checked == true){
-                orderLowCheckbox.checked = false
-            } 
+            orderCheckbox = document.querySelector('#orderHeigh');
         }
+
+        if (orderCheckbox.checked == true){
+            orderCheckbox.checked = false
+        } 
     }
 })
 

@@ -36,8 +36,20 @@ router.put('/:cid/product/:pid', async (req, res) => {
     console.log ("chek body", req.body)
     const {quantity} = req.body
     console.log ("check quantity", quantity)
-    const response = await mongoCartManager.addProductToCart(req.params.pid, req.params.cid, quantity)
-    return res.send(response)
+    try {
+        let response
+        if (quantity > 0) {
+            response = await mongoCartManager.addProductToCart(req.params.pid, req.params.cid, quantity)
+        } else if (quantity < 0) {
+            response = await mongoCartManager.removeProductOfCart(req.params.pid, req.params.cid, quantity)
+        }
+
+        return res.send(response)
+    } catch (error) {
+        console.log (error)
+        return res.send(error)
+    }
+
 });
 
 // Actualizar todo el carrito ------------------------------ OK
