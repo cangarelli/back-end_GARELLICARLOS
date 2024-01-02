@@ -72,43 +72,32 @@ onePageHeader.addEventListener('click', async (e) => {
             disponibility.length > 0 ? disponibility : disponibility = undefined
             // Creacion de la query
             const query = queryMaker ({categorie: categoryParameters, status: disponibility, order: orderParameters}) 
-            console.log ("query check",query)
+
             // Realización del filtrado y actualización de la pagina
             window.location.href = `/views/products${query}`;
             break;
     }
 })
-/* Metodo de change event listener
+
 onePageHeader.addEventListener('change', async (e) => {
-    const optionsChecked = {}
-    console.log (e.target.id)
-    console.log (e.target.value)
-    console.log (e.target.checked)
-    switch (e.target.checked) {  
-        case true:
-            if (e.target.id == "orderHeigh" || e.target.id == "orderLow") {
-                e.target.nextElementSibling.checked = false
-            }
-        
-            console.log ("check case true", e.target.id)
-            const option = optionSelector (e.target.id)
-            console.log ("check option in case", option)
-            Object.assign(optionsChecked, {category: option})
-            
-            break;
-        case false:
-            OptionSelector  (e.target.id)
-            break;
+    if (e.target.checked == true) {
+        if (e.target.id == "orderHeigh") { // Bloquea orderLow
+            const orderLowCheckbox = document.querySelector('#orderLow');
+            if (orderLowCheckbox.checked == true){
+                orderLowCheckbox.checked = false
+            } 
+        } else if (e.target.id == "orderLow") { // Bloquea orderHeigh
+            const orderLowCheckbox = document.querySelector('#orderHeigh');
+            if (orderLowCheckbox.checked == true){
+                orderLowCheckbox.checked = false
+            } 
+        }
     }
-    console.log (optionsChecked)
-    // queryMaker ({category: `${e.target.id}`, status, order, limit})
 })
-*/
+
 
 // MANEJO DE EVENTOS DEL MAIN
 onePageMain.addEventListener('click', async (e) => {
-    console.log (e.target.value)
-    console.log (e.target.value != "on") 
     if (e.target.value != undefined) {
         console.log ("entra")
         e.preventDefault();

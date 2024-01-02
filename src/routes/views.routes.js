@@ -33,10 +33,7 @@ router.get('/products', async (req, res) => {
         }  = data
 
         // SETEO DE CATEGORIAS PARA SEARCH BAR
-        const categorysArray = await apiCaller ({ route:`http://localhost:${req.app.locals.port}/api/products/mongo/category`, method: "GET" })
-
-        console.log ("views.router check categorysArray", categorysArray)
-
+        const categorysArray = await apiCaller ({ route:`http://localhost:${req.app.locals.port}/api/products/mongokeydata/category`, method: "GET" })
 
         //Renderizado
         res.render('home', { 

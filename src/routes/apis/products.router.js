@@ -73,7 +73,7 @@ router.get ("/mongo", async (req, res) => {
 })
 /* TRAER UN PRODUCTO SELECCIONADO -----------------------------> OK*/
 
-router.get("/mongo/:key", async (req, res) =>{
+router.get("/mongokeydata/:key", async (req, res) =>{
 
     try {
         const keyData = await mongoProductManager.getOneKeyData(req.params.key)
