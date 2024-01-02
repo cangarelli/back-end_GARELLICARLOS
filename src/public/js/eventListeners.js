@@ -47,8 +47,6 @@ const searchOptionMenu = document.getElementById("searchOptionMenu")
 
 
 // MANEJO DE EVENTOS DE LA NAV BAR
-// /* En proceso... 
-
 onePageHeader.addEventListener('click', async (e) => {
 
     switch (e.target.value) {  
@@ -70,6 +68,7 @@ onePageHeader.addEventListener('click', async (e) => {
             categoryParameters.length > 0 ? categoryParameters : categoryParameters = undefined
             orderParameters.length > 0 ? orderParameters : orderParameters = undefined
             disponibility.length > 0 ? disponibility : disponibility = undefined
+            
             // Creacion de la query
             const query = queryMaker ({categorie: categoryParameters, status: disponibility, order: orderParameters}) 
 
