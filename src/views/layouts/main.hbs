@@ -16,19 +16,21 @@
                 {{#if categorysList}}
                 
                 <form action="" id="searchOptionsMenu">
-                    <div>
+                    <div class="categories">
                         {{#each categorysList}}
                             <label for={{this}}>{{this}}</label>
                             <input type="checkbox" name={{this}} id={{this}}>
                         {{/each}}
                     </div>
-                    <div>
+                    <div class="order">
                         <label for="orderHigh">Mayor precio</label>
-                        <input type="radio" name="orderHeigh" id="orderHeigh">
+                        <input type="checkbox" name="orderHeigh" id="orderHeigh">
                         <label for="orderLow">Menor precio</label>
-                        <input type="radio" name="orderLow" id="orderLow">
+                        <input type="checkbox" name="orderLow" id="orderLow">
+                    </div>
+                    <div class="disponibility">
                         <label for="disponibility">Solo disponibles</label>
-                        <input type="radio" name="disponibility" id="status">
+                        <input type="checkbox" name="disponibility" id="status">
                     </div>
                     <input type="button" value="Filter Search">
                 </form>

@@ -10,14 +10,15 @@ const linkQueryMaker = require('../helpers/linkQueryMaker');
 
 router.get('/products', async (req, res) => {
     /*render hace que envie lo va a buscar a los archivos hbs en la carpeta viwews*/
-    const {category, disponibility, order, limit, onPage} = req.query
-    console.log ("chequeo query views", category, disponibility, order, limit, onPage)
+    // SETEO DE PARAMETROS DE QUERYS
+    let {category, status, order, limit, onPage} = req.query
+    limit = limit || 4
     const querys = linkQueryMaker(
-        {category: category, disponibility: disponibility, order: order, limit: limit, thePage: onPage})
-        console.log (querys)
+        {category: category, disponibility: status, order: order, limit: limit, thePage: onPage})
+   
     try {
+        // FILTRO DE PRODCUTOS SEGUN ESPECIFIACION DE LA QUERY
         const data = await apiCaller ({ route:`http://localhost:${req.app.locals.port}/api/products/mongo${querys}`, method: "GET" })
-        console.log ("checkeo result en views", data)
         const {            
             docs,
             totalPages,
@@ -29,15 +30,17 @@ router.get('/products', async (req, res) => {
             nextLink,
             prevLink
         }  = data
-        console.log ("HASTA ACA ANDA EL DOCS?", docs)
-        const categorysArray = docs.reduce((array, prod ) => {
+
+        // SETEO DE CATEGORIAS PARA SEARCH BAR
+        const alldata = await apiCaller ({ route:`http://localhost:${req.app.locals.port}/api/products/mongo`, method: "GET" })
+        const categorysArray = alldata.docs.reduce((array, prod ) => {
             if (!array.includes(prod.category)) {
                 console.log ("chek in")
                 array.push (prod.category) ;
             }
             return array
         }, []);
-        console.log(categorysArray)
+
 
         //Renderizado
         res.render('home', { 

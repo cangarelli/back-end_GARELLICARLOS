@@ -56,14 +56,25 @@ onePageHeader.addEventListener('click', async (e) => {
 
             break;
         case "Filter Search":
-            const form = document.getElementById("searchOptionsMenu")
-            const nodos = nodosIdGeter(form);
-            
-            console.log ("chequeo de nodos en filter search", nodos)
-            console.log (nodos)
-            const filters = formDataManager (nodos)
-            console.log ("chequeo de filltros uplads en filter search", filters)
+            // Recuperar parametros del filtro desde el dom
+            const checkBoxes = document.querySelectorAll('input[type="checkbox"]:checked');
 
+            let categoryParameters =[]
+            let orderParameters = [] 
+            let disponibility =[]
+            checkBoxes.forEach((nodo) => {
+                nodo.parentNode.className == "order" && orderParameters.push (nodo.id)
+                nodo.parentNode.className == "categories" && categoryParameters.push (nodo.id)
+                nodo.parentNode.className == "disponibility" && disponibility.push (nodo.id)
+            })
+            categoryParameters.length > 0 ? categoryParameters : categoryParameters = undefined
+            orderParameters.length > 0 ? orderParameters : orderParameters = undefined
+            disponibility.length > 0 ? disponibility : disponibility = undefined
+            // Creacion de la query
+            const query = queryMaker ({categorie: categoryParameters, status: disponibility, order: orderParameters}) 
+            console.log ("query check",query)
+            // Realización del filtrado y actualización de la pagina
+            window.location.href = `/views/products${query}`;
             break;
     }
 })

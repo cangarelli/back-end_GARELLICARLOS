@@ -25,10 +25,10 @@
 /* TRAER TODOS LOS PRODUCTOS -->  AGREGAR CONDICIONALES DE PARAMS */
 router.get ("/mongo", async (req, res) => {
     let {category, disponibility, order, limit, onPage} = req.query
-    limit = limit || 3 
+    
     try {
         const result = await mongoProductManager.getProducts({category: category, disponibility: disponibility, order: order, limit: limit, page: onPage})
-        console.log ("check result", result)
+
         const {
             docs,
             totalPages,
@@ -38,27 +38,14 @@ router.get ("/mongo", async (req, res) => {
             hasPrevPage,
             hasNextPage
         } = result 
-        console.log ("check Page", nextPage, prevPage)
+   
         const nextLink = `/views/products${linkQueryMaker(
             {category: category, disponibility: disponibility, order: order, limit: limit, thePage: nextPage}
             )}`
         const prevLink = `/views/products${linkQueryMaker(
             {category: category, disponibility: disponibility, order: order, limit: limit, thePage: prevPage}
             )}`
-        console.log (prevLink, nextLink)
-        console.log ("check docs of product.router", docs)
-        console.log ({
-            status:"success",
-            docs: docs,
-            totalPages: totalPages,
-            prevPage: prevPage,
-            nextPage: nextPage,
-            page: page,
-            hasPrevPage: hasPrevPage,
-            hasNextPage: hasNextPage,
-            prevLink: prevLink,
-            nextLink: nextLink 
-        })
+
         return (res.status(200).send({
             status:"success",
             payload: {

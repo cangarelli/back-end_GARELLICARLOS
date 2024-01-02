@@ -14,7 +14,7 @@ function paginateQueryMaker({category, disponibility, order, limit, page}) {
     if (limit != undefined) {
         pagination = {limit: limit, page: page, lean: true }
         if (order != undefined) {
-            pagination.sort = order == "asc" ? {precio: 1} : {precio: -1}
+            pagination.sort = order == "asc" ? {price: -1} : {price: 1}
         }
     } 
     console.log ("helper", filter, pagination)
