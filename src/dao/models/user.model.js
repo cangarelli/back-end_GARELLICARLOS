@@ -1,6 +1,6 @@
-const {Schema, model} = require('mongoose')
+const {Schema, model, default: mongoose} = require('mongoose')
 
-const usersCollection = 'Usuarios'
+const usersCollection = 'usuarios'
 
 const UsersSchema = Schema({
     first_name: {
@@ -19,7 +19,7 @@ const UsersSchema = Schema({
         type: String,
         required: true
     },
-    cartID: {
+    cartId: {
         type: String,
         required: true,
         unique: true
@@ -30,4 +30,4 @@ const usersModel = model(usersCollection, UsersSchema)
 
 module.exports = {
     usersModel
-}
+};

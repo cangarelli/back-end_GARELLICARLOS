@@ -3,6 +3,10 @@
     const app = express();
     const bodyParser = require('body-parser');
     const path = require('path');
+    const cookieParser = require("cookie-parser")
+    const session = require ("express-session") /*Para generar que se guarden cookies con Sesion ID (no en Session Storage) */ 
+    const FileStore = require ("session-file-store") /* Para generar storage de la sesion en archivos */
+    const MongoStore = require ("connect-mongo") /* Para generar storage de la sesion en mongo db/atlas */
 
 // Config express
     app.use(express.json());
@@ -10,6 +14,22 @@
     app.use(express.static(__dirname + '/public'));
     app.use(bodyParser.urlencoded({ extended: false }));
     app.use(bodyParser.json());
+    app.use(cookieParser("SecretWords"))
+    app.use(session({ /* Configuración de cookie session storage */
+        store: MongoStore.create({
+            mongoUrl: "mongodb+srv://agarelli91:5d8a6fsFWa6@anlugamescluster.mgh6ee1.mongodb.net/",
+            // mongoOptions: 
+            // {
+            //     useNewUrlParser: true,
+            //     useUnifiedTopology: true
+            // },
+            ttl: 60*24, /*Tiempo de duracion, en minutos, de la session en la base de datos */
+        }),
+        secret: "coderSecret", /* Encriptado  */
+        resave: true,
+        saveUninitialized: true
+    }))
+
     //Variables globales
         const port = 8080;
         app.locals.port = port;
@@ -45,6 +65,7 @@
     const userRouter = require('./routes/apis/users.router.js');
     const viewsRouter = require('./routes/views.routes.js');
     const chatRouter = require ("./routes/apis/chat.router.js")
+    const sessionRouter = require ("./routes/apis/session.router.js")
 
 
 // Renderizado de rutas 
@@ -54,7 +75,9 @@
     /* rutas de la api */
     app.use('/api/products', productsRouter);
     app.use('/api/carts', cartsRouter);
-    app.use("/api/chat", chatRouter)
+    app.use('/api/chat', chatRouter)
+    app.use('/api/session', sessionRouter)
+    app.use('/api/users', userRouter)
 
     /* Manejo de errores en el servidor */
     app.use((err, req, res, next) => {

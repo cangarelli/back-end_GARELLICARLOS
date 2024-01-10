@@ -1,5 +1,4 @@
 // Modulos importados
-const linkQueryMaker = require("../../helpers/linkQueryMaker.js");
 const { cartsModel } = require ("../models/carts.model.js")
 const { productsModel } = require ("../models/products.model.js")
 const apiCaller = require ("../../helpers/apiCaller.js")
@@ -22,8 +21,6 @@ class CartMongoManager {
     async getCartById (cid) {
         try {
             const cart = await cartsModel.findOne({_id: cid})
-            console.log ("mongoManager Check", cart)
-            console.log (cart.products)
             return ({ status: 'succes', payload: cart.products });
         } catch (error) {
             console.log (error)
@@ -124,6 +121,7 @@ class CartMongoManager {
                 const updateStock = {stock: parseInt(newStock) }
                 
                 await apiCaller ({ route:`http://localhost:8080/api/products/mongo/${pid}`, info: updateStock, method: "PUT" })
+
             // RESPONDE LO QUE RESPONDE DEL MANEJO DEL CARRITO
                 return result
             } else if (products[productIndex].quantity <= quantity) {
@@ -131,35 +129,7 @@ class CartMongoManager {
                 const response = await deleteProductById (pid, cid)
                 return response
             }
-
-            
-            /* CODIGO DE CONSULTA.. 
-
-            // Chequeo de existencia de propducto en el cart
-            const virtualCart = await cartsModel.findById(cid)
-            let existingProduct = -1
-
-            products.length > 0 && (() =>  {
-                existingProduct = products.findIndex(product => product.prodId === pid)
-            })(); 
-
-            // Si existe en el carrito me fijo cuantos quedan
-            if (existingProduct != -1) {
-                const newQuantity = products[existingProduct].quantity > 0 && (() => {products[existingProduct].quantity -= 1})()
-                // Si quedan algunos, los voy sacando
-                if (newQuantity > 0) {
-                    const result = await cartsModel.updateOne(
-                        { _id: cid, "products.prodId": pid },
-                        { $set: { "products.$.quantity": newQuantity } })
-                    return res.send({ status: 'succes', payload: result });
-                // Si no queda ninguno lo borro de la lista
-                } else if (newQuantity = 0) { //Falta poner para que borre de la lista
-                    return res.send({ status: 'succes', payload: "product remove from cart"  });
-                }
-            } else {
-                return ("The product wasnt found in the cart")
-            }
-            */
+         f
         } catch (error) {
             console.log (error)
             return res.send({ status: 'error', payload: error });

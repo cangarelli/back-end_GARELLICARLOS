@@ -1,13 +1,50 @@
 // Importación de modulos nativos
 const { Router } = require('express');
 const router = Router();
+
 //Importacion de modulos propios
 const apiCaller = require('../helpers/apiCaller');
 const linkQueryMaker = require('../helpers/linkQueryMaker');
-
+const userSchema = require ("../dao/models/user.model")
 
 // SETEO DE RUTAS
 
+// Register
+router.get('/register', async (req, res) => {
+    try {
+     // crear variables importantes
+    const formDataKeys = [
+        {id:"first_name" , label: "Ingrese su nombre", type: "text"},
+        {id:"last_name" , label: "Ingrese su apellido", type: "text"},
+        {id:"gender" , label: "¿Con que genero se identifica?", type: "optionCheck", options: ["Masculino", "Femenino", "No binario"]},
+        {id:"email" , label: "Ingrese su correo electronico", type:"email"},
+        {id:"password" , label: "Ingrese su contraseña", type:"password"},
+
+    ] 
+    // renderizar vita
+    res.render('register', {formCamps: formDataKeys}) 
+       
+    } catch (error) {
+        console.log (error)
+    }
+
+})
+// Login
+router.get('/login', async (req, res) => {
+    try {
+        // crear variables importantes
+        const formDataKeys = [
+            {id:"email" , label: "Ingrese su correo electronico", type:"email"},
+            {id:"password" , label: "Ingrese su contraseña", type:"password"},
+        ]
+       // renderizar vita
+       res.render('loguin', {formCamps: formDataKeys}) 
+          
+       } catch (error) {
+           console.log (error)
+       }
+})
+// Home
 router.get('/products', async (req, res) => {
 
     // SETEO DE PARAMETROS DE QUERYS
@@ -51,7 +88,7 @@ router.get('/products', async (req, res) => {
     }
 
 });
-
+// Product Detail
 router.get ("/product/:pid", async (req, res) => {
     console.log ("pega en ruta")
     try {
@@ -73,7 +110,7 @@ router.get('/realtimeproducts', async (req, res) => {
     res.render('realTimeProducts', { realTime: true, products: productslist });
 });
 */
-
+// Chat
 router.get("/chatApp/", async (req, res) => {
     //Recupero de mensajes
     const messagesList = await apiCaller ({ route: `http://localhost:${req.app.locals.port}/api/chat/`, method: "GET" })
@@ -81,6 +118,7 @@ router.get("/chatApp/", async (req, res) => {
     //Renderizado
     res.render("chat", {messagesList, user:nombre} )
 })
+// Carrito
 router.get("/cart/:cartid", async (req, res) => {
     const {cartid} = req.params
     console.log ("CartView check 0", cartid)
@@ -96,4 +134,5 @@ router.get("/cart/:cartid", async (req, res) => {
     }
 
 })
+
 module.exports = router;

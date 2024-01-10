@@ -1,0 +1,11 @@
+<form action="" class="loguinForm">
+    {{#each formCamps}}
+        <div class="loguinForm__camp">   
+            <label name={{this.id}}>{{this.label}}</label>
+            <input type={{this.type}} name={{this.id}} id={{this.id}}>
+        </div>
+    {{/each}}
+    <div class="loguinForm__buttonPad">
+        <button value="loguin">Inciar sesion</button>
+    </div>
+</form>
