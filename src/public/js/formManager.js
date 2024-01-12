@@ -89,7 +89,9 @@ const formDataManager = (nodos) => {
 async function formFetchtData({ route, info, method }) {
     console.log(method)
     console.log(info)
-    await fetch(route, {
+    console.log ("form fetch route", route)
+    return new Promise((resolve, reject) => {
+        fetch(route, {
         method: method,
         headers: {
             'Content-Type': 'application/json',
@@ -99,16 +101,19 @@ async function formFetchtData({ route, info, method }) {
         .then((response) => response.json())
         .then((data) => {
             console.log('Respuesta del servidor:', data);
+            resolve (data)
             // CHEQUEO RESPUESTA DEL SERVER
         })
         .catch((error) => {
             console.error('Error al enviar la solicitud:', error);
+            reject (error)
         });
+    })
 };
 
-async function upLoadProduct({ apiRoute, method, formId }) {
-    const updatableData = ['title', 'price', "category", 'description', 'stock', 'code', 'thumbnail'];
+async function upLoadData({ apiRoute, method, formId, updatableData}) {
     const updateData = formDataManager(updatableData);
-    await formFetchtData({ route: apiRoute, info: updateData, method: method });
-    deleteElement(formId);
+    const response = await formFetchtData({ route: apiRoute, info: updateData, method: method });
+    formId && deleteElement(formId);
+    return response
 };

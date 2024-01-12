@@ -1,15 +1,8 @@
-<form action="" class="registerForm">
+<form action="" class="logForm" id="registerForm">
     {{#each formCamps}}
         <div class="registerForm__camp">             
-            {{#if this.options}}
-                {{#each this.options}}
-                    <label for={{this}}>{{this}}</label>
-                    <input type="radio" name={{this}} id={{this}}>
-                {{/each}}
-            {{else}}
-                <label name={{this.id}}>{{this.label}}</label>
-                <input type={{this.type}} name={{this.id}} id={{this.id}}>
-            {{/if}}
+            <label name={{this.id}}>{{this.label}}</label>
+            <input type={{this.type}} name={{this.id}} id={{this.id}}>
         </div>
     {{/each}}
     <div class="registerForm__buttonPad">

@@ -16,10 +16,8 @@ router.get('/register', async (req, res) => {
     const formDataKeys = [
         {id:"first_name" , label: "Ingrese su nombre", type: "text"},
         {id:"last_name" , label: "Ingrese su apellido", type: "text"},
-        {id:"gender" , label: "¿Con que genero se identifica?", type: "optionCheck", options: ["Masculino", "Femenino", "No binario"]},
         {id:"email" , label: "Ingrese su correo electronico", type:"email"},
         {id:"password" , label: "Ingrese su contraseña", type:"password"},
-
     ] 
     // renderizar vita
     res.render('register', {formCamps: formDataKeys}) 
@@ -46,6 +44,19 @@ router.get('/login', async (req, res) => {
 })
 // Home
 router.get('/products', async (req, res) => {
+    // Gestion de loguin
+    console.log ("check req.session en views route", req.session)
+    let cartId 
+    let userId
+    let saludo
+    if (req.session.Userdata ) {
+        saludo = req.session.Userdata.saludo
+        userId = req.session.Userdata.userId
+        cartId = req.session.Userdata.cartId
+    }
+ 
+    console.log ("Check user id en views route", userId)
+    // const userData = await apiCaller ({ route:`http://localhost:${req.app.locals.port}/api/users/${userId}`, method: "GET" })
 
     // SETEO DE PARAMETROS DE QUERYS
     let {category, status, order, limit, onPage} = req.query
@@ -82,7 +93,11 @@ router.get('/products', async (req, res) => {
             hasPrevPage,
             hasNextPage,
             nextLink,
-            prevLink });
+            prevLink,
+            saludo,
+            userId,
+            cartId
+        });
     } catch (error) {
         console.log (error)
     }
@@ -90,7 +105,9 @@ router.get('/products', async (req, res) => {
 });
 // Product Detail
 router.get ("/product/:pid", async (req, res) => {
-    console.log ("pega en ruta")
+    console.log ("pega en ruta /product/:pid")
+    // Gestion de loguin
+
     try {
         const result = await apiCaller ({ route:`http://localhost:${req.app.locals.port}/api/products/mongo/${req.params.pid}`, method: "GET" })
         console.log ("chequeo data for render", result)

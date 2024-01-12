@@ -176,6 +176,15 @@ class CartMongoManager {
             return ({ status: 'error', payload: error });
         }
     }
+    // Delete cart
+    async deleteCart (cid) {
+        try {
+            const cartDeleted = await cartsModel.deleteOne({ _id: cid })
+            return ({status: "succes", payload: cartDeleted})
+        } catch (error) {
+            console.log (error)
+        }
+    }
 }
 
 module.exports = CartMongoManager;

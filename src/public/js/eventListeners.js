@@ -43,9 +43,50 @@ const onePageMain = document.getElementById('mainRoot');
 const onePageHeader = document.getElementById("headerRoot")
 const chatLetter = document.querySelector("#chatBox")
 const searchOptionMenu = document.getElementById("searchOptionMenu")
+const logBoard = document.querySelector (".logForm")
 // MANEJO DE EVENTOS DEL SITIO WEB
+console.log ("Check logboard", logBoard)
 
+// Log evetns
+logBoard.addEventListener("change", async (e) =>{
+    // Seteo de controles -- Opcional
+})
+logBoard.addEventListener("click", async (e) =>{
+    switch (e.target.value) {
+        case "clear-form":
+            
+            break;
+        case "register":
+            const nodosId = ["first_name","last_name","email", "password"]            
+            const result = await upLoadData({ apiRoute: `/api/users/`, method: 'POST', updatableData: nodosId }); 
+            
+            // Redirección al loguin
+            if (result.status == "succes") {
+                window.location.href = `/views/login`; 
+            }
+            break;
 
+        case "loguin":
+            // Log check route
+            const logData = ["email", "password"]  
+            const updateData = formDataManager (logData);
+            const user = await formFetchtData ({ route: `/api/users/${updateData.email}/log/${updateData.password}`, method: 'GET' }); 
+            console.log ("check user", user, user.status)
+            if (user.status == "succes") {// Si esta bien SETEAR EL PAYLOAD EN COOKIES SESSION
+                // const res = await formFetchtData (({ route: "/api/session/loguin", info: user, method: "POST" }))
+                console.log ("Check loguin res")
+                // Redirección al home
+                window.location.href = `/views/products`;
+            } else {
+                console.log ("Error", user)
+                // Armar pop up de error
+            }
+
+            break;
+        default:
+            break;
+    }
+})
 // MANEJO DE EVENTOS DE LA NAV BAR
 onePageHeader.addEventListener('click', async (e) => {
 
@@ -109,7 +150,8 @@ onePageMain.addEventListener('click', async (e) => {
             break;
         //Form create product
         case 'cargar-producto':
-            await upLoadProduct({ apiRoute: `/api/products/mongo`, method: 'POST', formId: e.target.parentNode.id});
+            const nodosId = ['title', 'price', "category", 'description', 'stock', 'code', 'thumbnail'];
+            await upLoadData({ apiRoute: `/api/products/mongo`, method: 'POST', formId: e.target.parentNode.id, updatableData: nodosId});
             socket = !undefined && socket.emit('update-product-db', 'change done');
             break;
         // Update
@@ -117,7 +159,8 @@ onePageMain.addEventListener('click', async (e) => {
             productFormManager(e.target.value, 'updateForm', e.target.parentNode.id);
             break;
         case 'update-producto':
-            await upLoadProduct({ apiRoute: `/api/products/mongo/${e.target.id}`, method: 'PUT', formId: e.target.parentNode.id });
+            const updatableData = ['title', 'price', "category", 'description', 'stock', 'code', 'thumbnail'];
+            await upLoadData({ apiRoute: `/api/products/mongo/${e.target.id}`, method: 'PUT', formId: e.target.parentNode.id, updatableData: updatableData });
             socket = !undefined && socket.emit('update-product-db', 'change done');
             break;
         // Delete

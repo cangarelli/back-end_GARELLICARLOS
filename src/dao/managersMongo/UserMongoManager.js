@@ -14,23 +14,23 @@ class UserMongoManager {
         try {
             // Creación de carrito y obtencion de cartId
             const cartManagerResponse = await cartManager.createCart()
-            const cartId = cartManagerResponse.payload._id.toString()
-
+            const cartVirtualId = cartManagerResponse.payload._id.toString()
+            console.log ("check user manager cartid", cartVirtualId)
             // Creación de user con Mongoose
             const newUser = await usersModel.create({
                 first_name: first_name, 
                 last_name: last_name, 
-                email: email, 
-                gender: gender, 
+                email: email,  
                 password: password, 
-                cartId: cartId})
+                cartId: cartVirtualId})
 
             // Respuesta
             return ({ status: 'succes', payload: newUser });
             
         } catch (error) {
+            cartVirtualId && cartManager.deleteCart (cartVirtualId)
             console.log (error)
-            return ({ status: 'error', payload: 'user not created' });
+            return ({ status: 'error', payload: error });
         }
 
     }
@@ -43,9 +43,31 @@ class UserMongoManager {
             return (error);
         }
     }
-    async find({userId, data}){
+    async userSearch(uid) {
         try {
-
+            const userData = await usersModel.findOne({_id: uid})
+            if (data) {
+                return ({status: "succes", payload: userData})
+            } else {
+                return ({status: "error", payload: "user doesnt exist"})
+            }
+        } catch (error) {
+            console.log (error)
+            return (error);
+        }
+    }
+    async userCheck({userMail, userPassword}){
+        try {
+            const data = await usersModel.findOne({email: userMail})
+            if (data) { // Si existe ese correo en la base de datos        
+                if (data.password == userPassword) {
+                    return ({status: "succes", payload: {saludo: `Bienvenido ${data.first_name} ${data.last_name}`, userId: data._id.toString(), cartId: data.cartId}})
+                } else {
+                    return ({status: "error", payload: "La contraseña es incorrecta"})
+                }
+            } else { // Si no existe
+                return ({status: "error", payload: "El correo electronio brindado no esta registrado"})
+            }
         } catch (error) {
             console.log (error)
             return (error);
