@@ -45,21 +45,8 @@ router.get('/login', async (req, res) => {
 // Home
 router.get('/products', sessionLoader, async (req, res) => {
     // Gestion de loguin
-    console.log ("check req.session en views route", req.session)
-    // let cartId 
-    // let userId
-    // let saludo
-    // let role
-    // if (req.session.Userdata ) {
-    //     saludo = req.session.Userdata.saludo
-    //     userId = req.session.Userdata.userId
-    //     cartId = req.session.Userdata.cartId
-    //     role = req.session.Userdata.role == "admin" && true
-    // }
     const { saludo, userId, cartId, role } = req.userSession;
 
-    console.log ("Check user id en views route", userId)
-    // const userData = await apiCaller ({ route:`http://localhost:${req.app.locals.port}/api/users/${userId}`, method: "GET" })
 
     // SETEO DE PARAMETROS DE QUERYS
     let {category, status, order, limit, onPage} = req.query
@@ -108,15 +95,22 @@ router.get('/products', sessionLoader, async (req, res) => {
 
 });
 // Product Detail
-router.get ("/product/:pid", async (req, res) => {
+router.get ("/product/:pid", sessionLoader, async (req, res) => {
     console.log ("pega en ruta /product/:pid")
+
     // Gestion de loguin
+    const { saludo, userId, cartId, role } = req.userSession;
 
     try {
         const result = await apiCaller ({ route:`http://localhost:${req.app.locals.port}/api/products/mongo/${req.params.pid}`, method: "GET" })
         console.log ("chequeo data for render", result)
         //Renderizado
-        res.render('productDetail', { product: result });
+        res.render('productDetail', { 
+            product: result, 
+            saludo,
+            userId,
+            cartId,
+            role });
     } catch (error) {
         console.log (error)
     }
@@ -132,15 +126,30 @@ router.get('/realtimeproducts', async (req, res) => {
 });
 */
 // Chat
-router.get("/chatApp/", async (req, res) => {
+router.get("/chatApp/", sessionLoader, async (req, res) => {
+
+    // Gestion de loguin
+    const { saludo, userId, cartId, role } = req.userSession;
+    console.log ("Check chat view userid",userId)
     //Recupero de mensajes
     const messagesList = await apiCaller ({ route: `http://localhost:${req.app.locals.port}/api/chat/`, method: "GET" })
     const nombre = false
     //Renderizado
-    res.render("chat", {messagesList, user:nombre} )
+    res.render("chat", {
+        messagesList,
+        saludo,
+        userId,
+        cartId,
+        role} )
 })
 // Carrito
-router.get("/cart/:cartid", async (req, res) => {
+router.get("/cart/:cartid", sessionLoader, async (req, res) => {
+
+    // Gestion de loguin
+    
+    const { saludo, userId, cartId, role } = req.userSession;
+
+    // Gestion de carrito
     const {cartid} = req.params
     console.log ("CartView check 0", cartid)
     try {
@@ -149,7 +158,12 @@ router.get("/cart/:cartid", async (req, res) => {
         console.log ("cartView Check", cart)
 
         // Renderizado de pagina
-        res.render("cart", { products: cart })
+        res.render("cart", { 
+            products: cart,
+            saludo,
+            userId,
+            cartId,
+            role })
     } catch (error) {
         console.log (error)
     }

@@ -8,7 +8,12 @@ function sessionLoader(req, res, next) {
         }
     }
     else {
-        req.userSession = null 
+        req.userSession = {
+            saludo: null,
+            userId: null,
+            cartId: null,
+            role: null 
+        }
     }
         // INDICA SI CONTINUA O NO CON LOS PROCESOS DE COMPUTO
         next()

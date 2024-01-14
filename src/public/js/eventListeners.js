@@ -48,45 +48,49 @@ const logBoard = document.querySelector (".logForm")
 console.log ("Check logboard", logBoard)
 
 // Log evetns
-logBoard.addEventListener("change", async (e) =>{
-    // Seteo de controles -- Opcional
-})
-logBoard.addEventListener("click", async (e) =>{
-    switch (e.target.value) {
-        case "clear-form":
-            
-            break;
-        case "register":
-            const nodosId = ["first_name","last_name","email", "password"]            
-            const result = await upLoadData({ apiRoute: `/api/users/`, method: 'POST', updatableData: nodosId }); 
-            
-            // Redirección al loguin
-            if (result.status == "succes") {
-                window.location.href = `/views/login`; 
-            }
-            break;
+if (logBoard) {
+    logBoard.addEventListener("change", async (e) =>{
+        // Seteo de controles -- Opcional
+    })
+    logBoard.addEventListener("click", async (e) =>{
+        switch (e.target.value) {
+            case "clear-form":
+                
+                break;
+            case "register":
+                const nodosId = ["first_name","last_name","email", "password"]            
+                const result = await upLoadData({ apiRoute: `/api/users/`, method: 'POST', updatableData: nodosId }); 
+                
+                // Redirección al loguin
+                if (result.status == "succes") {
+                    window.location.href = `/views/login`; 
+                }
+                break;
+    
+            case "loguin":
+                // Log check route
+                const logData = ["email", "password"]  
+                const updateData = formDataManager (logData);
+                const user = await formFetchtData ({ route: `/api/users/${updateData.email}/log/${updateData.password}`, method: 'GET' }); 
+                console.log ("check user", user, user.status)
+                if (user.status == "succes") {// Si esta bien SETEAR EL PAYLOAD EN COOKIES SESSION
+                    // const res = await formFetchtData (({ route: "/api/session/loguin", info: user, method: "POST" }))
+                    console.log ("Check loguin res")
+                    // Redirección al home
+                    window.location.href = `/views/products`;
+                } else {
+                    console.log ("Error", user)
+                    // Armar pop up de error
+                }
+    
+                break;
+            default:
+                break;
+        }
+    })
+}
 
-        case "loguin":
-            // Log check route
-            const logData = ["email", "password"]  
-            const updateData = formDataManager (logData);
-            const user = await formFetchtData ({ route: `/api/users/${updateData.email}/log/${updateData.password}`, method: 'GET' }); 
-            console.log ("check user", user, user.status)
-            if (user.status == "succes") {// Si esta bien SETEAR EL PAYLOAD EN COOKIES SESSION
-                // const res = await formFetchtData (({ route: "/api/session/loguin", info: user, method: "POST" }))
-                console.log ("Check loguin res")
-                // Redirección al home
-                window.location.href = `/views/products`;
-            } else {
-                console.log ("Error", user)
-                // Armar pop up de error
-            }
 
-            break;
-        default:
-            break;
-    }
-})
 // MANEJO DE EVENTOS DE LA NAV BAR
 onePageHeader.addEventListener('click', async (e) => {
 
