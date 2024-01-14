@@ -42,6 +42,9 @@
             {{else}}
             <button><a href="/views/login">Loguin</a></button>
             {{/if}}
+            {{#if role}}
+            <h3> Los permisos de acceso de administrador estan habilitados </h3>
+            {{/if}}
             {{!-- <div className='item__button' value="pull" onClick=(()=> {hasClass ? setHasClass (false) : setHasClass
                 (true)}())>
                 <h1></h1>

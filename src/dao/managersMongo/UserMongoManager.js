@@ -61,7 +61,11 @@ class UserMongoManager {
             const data = await usersModel.findOne({email: userMail})
             if (data) { // Si existe ese correo en la base de datos        
                 if (data.password == userPassword) {
-                    return ({status: "succes", payload: {saludo: `Bienvenido ${data.first_name} ${data.last_name}`, userId: data._id.toString(), cartId: data.cartId}})
+                    if (data.email.includes("gmail.com")) {
+                        return ({status: "succes", payload: {saludo: `Bienvenido ${data.first_name} ${data.last_name}`, userId: data._id.toString(), role: "admin",cartId: data.cartId}})
+                    } else {
+                        return ({status: "succes", payload: {saludo: `Bienvenido ${data.first_name} ${data.last_name}`, userId: data._id.toString(), role: null, cartId: data.cartId}})
+                    }     
                 } else {
                     return ({status: "error", payload: "La contraseña es incorrecta"})
                 }

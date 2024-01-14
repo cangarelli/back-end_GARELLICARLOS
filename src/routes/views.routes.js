@@ -6,7 +6,7 @@ const router = Router();
 const apiCaller = require('../helpers/apiCaller');
 const linkQueryMaker = require('../helpers/linkQueryMaker');
 const userSchema = require ("../dao/models/user.model")
-
+const sessionLoader = require ("../helpers/middleware/sessionLoader")
 // SETEO DE RUTAS
 
 // Register
@@ -43,18 +43,21 @@ router.get('/login', async (req, res) => {
        }
 })
 // Home
-router.get('/products', async (req, res) => {
+router.get('/products', sessionLoader, async (req, res) => {
     // Gestion de loguin
     console.log ("check req.session en views route", req.session)
-    let cartId 
-    let userId
-    let saludo
-    if (req.session.Userdata ) {
-        saludo = req.session.Userdata.saludo
-        userId = req.session.Userdata.userId
-        cartId = req.session.Userdata.cartId
-    }
- 
+    // let cartId 
+    // let userId
+    // let saludo
+    // let role
+    // if (req.session.Userdata ) {
+    //     saludo = req.session.Userdata.saludo
+    //     userId = req.session.Userdata.userId
+    //     cartId = req.session.Userdata.cartId
+    //     role = req.session.Userdata.role == "admin" && true
+    // }
+    const { saludo, userId, cartId, role } = req.userSession;
+
     console.log ("Check user id en views route", userId)
     // const userData = await apiCaller ({ route:`http://localhost:${req.app.locals.port}/api/users/${userId}`, method: "GET" })
 
@@ -96,7 +99,8 @@ router.get('/products', async (req, res) => {
             prevLink,
             saludo,
             userId,
-            cartId
+            cartId, 
+            role
         });
     } catch (error) {
         console.log (error)
