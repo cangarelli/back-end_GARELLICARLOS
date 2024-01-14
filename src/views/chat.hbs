@@ -2,7 +2,7 @@
     <div class="chat__box">
         {{#each messagesList}}
         <div class="chat__box--userMessage">
-            <p>{{this.user}}:</p>
+            <p>{{this.userMail}}:</p>
             <p>{{this.message}}</p>
         </div>
         {{/each}}
@@ -13,8 +13,12 @@
         <input type="button" value="Enviar">
     </form>
 </div>
-    {{#if userId}}
-
+    {{#if inn}}
+    <script >
+        console.log ("ingresa")
+        console.log ("{{first_name}}", "{{last_name}}","{{userId}}")
+        let userData = { user: "{{first_name}} {{last_name}}", userId: "{{userId}}" }
+    </script>
     {{else}}
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script>window.location.href = `/views/login`; </script>

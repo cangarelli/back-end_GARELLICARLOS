@@ -23,7 +23,7 @@
             //     useNewUrlParser: true,
             //     useUnifiedTopology: true
             // },
-            ttl: 15, /*Tiempo de duracion, en minutos, de la session en la base de datos */
+            ttl: 65, /*Tiempo de duracion, en minutos, de la session en la base de datos */
         }),
         secret: "coderSecret", /* Encriptado  */
         resave: true,
@@ -122,11 +122,10 @@
 
             // Chat
             socket.on('message', async (data) => {
+                console.log ("check soketio data", data)
                 const messageList = await apiCaller ({ route: `http://localhost:${port}/api/chat/`, method: "GET"})
-                console.log (messageList)
-                serverSocket.emit('update-chat', messageList.payload);
-                socket.emit ("loadUser", data)
-                
+                console.log ("check message list en event listener app", messageList)
+                serverSocket.emit('update-chat', messageList);                
             })
             // socket.emit ("para el actual")
             // socket.broadcast.emit ("para todos menos el actual")

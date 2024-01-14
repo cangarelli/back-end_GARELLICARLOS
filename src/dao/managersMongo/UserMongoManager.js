@@ -62,9 +62,9 @@ class UserMongoManager {
             if (data) { // Si existe ese correo en la base de datos        
                 if (data.password == userPassword) {
                     if (data.email.includes("gmail.com")) {
-                        return ({status: "succes", payload: {saludo: `Bienvenido ${data.first_name} ${data.last_name}`, userId: data._id.toString(), role: "admin",cartId: data.cartId}})
+                        return ({status: "succes", payload: { first_name: data.first_name, last_name: data.last_name, userId: data._id.toString(), role: "admin",cartId: data.cartId}})
                     } else {
-                        return ({status: "succes", payload: {saludo: `Bienvenido ${data.first_name} ${data.last_name}`, userId: data._id.toString(), role: null, cartId: data.cartId}})
+                        return ({status: "succes", payload: { first_name: data.first_name, last_name: data.last_name, userId: data._id.toString(), role: null, cartId: data.cartId}})
                     }     
                 } else {
                     return ({status: "error", payload: "La contraseña es incorrecta"})

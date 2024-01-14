@@ -44,7 +44,6 @@ class ProductMongoManager {
             const querys = paginateQueryMaker({category: categoriesArray, disponibility, order, limit, page})
             // HAGO LA BUSQUEDA
             const result= await productsModel.paginate(querys.filter, querys.pagination)
-            console.log ("check product Manager", result)
             // ENVIO EL RESULTADO
             return (result)
         } catch (error) {

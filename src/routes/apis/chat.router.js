@@ -17,7 +17,7 @@ const mongoChat = new ChatMongoManager();
 
 // Recuperar mensajes
 router.get ("/", async (req, res) => {
-    const response = mongoChat.getMessages()
+    const response = await mongoChat.getMessages()
     return res.send({ status: 'succes', payload: response});  
 
 })

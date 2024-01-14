@@ -99,15 +99,16 @@ router.get ("/product/:pid", sessionLoader, async (req, res) => {
     console.log ("pega en ruta /product/:pid")
 
     // Gestion de loguin
-    const { saludo, userId, cartId, role } = req.userSession;
-
+    const { first_name, last_name, userId, cartId, role } = req.userSession;
+    const saludo = `Bienvenido ${first_name} ${last_name}`
     try {
         const result = await apiCaller ({ route:`http://localhost:${req.app.locals.port}/api/products/mongo/${req.params.pid}`, method: "GET" })
         console.log ("chequeo data for render", result)
         //Renderizado
         res.render('productDetail', { 
             product: result, 
-            saludo,
+            first_name, 
+            last_name,
             userId,
             cartId,
             role });
@@ -127,19 +128,21 @@ router.get('/realtimeproducts', async (req, res) => {
 */
 // Chat
 router.get("/chatApp/", sessionLoader, async (req, res) => {
-
+    
     // Gestion de loguin
-    const { saludo, userId, cartId, role } = req.userSession;
-    console.log ("Check chat view userid",userId)
+    const { first_name, last_name, userId, role } = req.userSession;
+    let inn
+    if (userId) {inn = true}
+    
     //Recupero de mensajes
     const messagesList = await apiCaller ({ route: `http://localhost:${req.app.locals.port}/api/chat/`, method: "GET" })
-    const nombre = false
     //Renderizado
     res.render("chat", {
         messagesList,
-        saludo,
+        first_name, 
+        last_name,
         userId,
-        cartId,
+        inn,
         role} )
 })
 // Carrito

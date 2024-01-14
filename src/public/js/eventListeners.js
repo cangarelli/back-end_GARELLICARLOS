@@ -24,15 +24,15 @@ socket.on('update-productList', (data) => {
     });
 });
 socket.on("update-chat", async data => {
-    await socket.on ("loadUser", async data => data.length > 0 && (() => user = data))
     
     const chatBox = document.querySelector(".chat__box")
-
+    chatBox.innerHTML = ""
+    console.log ("check chat event listener is returned data",data)
     data.forEach(messageElement => {
         const messageLine = document.createElement ("div")
         messageLine.className ="chat__box--userMessage"
         messageLine.innerHTML = `
-        <p>${messageElement.user}:</p>
+        <p>${messageElement.userMail}:</p>
         <p>${messageElement.message} </p>`
         chatBox.appendChild(messageLine)
     })
@@ -178,10 +178,11 @@ onePageMain.addEventListener('click', async (e) => {
             break;
         // CHAT APP
         case 'Enviar':
-            const info = {user, message: chatLetter.value}
+            console.log ("check data en enviar", userData.user,  chatLetter.value )
+            const info = {user: userData.user, message: chatLetter.value}
             await formFetchtData({ route: `/api/chat/`, info, method: "POST"})
             chatLetter.value= ``;
-            socket.emit("message", user)
+            socket.emit("message", userData.user)
             break;
         // CART Cases
         case "clear-cart": 

@@ -31,11 +31,8 @@ router.post ("/", async (req, res) => {
 // Encontra usuario data
 router.get("/:email/log/:pass", async (req, res) => {
     try {
-        console.log ("check params get log route", req.params)
         const result = await userManager.userCheck({userMail: req.params.email, userPassword: req.params.pass})
-        console.log ("check result en users route", result)
         req.session.Userdata = result.payload
-        console.log ("check setting users router session", req.session.Userdata )
         return res.send(result)
     } catch (error) {
         console.log ("Encontra usuario data", error)
