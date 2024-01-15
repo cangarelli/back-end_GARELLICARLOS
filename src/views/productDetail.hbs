@@ -5,7 +5,17 @@
     <p>Categoria {{product.category}}</p>
     <p>Sobre el producto:</p>
     <p>{{product.description}}</p>
-    <div id0="{{product._id}}">
-        <button value="add-to-cart">Agregar al carrito</button>
+    <div class="productPakage__buttonPad" id="{{product._id}}">
+        <div>
+            <input type="number" name="quantity+" id="quantity+">
+            <button value="add-to-cart">Agregar al carrito</button>
+        </div>
+        <div>
+            <input type="number" name="quantity-" id="quantity-">
+            <button value="substract-of-cart">Retirar del carrito</button>
+        </div>
     </div>
+    <script>
+        let cartId = "{{cartId}}"
+    </script>
 </div>

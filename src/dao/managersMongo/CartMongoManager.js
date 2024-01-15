@@ -74,7 +74,7 @@ class CartMongoManager {
                             )
                         
                         // Manejo de cantidades en stock
-                        const newStock = parseInt(products[productIndex].product.stock) - parseInt(quantity)
+                        const newStock = parseInt(hay.stock) - parseInt(quantity)
                         const updateStock = {stock: parseInt(newStock) }
                             
                         await apiCaller ({ route:`http://localhost:8080/api/products/mongo/${pid}`, info: updateStock, method: "PUT" })

@@ -150,7 +150,7 @@ router.get("/cart/:cartid", sessionLoader, async (req, res) => {
 
     // Gestion de loguin
     
-    const { saludo, userId, cartId, role } = req.userSession;
+    const { saludo, userId, role } = req.userSession;
 
     // Gestion de carrito
     const {cartid} = req.params
@@ -163,9 +163,9 @@ router.get("/cart/:cartid", sessionLoader, async (req, res) => {
         // Renderizado de pagina
         res.render("cart", { 
             products: cart,
+            cartid,
             saludo,
             userId,
-            cartId,
             role })
     } catch (error) {
         console.log (error)

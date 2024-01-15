@@ -17,13 +17,13 @@
     app.use(cookieParser("SecretWords"))
     app.use(session({ /* Configuración de cookie session storage ver clase sesion I min 61 */
         store: MongoStore.create({
-            mongoUrl: "mongodb+srv://agarelli91:5d8a6fsFWa6@anlugamescluster.mgh6ee1.mongodb.net/",
+            mongoUrl: "mongodb+srv://agarelli91:5d8a6fsFWa6@anlugamescluster.mgh6ee1.mongodb.net/ecommerce",
             // mongoOptions: 
             // {
             //     useNewUrlParser: true,
             //     useUnifiedTopology: true
             // },
-            ttl: 65, /*Tiempo de duracion, en minutos, de la session en la base de datos */
+            ttl: 65*10000, /*Tiempo de duracion, en minutos, de la session en la base de datos */
         }),
         secret: "coderSecret", /* Encriptado  */
         resave: true,

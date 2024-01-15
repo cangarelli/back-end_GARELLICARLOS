@@ -191,16 +191,27 @@ onePageMain.addEventListener('click', async (e) => {
 
             break;
         case "substract-of-cart":
+            const nodeQuantity = document.querySelector(`#quantity-`)
+            let information
+
+            if (nodeQuantity.value > 0) {
+                information = {quantity: nodeQuantity.value*-1}
+            } else {
+                information = {quantity: -1}
+            }
+  
+            await formFetchtData({ route: `/api/carts/${cartId}/product/${e.target.parentNode.parentNode.id}`, info: information, method: 'PUT' });
+            // socket = !undefined && socket.emit('update-product-db', 'change done');
             break;
         case "add-to-cart":
-            const quantityNode = document.querySelector(`#quantity${e.target.parentNode.id}`)
+            const quantityNode = document.querySelector(`#quantity+`)
             let data
-            if (quantityNode) {
-                if (quantityNode.value > 0) {
-                    data = {quantity: quantityNode.value}
-                }
-            } 
-            await formFetchtData({ route: `/api/carts/658388103a44d83d3749d1d6/product/${e.target.parentNode.id}`, info: data, method: 'PUT' });
+            if (quantityNode.value > 0) {
+                data = {quantity: quantityNode.value}
+            } else {
+                data = {quantity: 1}
+            }
+            await formFetchtData({ route: `/api/carts/${cartId}/product/${e.target.parentNode.parentNode.id}`, info: data, method: 'PUT' });
             // socket = !undefined && socket.emit('update-product-db', 'change done');
             break;
         case "delete-of-cart":
