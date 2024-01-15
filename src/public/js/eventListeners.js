@@ -120,6 +120,10 @@ onePageHeader.addEventListener('click', async (e) => {
             // Realización del filtrado y actualización de la pagina
             window.location.href = `/views/products${query}`;
             break;
+        case "logOut":
+            await formFetchtData ({ route: "/api/session/logout", method: 'DELETE' }) 
+            window.location.href = "/"
+            break;
     }
 })
 

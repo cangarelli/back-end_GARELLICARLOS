@@ -65,7 +65,7 @@
     const userRouter = require('./routes/apis/users.router.js');
     const viewsRouter = require('./routes/views.routes.js');
     const chatRouter = require ("./routes/apis/chat.router.js")
-    // const sessionRouter = require ("./routes/apis/session.router.js")
+    const sessionRouter = require ("./routes/apis/session.router.js")
 
 
 // Renderizado de rutas 
@@ -76,7 +76,7 @@
     app.use('/api/products', productsRouter);
     app.use('/api/carts', cartsRouter);
     app.use('/api/chat', chatRouter)
-    // app.use('/api/session', sessionRouter)
+    app.use('/api/session', sessionRouter)
     app.use('/api/users', userRouter)
 
     /* Manejo de errores en el servidor */

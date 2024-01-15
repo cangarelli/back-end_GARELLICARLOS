@@ -1,7 +1,9 @@
 <div class="home">
+    {{#if role}}
     <div class="home__buttonery">
         <button value="create">Agregar producto</button>
     </div>
+    {{/if}}
     <div>
         <h1>{{saludo}}</h1>
     </div>
@@ -14,10 +16,12 @@
             <p>Quedan: {{this.stock}}</p>
             <p>{{this.description}}</p>
             <div id={{this._id}}>
+                {{#if role}}
                 <div class="adminButtons">
                     <button value="create-update">Update</button>
                     <button value="delete">Eliminar</button>
                 </div>
+                {{/if}}
                 <div class="userButtons">
                     <button><a href="/views/product/{{this._id}}">Ver detalle</a></button>
                     <button value="add-to-cart">Agregar al carrito</button>
