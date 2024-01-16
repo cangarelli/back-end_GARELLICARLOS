@@ -60,7 +60,7 @@ if (logBoard) {
             case "register":
                 const nodosId = ["first_name","last_name","email", "password"]            
                 const result = await upLoadData({ apiRoute: `/api/users/`, method: 'POST', updatableData: nodosId }); 
-                
+                console.log("check register op", result)
                 // Redirección al loguin
                 if (result.status == "succes") {
                     window.location.href = `/views/login`; 
@@ -71,11 +71,8 @@ if (logBoard) {
                 // Log check route
                 const logData = ["email", "password"]  
                 const updateData = formDataManager (logData);
-                const user = await formFetchtData ({ route: `/api/users/${updateData.email}/log/${updateData.password}`, method: 'GET' }); 
-                console.log ("check user", user, user.status)
+                const user = await formFetchtData ({ route: `/api/session/loguin/${updateData.email}/log/${updateData.password}`, method: 'GET' }); 
                 if (user.status == "succes") {// Si esta bien SETEAR EL PAYLOAD EN COOKIES SESSION
-                    // const res = await formFetchtData (({ route: "/api/session/loguin", info: user, method: "POST" }))
-                    console.log ("Check loguin res")
                     // Redirección al home
                     window.location.href = `/views/products`;
                 } else {
@@ -121,8 +118,8 @@ onePageHeader.addEventListener('click', async (e) => {
             window.location.href = `/views/products${query}`;
             break;
         case "logOut":
-            await formFetchtData ({ route: "/api/session/logout", method: 'DELETE' }) 
-            window.location.href = "/"
+            const logout = await formFetchtData ({ route: "/api/session/logout", method: 'DELETE' }) 
+            logout.status == "succes" && (() => window.location.href = "/") ()
             break;
     }
 })

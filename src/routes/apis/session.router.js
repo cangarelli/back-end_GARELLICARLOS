@@ -2,32 +2,40 @@
 const { Router } = require('express');
 const router = Router();
 
+// Importación de modulos propios
+const UserMongoManager = require ("../../dao/managersMongo/UserMongoManager.js")
 
-// Ruta base: api/session
+// Creación de instancias de managers
+const userManager = new UserMongoManager ()
 
+// Ruta base: "api/session/loguin/:email/log/:pass"
+// Register
+router.post('/register', async (req, res) => {})
 
-// Log Out
-// router.delete('/logout', async (req, res) => {
-//     req.session.destroy(function(err) {
-//         if (err) {
-//           console.log(err);
-//         } else {
-//           res.redirect('/');
-//         }
-//       });
-// })
+// Loguin
+router.get('/loguin/:email/log/:pass', async (req, res) => {
+    try {
+        const result = await userManager.userCheck({userMail: req.params.email, userPassword: req.params.pass})
+        req.session.Userdata = result.payload
+        return res.send(result)
+    } catch (error) {
+        console.log ("Encontra usuario data", error)
+    }
 
+})
+
+// Log Out y destruir la sesion
+router.delete('/logout', async (req, res) => {
+    req.session.destroy (err => {
+        if (err) { return res.send ({status: "error", payload: err})}
+        res.send ({status: "succes", payload: "logout exitoso"})
+    })
+})
 
 router.get('/getCookies', async (req, res) => {
     console.log (req.signedCookies)
 })
-//Destruir la sesion
-router.delete('/logOut', async (req, res) => {
-    req.session.destroy (err => {
-        if (err) { return res.send ({status: "error", payload: err})}
-        res.send ({status: "sicces", payload: "logout exitoso"})
-    })
-})
+
 // Exportación de rutas
 module.exports = router;
 

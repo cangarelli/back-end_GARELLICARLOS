@@ -3,6 +3,7 @@ const { cartsModel } = require ("../models/carts.model.js")
 const { usersModel } = require ("../models/user.model.js")
 const CartMongoManager = require ("./CartMongoManager.js")
 const apiCaller = require ("../../helpers/apiCaller.js")
+const {createHash, passwordValidator} = require ("../../helpers/hashPasswordManager.js")
 
 const cartManager = new CartMongoManager()
 
@@ -11,17 +12,18 @@ class UserMongoManager {
     constructor() {}
     async create(userData) {
         const { first_name, last_name, email, gender, password } = userData
+        let cartVirtualId
         try {
             // Creación de carrito y obtencion de cartId
             const cartManagerResponse = await cartManager.createCart()
-            const cartVirtualId = cartManagerResponse.payload._id.toString()
-            console.log ("check user manager cartid", cartVirtualId)
+            cartVirtualId = cartManagerResponse.payload._id.toString()
+
             // Creación de user con Mongoose
             const newUser = await usersModel.create({
                 first_name: first_name, 
                 last_name: last_name, 
                 email: email,  
-                password: password, 
+                password: createHash(userData.password), 
                 cartId: cartVirtualId})
 
             // Respuesta
@@ -59,8 +61,9 @@ class UserMongoManager {
     async userCheck({userMail, userPassword}){
         try {
             const data = await usersModel.findOne({email: userMail})
-            if (data) { // Si existe ese correo en la base de datos        
-                if (data.password == userPassword) {
+            if (data) { // Si existe ese correo en la base de datos  
+                console.log ("check password Validator en user mongo Manager", passwordValidator(userPassword, data.password))     
+                if (passwordValidator(userPassword, data.password)) {
                     if (data.email.includes("gmail.com")) {
                         return ({status: "succes", payload: { first_name: data.first_name, last_name: data.last_name, userId: data._id.toString(), role: "admin",cartId: data.cartId}})
                     } else {

@@ -23,11 +23,14 @@
             //     useNewUrlParser: true,
             //     useUnifiedTopology: true
             // },
-            ttl: 65*10000, /*Tiempo de duracion, en minutos, de la session en la base de datos */
+            ttl: 3600000, // Tiempo de expiración en milisegundos (1 hora)
         }),
+        cookie: {
+            maxAge: 3600000, // Tiempo de expiración en milisegundos (1 hora)
+        },
         secret: "coderSecret", /* Encriptado  */
-        resave: true,
-        saveUninitialized: true
+        resave: false,
+        saveUninitialized: false
     }))
 
     //Variables globales

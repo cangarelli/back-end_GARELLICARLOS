@@ -13,6 +13,7 @@ const UserMongoManager = require ("../../dao/managersMongo/UserMongoManager.js")
 // Creación de instancias de managers
 const userManager = new UserMongoManager ()
 // Configuración de rutas
+// Ruta de base: "api/users"
 
 // Crear usuario
 router.post ("/", async (req, res) => {
