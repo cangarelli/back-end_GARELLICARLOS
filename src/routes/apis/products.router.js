@@ -9,11 +9,11 @@
 
 // Importaciones de modulos propios
     const ProductManager = require('../../dao/managers/ProductManager.js');
-    const { uploader } = require('../../helpers/uploader.js');
+    const { uploader } = require('../../helpers/fileManagers/uploader.js');
     const ProductMongoManager = require('../../dao/managersMongo/ProductMongoManager.js');
-    const paginateQueryMaker = require('../../helpers/paginateQueryMaker.js');
+    const paginateQueryMaker = require('../../helpers/apiUtils/paginateQueryMaker.js');
     const { paginateSubDocs } = require('mongoose-paginate-v2');
-    const linkQueryMaker = require('../../helpers/linkQueryMaker.js');
+    const linkQueryMaker = require('../../helpers/apiUtils/linkQueryMaker.js');
 
 //Creacion de array de productos
     const productArray = new ProductManager();

@@ -24,22 +24,12 @@ router.post ("/", async (req, res) => {
         })         
         return res.send(result)
     } catch (error) {
-        console.log ("Crear usuario", error)
+       
     }
 })
 
 
-// Encontra usuario data
-router.get("/:email/log/:pass", async (req, res) => {
-    try {
-        const result = await userManager.userCheck({userMail: req.params.email, userPassword: req.params.pass})
-        req.session.Userdata = result.payload
-        return res.send(result)
-    } catch (error) {
-        console.log ("Encontra usuario data", error)
-    }
-})
-
+// Find user data by id
 router.get("/:uid", async (req, res) => {
     try {
         console.log ("check params get log route", req.params)

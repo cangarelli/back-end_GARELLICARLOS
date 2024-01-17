@@ -6,7 +6,6 @@ function sessionLoader(req, res, next) {
             userId: req.session.Userdata.userId,
             cartId: req.session.Userdata.cartId,
             role: req.session.Userdata.role == "admin" && true,
-            prueba: "chequeo que no genere nada nuevo"
         }
     }
     else {
@@ -16,7 +15,6 @@ function sessionLoader(req, res, next) {
             userId: null,
             cartId: null,
             role: null,
-            prueba: "chequeo que no genere nada nuevo" 
         }
     }
         // INDICA SI CONTINUA O NO CON LOS PROCESOS DE COMPUTO

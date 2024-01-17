@@ -5,23 +5,7 @@ socket = io();
 socket.emit('conection', 'client connected');
 socket.on('update-productList', (data) => {
     console.log('actualizando pagina');
-    const gondola = document.getElementsByClassName('gondola');
-    gondola[0].innerHTML = ``;
-    data.forEach((element) => {
-        const productCard = document.createElement('div');
-        productCard.className = 'gondola__productCard';
-        productCard.innerHTML = `
-        <h1>${element.title}</h1>
-        <h2>Cuesta ${element.price}</h2>
-        <p>Qudan: ${element.stock}</p>
-        <p>${element.description}</p>
-        <div id=${element._id}>
-            <button value="create-update">Update</button>
-            <button value="delete">Eliminar</button>
-            <button value="add-to-cart">Agregar al carrito</button>
-        </div>`
-        gondola[0].appendChild(productCard);
-    });
+    window.location.href = `/views/products`;
 });
 socket.on("update-chat", async data => {
     
@@ -161,7 +145,7 @@ onePageMain.addEventListener('click', async (e) => {
             break;
         // Update
         case 'create-update':
-            productFormManager(e.target.value, 'updateForm', e.target.parentNode.id);
+            productFormManager(e.target.value, 'updateForm', e.target.parentNode.parentNode.id);
             break;
         case 'update-producto':
             const updatableData = ['title', 'price', "category", 'description', 'stock', 'code', 'thumbnail'];

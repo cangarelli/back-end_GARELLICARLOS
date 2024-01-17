@@ -2,7 +2,7 @@
 const { cartsModel } = require ("../models/carts.model.js")
 const { usersModel } = require ("../models/user.model.js")
 const CartMongoManager = require ("./CartMongoManager.js")
-const apiCaller = require ("../../helpers/apiCaller.js")
+const apiCaller = require ("../../helpers/apiUtils/apiCaller.js")
 const {createHash, passwordValidator} = require ("../../helpers/hashPasswordManager.js")
 
 const cartManager = new CartMongoManager()
@@ -14,21 +14,26 @@ class UserMongoManager {
         const { first_name, last_name, email, gender, password } = userData
         let cartVirtualId
         try {
-            // Creación de carrito y obtencion de cartId
-            const cartManagerResponse = await cartManager.createCart()
-            cartVirtualId = cartManagerResponse.payload._id.toString()
+            // Validación de que el usuario no exista
+            const existAlredy = await usersModel.findOne({email: email})
+            if (existAlredy) {
+                return ({ status: 'error', payload: "El correo electronico ya se encuentra registrado" });
+            } else {
+                // Creación de carrito y obtencion de cartId
+                const cartManagerResponse = await cartManager.createCart()
+                cartVirtualId = cartManagerResponse.payload._id.toString()
 
-            // Creación de user con Mongoose
-            const newUser = await usersModel.create({
-                first_name: first_name, 
-                last_name: last_name, 
-                email: email,  
-                password: createHash(userData.password), 
-                cartId: cartVirtualId})
+                // Creación de user con Mongoose
+                const newUser = await usersModel.create({
+                    first_name: first_name, 
+                    last_name: last_name, 
+                    email: email,  
+                    password: createHash(userData.password), 
+                    cartId: cartVirtualId})
 
-            // Respuesta
-            return ({ status: 'succes', payload: newUser });
-            
+                // Respuesta
+                return ({ status: 'succes', payload: newUser });
+            }            
         } catch (error) {
             cartVirtualId && cartManager.deleteCart (cartVirtualId)
             console.log (error)

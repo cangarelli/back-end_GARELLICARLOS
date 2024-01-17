@@ -7,6 +7,7 @@
     const session = require ("express-session") /*Para generar que se guarden cookies con Sesion ID (no en Session Storage) */ 
     const FileStore = require ("session-file-store") /* Para generar storage de la sesion en archivos */
     const MongoStore = require ("connect-mongo") /* Para generar storage de la sesion en mongo db/atlas */
+    const passport = require ("passport")
 
 // Config express
     app.use(express.json());
@@ -32,6 +33,9 @@
         resave: false,
         saveUninitialized: false
     }))
+    // app.use (passport.initialize())
+    // app.use (passport.session)
+
 
     //Variables globales
         const port = 8080;
@@ -39,9 +43,12 @@
 
 
 
-// Activación de mongoose
+// Activación de config personales
     const connectDB = require ("./config/mongoose-config.js")
     connectDB  ();
+
+    // const {initializePassport} = require ("./config/passport.config.js")
+    // initializePassport()
 
 
 
@@ -96,42 +103,11 @@
 
 
 // Configuración de serverSocket
-
-    // Importación de modulos de Socket.io
-        const { Server } = require('socket.io');
-    // Importación y generación de instancias de data managers
-        const apiCaller = require ("./helpers/apiCaller.js")
-
-    // Configuración Sockey.io
-        const serverSocket = new Server(serverHTTP);
-
-    // Configuración x
-    const io = require("socket.io")
+    // Modulos nativos y express
+    const io = require("socket.io");
     app.set('socketio', io);
-    
-    // Configuración de Eventlisteners de socket.io
-        serverSocket.on('connection', (socket) => {
-            console.log('server connected');
-            socket.on('conection', (data) => {
-                console.log(data);
-            });
-            // RealTime
-            socket.on('update-product-db', async (data) => {
-            if (data === 'change done') {
-                const newProductList = await apiCaller ({ route:`http://localhost:${port}/api/products/mongo`, method: "GET" })
-                serverSocket.emit('update-productList', newProductList);
-            }
-            });
 
-            // Chat
-            socket.on('message', async (data) => {
-                console.log ("check soketio data", data)
-                const messageList = await apiCaller ({ route: `http://localhost:${port}/api/chat/`, method: "GET"})
-                console.log ("check message list en event listener app", messageList)
-                serverSocket.emit('update-chat', messageList);                
-            })
-            // socket.emit ("para el actual")
-            // socket.broadcast.emit ("para todos menos el actual")
-            // serverSocket.emit("para todos")
-
-        });
+    // Modulos propios y config
+    const initializeSoketServer = require('./config/socket-config.js');
+    initializeSoketServer (serverHTTP, port)
+  

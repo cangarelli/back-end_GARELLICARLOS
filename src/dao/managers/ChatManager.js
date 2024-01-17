@@ -1,7 +1,7 @@
 //Modulos nativos importados
 const fs = require('fs');
-const leerDB = require('../../helpers/recuperarDatos');
-const guardarDatos = require('../../helpers/persistenciaDatos');
+const leerDB = require('../../helpers/fileManagers/recuperarDatos');
+const guardarDatos = require('../../helpers/fileManagers/persistenciaDatos');
 
 // CLASE CONSTRUCTORA
 class ChatManager {

@@ -3,8 +3,8 @@ const { Router } = require('express');
 const router = Router();
 
 //Importacion de modulos propios
-const apiCaller = require('../helpers/apiCaller');
-const linkQueryMaker = require('../helpers/linkQueryMaker');
+const apiCaller = require('../helpers/apiUtils/apiCaller');
+const linkQueryMaker = require('../helpers/apiUtils/linkQueryMaker');
 const userSchema = require ("../dao/models/user.model")
 const sessionLoader = require ("../helpers/middleware/sessionLoader")
 // SETEO DE RUTAS
@@ -54,7 +54,6 @@ router.get('/products', sessionLoader, async (req, res) => {
     limit = limit || 4
     const querys = linkQueryMaker(
         {category: category, disponibility: status, order: order, limit: limit, thePage: onPage})
-   
     try {
         // FILTRO DE PRODCUTOS SEGUN ESPECIFIACION DE LA QUERY
         const data = await apiCaller ({ route:`http://localhost:${req.app.locals.port}/api/products/mongo${querys}`, method: "GET" })

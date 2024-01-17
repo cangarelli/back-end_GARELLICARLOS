@@ -1,4 +1,3 @@
-// Configuracion mongose
 // Importación de modulo mongoose.connect con destructuring
 const { connect } = require("mongoose")
 // Cración de conección
