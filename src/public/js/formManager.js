@@ -59,7 +59,6 @@ const productFormManager = (action, id, idProd) => {
             existe === null && formWindowMaker({formId: id, optionsObjectsArray: formProductManagerObjetc, buttonValue: "cargar-producto"});
             break;
         case 'close':
-            console.log (id)
             deleteElement(id);
             break;
         case 'create-update':

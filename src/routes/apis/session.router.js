@@ -10,7 +10,7 @@ const passport = require('passport');
 const userManager = new UserMongoManager ()
 
 // Ruta base: "api/session/loguin/:email/log/:pass"
-/* Por probar
+
 // Register
 router.post('/register', passport.authenticate("register", {failregister:"api/sessions/failregister"}),async (req, res) => {
     try {
@@ -36,7 +36,7 @@ router.get("/failregister", (req, res)=> {
     console.log ("Fail strategy")
     return res.send({status: "error", payload: "Fallo el registro por passport local"})
 })
-*/
+
 
 
 // Loguin

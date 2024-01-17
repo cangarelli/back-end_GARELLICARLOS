@@ -4,6 +4,7 @@ const { Server } = require('socket.io');
 // Importación y generación de instancias de data managers
 const apiCaller = require ("../helpers/apiUtils/apiCaller")
 
+// SETEO DE EVENTOS
 const marketUpdate = ({socket, serverSocket, port}) =>{
     socket.on('update-product-db', async (data) => {
     if (data === 'change done') {
@@ -22,6 +23,7 @@ const chatUpdate = ({socket, serverSocket, port}) =>{
         })
 }
 
+// Configuración
 const initializeSoketServer = (serverHTTP, port) => {
     // Configuración Sockey.io
     const serverSocket = new Server(serverHTTP);

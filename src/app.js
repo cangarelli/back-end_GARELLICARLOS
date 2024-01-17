@@ -33,8 +33,12 @@
         resave: false,
         saveUninitialized: false
     }))
-    // app.use (passport.initialize())
-    // app.use (passport.session)
+
+    const { initializePassport } = require ("./config/passport-config.js")
+    initializePassport()
+
+    app.use (passport.initialize())
+    app.use (passport.session())
 
 
     //Variables globales
@@ -47,8 +51,6 @@
     const connectDB = require ("./config/mongoose-config.js")
     connectDB  ();
 
-    // const {initializePassport} = require ("./config/passport.config.js")
-    // initializePassport()
 
 
 
