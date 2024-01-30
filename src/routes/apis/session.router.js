@@ -5,51 +5,74 @@ const router = Router();
 // Importación de modulos propios
 const UserMongoManager = require ("../../dao/managersMongo/UserMongoManager.js");
 const passport = require('passport');
+const { createToken, validateToken } = require('../../helpers/jwt.js');
 
 // Creación de instancias de managers
 const userManager = new UserMongoManager ()
 
 // Ruta base: "api/session/loguin/:email/log/:pass"
 
-// Register
+
+// Register JWT
+
+
+
+// Register passport local WORKING
 router.post('/register', passport.authenticate("register", {failregister:"api/sessions/failregister"}),async (req, res) => {
     try {
-        console.log ("check users router post body", req.body)
-        const result = await userManager.create({
-           first_name: req.body.first_name, last_name: req.body.last_name, email: req.body.email , password: req.body.password
-        })         
-        return res.send(result)
+        console.log ("check result del middlework de register route", req.user)
+        if (typeof req.user == "object") {
+            const {newUser} = req.user
+            const token = createToken ({id: newUser._id, role: newUser.role, cartId: newUser.cartId}) 
+            return res.send({status: "succes", payload: newUser, token})
+        } else {
+            return res.send({status: "error", payload: req.user})
+        } 
     } catch (error) {
         console.log ("Crear usuario", error)
     }
-    // Guardar y recuperar las credenciales del usuario de sesion
-    passport.serializeUser((user, done)=>{
-        done(null, user.id)
-    })
-    passport.deserializeUser(async(id, done)=>{
-        let user //busqueda por id de los datos del usuario
-        done(null, user)
-    })
-
 })
+
+// Loguin passport Local WORKING
+router.get('/loguin/:email/log/:pass', async (req, res) => {
+    try {
+        const result = await userManager.userCheck({userMail: req.params.email, userPassword: req.params.pass})
+        if (typeof result == "object") {
+            req.session.Userdata = result
+            console.log ("check result loguin route", result)
+            const token = createToken ({id: result.userId, role: result.role, cartId: result.cartId})
+            return res.send({status: "succes", payload: result, token})
+        } else {
+            return res.status(401).send({status: "error", payload: result})
+        }
+
+    } catch (error) {
+        console.log ("check result loguin route catch", error)
+        return res.status(500).send({status: "server error", payload: error})
+    }
+})
+
+// WORKING
+router.get ("/current", validateToken, (req, res) => {
+    res.send("datos sencibles")
+})
+
+// passport githubgt000 
+ 
+
+router.get("/github", passport.authenticate("github", {scope:["user:email"]}), async (req, res) => {})
+router.get("/githubcallback", passport.authenticate("github", {failregister:"api/sessions/failregister"}), async (req, res) => {
+    req.session.user = req.user
+    res.redirect("/views/products ")
+})
+
 router.get("/failregister", (req, res)=> { 
     console.log ("Fail strategy")
     return res.send({status: "error", payload: "Fallo el registro por passport local"})
 })
+// ME QUEDE EN EL MINUTO 52
 
 
-
-// Loguin
-router.get('/loguin/:email/log/:pass', async (req, res) => {
-    try {
-        const result = await userManager.userCheck({userMail: req.params.email, userPassword: req.params.pass})
-        req.session.Userdata = result.payload
-        return res.send(result)
-    } catch (error) {
-        console.log ("Encontra usuario data", error)
-    }
-
-})
 
 // Log Out y destruir la sesion
 router.delete('/logout', async (req, res) => {

@@ -7,7 +7,7 @@
     const session = require ("express-session") /*Para generar que se guarden cookies con Sesion ID (no en Session Storage) */ 
     const FileStore = require ("session-file-store") /* Para generar storage de la sesion en archivos */
     const MongoStore = require ("connect-mongo") /* Para generar storage de la sesion en mongo db/atlas */
-    const passport = require ("passport")
+    const passport = require ("passport") /* Base de libreras de loguins con diferentes estrategias */
 
 // Config express
     app.use(express.json());
@@ -16,7 +16,8 @@
     app.use(bodyParser.urlencoded({ extended: false }));
     app.use(bodyParser.json());
     app.use(cookieParser("SecretWords"))
-    app.use(session({ /* Configuración de cookie session storage ver clase sesion I min 61 */
+    /* Configuración de app.use(session...) con mogostorage ver clase sesion I min 61 v*/
+    app.use(session({
         store: MongoStore.create({
             mongoUrl: "mongodb+srv://agarelli91:5d8a6fsFWa6@anlugamescluster.mgh6ee1.mongodb.net/ecommerce",
             // mongoOptions: 
@@ -29,16 +30,23 @@
         cookie: {
             maxAge: 3600000, // Tiempo de expiración en milisegundos (1 hora)
         },
-        secret: "coderSecret", /* Encriptado  */
+        secret: "coderSecret", // Encriptado  
+        resave: false,
+        saveUninitialized: false
+    }))
+     
+    app.use (session({
+        secret:"SecretWords",
         resave: false,
         saveUninitialized: false
     }))
 
-    const { initializePassport } = require ("./config/passport-config.js")
-    initializePassport()
-
+    const { initializePassportLocal, initializePassportGitHub } = require ("./config/passport-config.js")
+    initializePassportLocal()
     app.use (passport.initialize())
     app.use (passport.session())
+    
+    // initializePassportGitHub ()
 
 
     //Variables globales
@@ -88,7 +96,7 @@
     app.use('/api/products', productsRouter);
     app.use('/api/carts', cartsRouter);
     app.use('/api/chat', chatRouter)
-    app.use('/api/session', sessionRouter)
+    app.use('/api/sessions', sessionRouter)
     app.use('/api/users', userRouter)
 
     /* Manejo de errores en el servidor */

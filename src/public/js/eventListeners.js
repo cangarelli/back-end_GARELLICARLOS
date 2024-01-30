@@ -37,6 +37,8 @@ if (logBoard) {
         // Seteo de controles -- Opcional
     })
     logBoard.addEventListener("click", async (e) =>{
+
+       console.log ("Check donde hace clickk???",e.target.value, e.target.href)
         switch (e.target.value) {
             case "clear-form":
                 
@@ -65,6 +67,14 @@ if (logBoard) {
                 }
     
                 break;
+            case "github":
+                const dataNode = ["email", "password"]  
+                const catchedData = formDataManager (logData);
+                const userload = await formFetchtData ({ route: `/api/session/github/${catchedData.email}/log/${catchedData.password}`, method: 'GET' }); 
+
+
+                break;
+            
             default:
                 break;
         }

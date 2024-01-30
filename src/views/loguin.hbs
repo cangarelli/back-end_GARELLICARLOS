@@ -1,11 +1,12 @@
 <form action="" class="logForm" id="registerForm">
     {{#each formCamps}}
-        <div class="loguinForm__camp">   
-            <label name={{this.id}}>{{this.label}}</label>
-            <input type={{this.type}} name={{this.id}} id={{this.id}}>
-        </div>
+    <div class="loguinForm__camp">
+        <label name={{this.id}}>{{this.label}}</label>
+        <input type={{this.type}} name={{this.id}} id={{this.id}}>
+    </div>
     {{/each}}
     <div class="loguinForm__buttonPad">
         <button value="loguin">Inciar sesion</button>
+        {{!-- <button><a href="/api/sessions/github">GitHub changed?</a></button> --}}
     </div>
 </form>
