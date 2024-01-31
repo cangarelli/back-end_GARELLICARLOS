@@ -41,8 +41,12 @@
         saveUninitialized: false
     }))
 
-    const { initializePassportLocal, initializePassportGitHub } = require ("./config/passport-config.js")
+    const { initializePassportLocal, initializePassportGitHub, initializePassportJWT } = require ("./config/passport-config.js")
+    // Estrategia JWT
+    initializePassportJWT ()
+    // EStrategia passport local
     initializePassportLocal()
+    
     app.use (passport.initialize())
     app.use (passport.session())
     

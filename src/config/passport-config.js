@@ -2,14 +2,39 @@
 const passport = require ("passport")
 const local = require ("passport-local")
 const GithubStrategy = require ("passport-github2")
-
+const jwt = require ("passport-jwt")
 // Importación de modulos propios
 const userMongoManager = require ("../dao/managersMongo/UserMongoManager.js")
 const {createHash, passwordValidator} = require ("../helpers/hashPasswordManager.js")
+const { json_private_key } = require("../helpers/jwt.js")
 
 //Creacion de instancias de managers
 const userManager = new userMongoManager();
+// Jwt Strategy
+const JWTStrategy = jwt.Strategy
+const ExtractJWT = jwt.ExtractJwt
+exports.initializePassportJWT = () =>{
+    const cookieExtractor = (req) =>{
+        let token = null
+        if (req && req.cookies){
+            token = req.cookies["token"]
+        }
+        return token
+    }
+    passport.use("jwt", new JWTStrategy ({
+        jwtFromRequest: ExtractJWT.fromExtractors([cookieExtractor]),
+        secretOrKey: json_private_key
+    }, async (jwt_payload, done) => {
+        try {
+            return done (null, jwt_payload)
+        } catch (error) {
+            console.log ("error en intializePassportJWT", error)
+            return done(error)
+        }
+    }))
+}
 
+// Local strategy
 const LocalStrategy =  local.Strategy
 exports.initializePassportLocal = () => {
     passport.use("register", new LocalStrategy({

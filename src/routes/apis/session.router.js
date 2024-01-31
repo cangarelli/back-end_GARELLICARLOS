@@ -6,6 +6,8 @@ const router = Router();
 const UserMongoManager = require ("../../dao/managersMongo/UserMongoManager.js");
 const passport = require('passport');
 const { createToken, validateToken } = require('../../helpers/jwt.js');
+const { passportCall } = require('../../helpers/passportCall.js');
+const { authorizationJWT } = require('../../helpers/middleware/jwt-passport.middleware.js');
 
 // Creación de instancias de managers
 const userManager = new UserMongoManager ()
@@ -41,7 +43,12 @@ router.get('/loguin/:email/log/:pass', async (req, res) => {
             req.session.Userdata = result
             console.log ("check result loguin route", result)
             const token = createToken ({id: result.userId, role: result.role, cartId: result.cartId})
-            return res.send({status: "succes", payload: result, token})
+            return res.cookie("token", token, {
+                maxAge: 60*60*1000, 
+                httpOnly: true, 
+                secure: true, 
+                sameSite: "none"})
+                .send({status: "succes", payload: result})
         } else {
             return res.status(401).send({status: "error", payload: result})
         }
@@ -53,8 +60,8 @@ router.get('/loguin/:email/log/:pass', async (req, res) => {
 })
 
 // WORKING
-router.get ("/current", validateToken, (req, res) => {
-    res.send("datos sencibles")
+router.get ("/current", passportCall("jwt"), authorizationJWT("admin") ,(req, res) => {
+    res.send({message: "datos sencibles", user: req.user})
 })
 
 // passport githubgt000 
