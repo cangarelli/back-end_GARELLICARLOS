@@ -1,47 +1,18 @@
 // Modulos importados
-const { cartsModel } = require ("../models/carts.model.js")
 const { usersModel } = require ("../models/user.model.js")
-const CartMongoManager = require ("./CartMongoManager.js")
 const apiCaller = require ("../../helpers/apiUtils/apiCaller.js")
 const {createHash, passwordValidator} = require ("../../helpers/hashPasswordManager.js")
-
-const cartManager = new CartMongoManager()
 
 // CLASE CONSTRUCTORA
 class UserMongoManager {
     constructor() {}
     async create(userData) {
-        const { first_name, last_name, email, age, password } = userData
-        let cartVirtualId
         try {
-            // Validación de que el usuario no exista
-            const existAlredy = await usersModel.findOne({email: email})
-            if (existAlredy) {
-                return ("El correo electronico ya se encuentra registrado");
-            } else {
-                // Creación de carrito y obtencion de cartId
-                const cartManagerResponse = await cartManager.createCart()
-                cartVirtualId = cartManagerResponse.payload._id.toString()
-                console.log ("check cartVirtualId en user manager", cartVirtualId)
-                // Creación de user con Mongoose
-                const newUser = await usersModel.create({
-                    first_name: first_name, 
-                    last_name: last_name, 
-                    email: email, 
-                    age: age,
-                    password: createHash(password), 
-                    cartId: cartVirtualId})
-
-                // Respuesta
-                console.log ("check newUser om user manager", newUser)
-                return ({newUser});
-            }            
+            const newUser = await usersModel.create(userData)
+            return ({status: "succes", payload: newUser})
         } catch (error) {
-            cartVirtualId && cartManager.deleteCart (cartVirtualId)
-            console.log (error)
-            return (`${error}`);
-        }
-
+            return ({status: "error", payload: error})
+        }                    
     }
 
     async update(userId, data) {
@@ -55,19 +26,17 @@ class UserMongoManager {
     async userSearch(uid) {
         try {
             const userData = await usersModel.findOne({_id: uid})
-            if (data) {
-                return ({status: "succes", payload: userData})
-            } else {
-                return ({status: "error", payload: "user doesnt exist"})
-            }
+            return userData
         } catch (error) {
             console.log (error)
             return (error);
         }
     }
-    async userSearchByEmail({email}){
+    async userSearchByEmail(email){
         try {
             const userData = await usersModel.findOne({email: email})
+            console.log ("check ")
+
             if (userData) {
                 return ({status: "succes", payload: userData})
             } else {
@@ -75,7 +44,7 @@ class UserMongoManager {
             }
         } catch (error) {
             console.log (error)
-            return (error);
+            return (({status: "error", payload: error}));
         }
     }
     async userCheck({userMail, userPassword}){
@@ -102,13 +71,8 @@ class UserMongoManager {
     }
     async delete (userId) {
         try {
-            // Seleccion y elminación del carrito
-            const userFind = await usersModel.findOne({_id: userId})
-            const cartDelete = await cartsModel.deleteOne({ _id: userFind.cartId })
-
             // Eliminación del usuario
             const response = await usersModel.deleteOne({ _id: userId }) 
-            console.log ("check delete response", response)
             // Respuesta
             return (response)
         } catch (error) {

@@ -32,57 +32,51 @@ function selectorQuery(query1, query2, query3, query4) {
 // CLASE CONSTRUCTORA
 class ProductMongoManager {
     constructor() {}
-    async getProducts ({category, disponibility, order, limit, page}) {   
-
-        // CREO ARRAY DE CATEGORIES A PARTIR DEL STRING DEL QUERY
-        let categoriesArray 
-        if (category != undefined) {
-            categoriesArray = category.split(',');
-        }
+    async getProducts ({filter, pagination}) {   
         try {
-            // CREO PARAMETROS PARA PAGINATE
-            const querys = paginateQueryMaker({category: categoriesArray, disponibility, order, limit, page})
-            // HAGO LA BUSQUEDA
-            const result= await productsModel.paginate(querys.filter, querys.pagination)
-            // ENVIO EL RESULTADO
+            const result= await productsModel.paginate(filter, pagination)
             return (result)
         } catch (error) {
             console.log (error)
-            return (error);
+            return ({status: "error", payload: error});
         }
     }
     async getOneKeyData (key) {
         try {
             const keyData = await productsModel.distinct(key);
-            return (keyData)
+            return ({
+                status:"success",
+                payload: keyData
+            })
         } catch (error) {
             console.log (error)
-            return (error);
+            return ({
+                status:"error",
+                payload: error
+            })
         }
     }
     async getProductsById (pid) {
         try {
-            const products = await productsModel.findOne({_id: pid})
-            console.log ("Manager is get product by id check", products)
-            return ({status: "succes", payload: products})
+            const product = await productsModel.findOne({_id: pid})
+            return ({status: "succes", payload: product})
         } catch (error) {
             console.log (error)
-            return ({ status: 'error', payload: 'No hay productos registrados' });
+            return ({ status: 'error', payload: error });
         }
     }
-    async createProduct (productArray) {
+    async productCreate ({title, price, category, description, stock, code, thumbnail, status}) {
         try {
-            const {title, price, category, description, stock, code, thumbnail} = productArray
             const result = await productsModel.create({
-                title, price, category, description, stock, code, thumbnail, status: true
+                title, price, category, description, stock, code, thumbnail, status
             })
             return ({status: "succes", payload: result})
         } catch (error){
             console.log (error)
-            return ({status: "fail", payload: error})
+            return ({status: "error", payload: error})
         }
     }
-    async updateProduct (pid, productArray) {
+    async productUpdate (pid, productArray) {
         try {
             const result = await productsModel.updateOne({_id: pid}, productArray)
            return ({status: "succes", payload: result})
@@ -92,7 +86,7 @@ class ProductMongoManager {
         }
     }
 
-    async deleteProduct (pid) {
+    async productDelete (pid) {
         try {
             const response = await productsModel.deleteOne({ _id: pid })
             return ({status: "succes", payload: response})

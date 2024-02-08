@@ -7,25 +7,22 @@ router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
 
 //Importacion de modulos propios
-const userModel = require ("../../dao/models/user.model")
-const UserMongoManager = require ("../../dao/managersMongo/UserMongoManager.js")
+const UserMongoManager = require ("../../dao/managersMongo/UserMongoManager.js");
+const userController = require('../../controller/users.controller.js');
 
 // Creación de instancias de managers
-const userManager = new UserMongoManager ()
+const userManager = new userController ()
+
 // Configuración de rutas
 // Ruta de base: "api/users"
 
 // Crear usuario
 router.post ("/", async (req, res) => {
-    try {
-        console.log ("check users router post body", req.body)
-        const result = await userManager.create({
-           first_name: req.body.first_name, last_name: req.body.last_name, email: req.body.email , password: req.body.password
-        })         
-        return res.send(result)
-    } catch (error) {
-       
-    }
+
+    console.log ("check users router post body", req.body)
+    const response = await userManager.createUser(req.body) 
+    return res.send(response)
+
 })
 
 
@@ -33,7 +30,7 @@ router.post ("/", async (req, res) => {
 router.get("/:uid", async (req, res) => {
     try {
         console.log ("check params get log route", req.params)
-        const result = await userManager.userSearch({userId: req.params.uid})
+        const result = await userManager.getUser(req.params.uid)
         console.log ("check result en users route", result)
         const {payload} = result
         const infoShare = {first_name: payload.first_name, last_name: payload.last_name}

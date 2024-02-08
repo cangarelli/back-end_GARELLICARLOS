@@ -21,6 +21,7 @@ class CartMongoManager {
     async getCartById (cid) {
         try {
             const cart = await cartsModel.findOne({_id: cid})
+            console.log ("check getCartById if cart of cart dao manager", cart)
             return ({ status: 'succes', payload: cart.products });
         } catch (error) {
             console.log (error)
@@ -28,6 +29,22 @@ class CartMongoManager {
         }
     }
     // ADD PRODUCTS TO CART WORKING
+
+    async updateExistingProductQuantity (pid,newQuantity){
+        const result = await cartsModel.updateOne(
+            { _id: cid, "products.product": pid },
+            { $set: { "products.$.quantity": newQuantity } })
+        console.log ("check updateProductQuantity of cart dao manager", result)
+        return result
+    }
+    async addNewProduct (cid, products){
+        const result = await cartsModel.findOneAndUpdate(
+            { _id: cid},
+            {products},
+        )
+        return result
+    }
+    /* En DESUSO
     async addProductToCart (pid, cid, quantity){
         try { // Falta quitar del stock del array de productos cuando suma.
             // Carga de datos
@@ -95,6 +112,8 @@ class CartMongoManager {
             return ({ status: 'error', payload: error });
         }
     }
+
+    
     // HECHO HASTA ACTUALIZA EL STOCK
     async removeProductOfCart (pid, cid, quantity){
         try { // Falta sumar al array de productos cuando resta
@@ -153,29 +172,19 @@ class CartMongoManager {
     // Quitar producto del carrito Working
     async deleteProductById (pid, cid) {
         try {            
-            // Manejo de stock
-            const cart = await cartsModel.findOne({_id: cid})
-            const {products} = cart
-            productIndex = products.findIndex(productObjetc => productObjetc.product._id.equals(pid))
-            const newStock = products[productIndex].product.stock + products[productIndex].quantity
-            
-            await apiCaller ({ route:`http://localhost:${req.app.locals.port}/api/products/mongo/${pid}`, info:{stock: newStock} , method: "PUT" })
-            
-            // Manejo de cart
             const cartupdate = await cartsModel.findOneAndUpdate(
                 {_id: cid},
                 {$pull: {products: {product: pid}}},
                 {new: true}
             )
 
-
-            // Respuesta
             return ({ status: 'succes', payload: cartupdate.products });
         } catch (error) {
             console.log (error)
             return ({ status: 'error', payload: error });
         }
     }
+    */
     // Delete cart
     async deleteCart (cid) {
         try {
@@ -183,6 +192,7 @@ class CartMongoManager {
             return ({status: "succes", payload: cartDeleted})
         } catch (error) {
             console.log (error)
+            return ({ status: 'error', payload: error });
         }
     }
 }

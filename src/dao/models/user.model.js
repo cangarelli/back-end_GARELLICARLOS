@@ -24,7 +24,8 @@ const UsersSchema = Schema({
     cartId: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
+        // posts:  [{ type: mongoose.Schema.Types.ObjectId, ref: 'carts' }]
     },
     role: {
         type: String,

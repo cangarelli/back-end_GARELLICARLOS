@@ -8,7 +8,7 @@
     const FileStore = require ("session-file-store") /* Para generar storage de la sesion en archivos */
     const MongoStore = require ("connect-mongo") /* Para generar storage de la sesion en mongo db/atlas */
     const passport = require ("passport") /* Base de libreras de loguins con diferentes estrategias */
-
+    const cors = require ("cors") /* Permite que la base de datos se use desde otros puertos */
 // Config express
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
@@ -16,6 +16,7 @@
     app.use(bodyParser.urlencoded({ extended: false }));
     app.use(bodyParser.json());
     app.use(cookieParser("SecretWords"))
+    app.use(cors())
     /* Configuración de app.use(session...) con mogostorage ver clase sesion I min 61 v*/
     app.use(session({
         store: MongoStore.create({
@@ -52,21 +53,15 @@
     
     // initializePassportGitHub ()
 
-
-    //Variables globales
-        const port = 8080;
-        app.locals.port = port;
-
-
-
 // Activación de config personales
-    const connectDB = require ("./config/mongoose-config.js")
+    const {connectDB, configObject: {PORT}} = require ("./config/mongoose-config.js")
+    
+    //Variables globales
+        // const port = 8080;
+        app.locals.port= PORT;
+
     connectDB  ();
-
-
-
-
-
+    
 //!!CONFIGURACION DE HANDELBARS!!
     const handelbars = require('express-handlebars'); /* Inmportación de motor de plantillas */
     app.engine(
@@ -83,36 +78,15 @@
     app.set('views', __dirname + '/views'); /* Definición de ruta donde estan las plantillas */
 //^^^^ CONFIGURACION DE HALDELBARS ^^^^
 
-// Importacion de rutas de expres
-    const productsRouter = require('./routes/apis/products.router.js');
-    const cartsRouter = require('./routes/apis/carts.router.js');
-    const userRouter = require('./routes/apis/users.router.js');
-    const viewsRouter = require('./routes/views.routes.js');
-    const chatRouter = require ("./routes/apis/chat.router.js")
-    const sessionRouter = require ("./routes/apis/session.router.js")
+// Importacion y seteo de rutas en express
+const appRouter = require ("./routes/index.js")
+app.use (appRouter)
 
-
-// Renderizado de rutas 
-    /* Rutas de handelbars */
-    app.use('/views', viewsRouter);
-
-    /* rutas de la api */
-    app.use('/api/products', productsRouter);
-    app.use('/api/carts', cartsRouter);
-    app.use('/api/chat', chatRouter)
-    app.use('/api/sessions', sessionRouter)
-    app.use('/api/users', userRouter)
-
-    /* Manejo de errores en el servidor */
-    app.use((err, req, res, next) => {
-        console.error(err.stack);
-        res.status(500).send('error de server');
-    });
 
 
 // Creacion de servidor HTTP
-    const serverHTTP = app.listen(port, () => {
-        console.log(`server is running on http://localhost:${port}`);
+    const serverHTTP = app.listen(PORT, () => {
+        console.log(`server is running on http://localhost:${PORT}`);
     });
 
 
@@ -123,5 +97,5 @@
 
     // Modulos propios y config
     const initializeSoketServer = require('./config/socket-config.js');
-    initializeSoketServer (serverHTTP, port)
+    initializeSoketServer (serverHTTP, PORT)
   

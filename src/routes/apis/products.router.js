@@ -8,100 +8,36 @@
     router.use(bodyParser.json());
 
 // Importaciones de modulos propios
-    const ProductManager = require('../../dao/managers/ProductManager.js');
     const { uploader } = require('../../helpers/fileManagers/uploader.js');
-    const ProductMongoManager = require('../../dao/managersMongo/ProductMongoManager.js');
-    const paginateQueryMaker = require('../../helpers/apiUtils/paginateQueryMaker.js');
     const { paginateSubDocs } = require('mongoose-paginate-v2');
-    const linkQueryMaker = require('../../helpers/apiUtils/linkQueryMaker.js');
+    const productController = require('../../controller/products.controller.js');
 
-//Creacion de array de productos
-    const productArray = new ProductManager();
-    const mongoProductManager = new ProductMongoManager();
+    const productManager = new productController ()
 
 // Configuración de rutas
 // DATA MANAGERS MONGOOSE
 
-/* TRAER TODOS LOS PRODUCTOS -->  AGREGAR CONDICIONALES DE PARAMS */
 router.get ("/mongo", async (req, res) => {
     let {category, disponibility, order, limit, onPage} = req.query
-   
-    try {
-
-        // Request de data
-        const result = await mongoProductManager.getProducts({category: category, disponibility: disponibility, order: order, limit: limit, page: onPage})
-        // Destructuring
-        const {
-            docs,
-            totalPages,
-            prevPage,
-            nextPage,
-            page,
-            hasPrevPage,
-            hasNextPage
-        } = result 
-        // Creacion de querys
-        const nextLink = `/views/products${linkQueryMaker(
-            {category: category, disponibility: disponibility, order: order, limit: limit, thePage: nextPage}
-            )}`
-        const prevLink = `/views/products${linkQueryMaker(
-            {category: category, disponibility: disponibility, order: order, limit: limit, thePage: prevPage}
-            )}`
-
-        return (res.status(200).send({
-            status:"success",
-            payload: {
-                docs: docs,
-                totalPages: totalPages,
-                prevPage: prevPage,
-                nextPage: nextPage,
-                page: page,
-                hasPrevPage: hasPrevPage,
-                hasNextPage: hasNextPage,
-                prevLink: prevLink,
-                nextLink: nextLink 
-            }
-        }))
-    } catch (error) {
-        console.log (error)
-        return res.send({
-            status:"error",
-            payload: error,
-        })
-    }
-
-})
-/* TRAER UN PRODUCTO SELECCIONADO -----------------------------> OK*/
-
-router.get("/mongokeydata/:key", async (req, res) =>{
-
-    try {
-        const keyData = await mongoProductManager.getOneKeyData(req.params.key)
-        return (res.status(200).send({
-            status:"success",
-            payload: keyData
-        }))
-    } catch (error) {
-        console.log (error)
-        return res.send({
-            status:"error",
-            payload: error,
-    })}
-})
-router.get ("/mongo/:pid", async (req, res) => {
-    try {
-        const response = await mongoProductManager.getProductsById(req.params.pid)
-        return res.send(response)
-    } catch (error) {
-        console.log (error)
-    }
-
-})
-/* ACTUALIZAR LISTA DE PRODCTOS -------------------------------> OK*/
-router.post ("/mongo", async (req, res) => {
-    const response = await mongoProductManager.createProduct(req.body)
+    const response = await productManager.getProducts({category, disponibility, order, limit, onPage})
     return res.send(response)
 })
+
+router.get("/mongokeydata/:key", async (req, res) =>{
+    const keyData = await productManager.getSelectiveData(req.params.key) 
+    return res.send(keydata)
+})
+
+router.get ("/mongo/:pid", async (req, res) => {
+    const response = await productManager.getProduct(req.parms.pid)
+    return res.send(response)
+})
+
+router.post ("/mongo", async (req, res) => {
+    const response = await productManager.createProduct(req.body)
+    return res.send(response)
+})
+
 /* CARGADO DE FILE DB EN MONGO DB
 router.post ("/armado", async (req, res) => {
     let listObjetcs = await productArray.getProducts();
@@ -115,14 +51,13 @@ router.post ("/armado", async (req, res) => {
     return res.status(200).send({ status: 'succes', payload: listObjetcs });
 })*/
 
-/* ACTUALIZAR UN SOLO PRODUCTO DE LA LISTA --------------------> OK*/
 router.put ("/mongo/:pid/", async (req, res) => {
-  const responseAdd = await mongoProductManager.updateProduct(req.params.pid, req.body)
-  return res.send(responseAdd)
+  const response = await productManager.updateProduct(req.params.pid, req.body) 
+  return res.send(response)
 })
-/* BORRAR UN SOLO PRODUCTO DE LA LISTA ------------------------> OK*/
+
 router.delete ("/mongo/:pid", async (req, res) => {
-    const response = await mongoProductManager.deleteProduct(req.params.pid)
+    const response = await productManager.deleteProduct(req.params.pid) 
     return res.send(response)
 })
 
