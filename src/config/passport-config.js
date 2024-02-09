@@ -7,12 +7,16 @@ const jwt = require ("passport-jwt")
 const userMongoManager = require ("../dao/managersMongo/UserMongoManager.js")
 const {createHash, passwordValidator} = require ("../helpers/hashPasswordManager.js")
 const { json_private_key } = require("../helpers/jwt.js")
+const userController = require("../controller/users.controller.js")
+const userManager = new userController
 
 //Creacion de instancias de managers
-const userManager = new userMongoManager();
+// const userManager = new userMongoManager();
 // Jwt Strategy
 const JWTStrategy = jwt.Strategy
 const ExtractJWT = jwt.ExtractJwt
+
+
 exports.initializePassportJWT = () =>{
     const cookieExtractor = (req) =>{
         let token = null
@@ -46,7 +50,7 @@ exports.initializePassportLocal = () => {
             const {first_name, last_name, email, age} = req.body
             console.log ("check users router post body", req.body)
             // Gestion de datos
-            const result = await userManager.create({
+            const result = await userManager.createUser({
                first_name: first_name, last_name: last_name, email: username, password: password, age
             })
             // Manejo de respuesta      
@@ -63,11 +67,11 @@ exports.initializePassportLocal = () => {
     }))
         passport.serializeUser((user, done)=>{
             console.log ("check user in  serializeUser", user)
-            done(null, user.newUser._id)
+            done(null, user.payload._id)
         })
         passport.deserializeUser(async(id, done)=>{
             console.log ("check id in  deserializeUser", id)
-            let user = await userManager.userSearch(id)//busqueda por id de los datos del usuario
+            let user = await userManager.getUser(id)//busqueda por id de los datos del usuario
             done(null, user)
         })
 

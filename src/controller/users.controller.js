@@ -49,7 +49,7 @@ class userController{
         let cartVirtualId
         try {
                     // Validación de que el usuario no exista
-            const existAlredy = await this.service.getUser(email)
+            const existAlredy = await this.getUser(email)
             if (existAlredy.status == "succes") {
                 return ({status: "error", payload:"El correo electronico ya se encuentra registrado"});
             } else {
@@ -92,6 +92,24 @@ class userController{
             cartVirtualId && this.cartManager.deleteCart (cartVirtualId)
             console.log ("check catch error in controller route",error)
             return ({status: "error", payload: error})
+        }
+
+    }
+    userCheck = async (email, password) =>{
+        const data = await this.getUser(email)
+        if (data.status == "succes") {
+            console.log ("check data of userController is userCheck", data)
+            const {payload} = data
+            console.log ("check password Validator en userController is userCheck", passwordValidator(password, payload.password))     
+            if (passwordValidator(password, payload.password)) {
+                if (data.email.includes("gmail.com")) {
+                    return ({ first_name: data.first_name, last_name: data.last_name, userId: data._id.toString(), role: "admin",cartId: data.cartId})
+                } else {
+                    return ({ first_name: data.first_name, last_name: data.last_name, userId: data._id.toString(), role: "user", cartId: data.cartId})
+                }     
+            }
+        } else {
+            return ({status: "error", payload: "El correo eletronico no se encuentra registrado"})
         }
 
     }

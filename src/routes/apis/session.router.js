@@ -16,6 +16,24 @@ const userManager = new UserMongoManager ()
 
 
 // Register JWT
+router.post('/registerr', async (req, res) => {
+
+})
+
+// Loguin con JWT
+router.post('/loguin', async (req, res) => {
+    const {email, password} = req.body
+    response = await userManager.userCheck(email, password)
+    if (response.status == "succes") {
+        console.log ("check response in sesion ruter is loguin", response)
+        const {payload} = response
+        const token = createToken ({id: payload.userId, role: payload.role, cartId: payload.cartId})
+
+       return res.send(response)
+    } else {
+       return res.status(400).send(response)
+    }
+})
 
 
 
@@ -26,7 +44,12 @@ router.post('/register', passport.authenticate("register", {failregister:"api/se
         if (typeof req.user == "object") {
             const {newUser} = req.user
             const token = createToken ({id: newUser._id, role: newUser.role, cartId: newUser.cartId}) 
-            return res.send({status: "succes", payload: newUser, token})
+            return res.cookie("token", token, {
+                maxAge: 60*60*1000, 
+                httpOnly: true, 
+                secure: true, 
+                sameSite: "none"})
+                .send({status: "succes", payload: newUser, token})
         } else {
             return res.send({status: "error", payload: req.user})
         } 
