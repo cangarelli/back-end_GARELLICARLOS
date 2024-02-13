@@ -5,6 +5,7 @@ const createToken = (user) => jwt.sign(user, json_private_key, {expiresIn: "1d"}
 
 const validateToken =  (req, res, next) => {
     const authHeader = req.headers["authorization"]
+    console.log ("validateToken")
     if (!authHeader) {
         res.status(401).send({status: "error", error: "not authenticated"})
     } else {

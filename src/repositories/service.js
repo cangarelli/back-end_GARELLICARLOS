@@ -4,10 +4,10 @@ const chatRepository = require("./chatRepository.js");
 const productRepository = require("./productsRepository.js");
 const usersRepository = require("./userRepository.js");
 
-const userService = new usersRepository (userDao)
-const cartService = new cartRepository (cartDao)
-const productService = new productRepository (productDao)
-const chatService = new chatRepository (chatDao)
+const userService = new usersRepository (new userDao ())
+const cartService = new cartRepository (new cartDao ())
+const productService = new productRepository (new productDao ())
+const chatService = new chatRepository (new chatDao ())
 
 module.exports = {
     userService, 

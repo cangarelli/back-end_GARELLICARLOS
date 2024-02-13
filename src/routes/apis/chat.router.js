@@ -25,7 +25,7 @@ router.get ("/", async (req, res) => {
 // Recibir mensajes
 router.post ("/", async (req, res) => {
     // Recuperar datos del request
-    const {message, user} = req.body
+    
     // Subir mensajes
     const response = await mongoChat.sendMessage (message, user)
     return res.send (response)

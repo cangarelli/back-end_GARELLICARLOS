@@ -32,69 +32,20 @@ function selectorQuery(query1, query2, query3, query4) {
 // CLASE CONSTRUCTORA
 class ProductMongoManager {
     constructor() {}
-    async getProducts ({filter, pagination}) {   
-        try {
-            const result= await productsModel.paginate(filter, pagination)
-            return (result)
-        } catch (error) {
-            console.log (error)
-            return ({status: "error", payload: error});
-        }
-    }
-    async getOneKeyData (key) {
-        try {
-            const keyData = await productsModel.distinct(key);
-            return ({
-                status:"success",
-                payload: keyData
-            })
-        } catch (error) {
-            console.log (error)
-            return ({
-                status:"error",
-                payload: error
-            })
-        }
-    }
-    async getProductsById (pid) {
-        try {
-            const product = await productsModel.findOne({_id: pid})
-            return ({status: "succes", payload: product})
-        } catch (error) {
-            console.log (error)
-            return ({ status: 'error', payload: error });
-        }
-    }
-    async productCreate ({title, price, category, description, stock, code, thumbnail, status}) {
-        try {
-            const result = await productsModel.create({
-                title, price, category, description, stock, code, thumbnail, status
-            })
-            return ({status: "succes", payload: result})
-        } catch (error){
-            console.log (error)
-            return ({status: "error", payload: error})
-        }
-    }
-    async productUpdate (pid, productArray) {
-        try {
-            const result = await productsModel.updateOne({_id: pid}, productArray)
-           return ({status: "succes", payload: result})
-        } catch (error){
-            console.log (error)
-            return ({status: "error", payload: error})
-        }
-    }
+    getProducts = async ({filter, pagination}) => await productsModel.paginate(filter, pagination)
+    
+    getOneKeyData = async (key) => await productsModel.distinct(key)
+        
+    getProductsById = async (pid) => await productsModel.findOne({_id: pid})
 
-    async productDelete (pid) {
-        try {
-            const response = await productsModel.deleteOne({ _id: pid })
-            return ({status: "succes", payload: response})
-        } catch (error){
-            console.log (error)
-            return ({status: "succes", payload: error})
-        }
-    }
+    productCreate = async ({title, price, category, description, stock, code, thumbnail, status}) => 
+        await productsModel.create({
+            title, price, category, description, stock, code, thumbnail, status
+        })
+    
+    productUpdate = async (pid, productArray) => await productsModel.updateOne({_id: pid}, productArray)
+       
+    productDelete = async (pid) => await productsModel.deleteOne({ _id: pid })
 }
 
 module.exports = ProductMongoManager;

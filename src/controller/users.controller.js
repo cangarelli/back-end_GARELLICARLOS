@@ -1,5 +1,6 @@
-const { createHash, passwordValidator } = require("../helpers/hashPasswordManager");
+const { passwordValidator } = require("../helpers/hashPasswordManager")
 const { userService, cartService } = require ("../repositories/service.js")
+
 // Helpers del controller
 const emptyFieldDetector = (object) =>{
     let emptyFields = []
@@ -11,6 +12,7 @@ const emptyFieldDetector = (object) =>{
     const emptyFieldsStrings = emptyFields.join(", ") 
     return emptyFields
 }
+
 const filterCleanStrings = (object) =>{
     let reviewObject = {}
     for (const key in object) {
@@ -24,8 +26,6 @@ const filterCleanStrings = (object) =>{
     return reviewObject
 }
 
-
-
 class userController{
     constructor(){
         this.service = userService
@@ -33,72 +33,69 @@ class userController{
     }
     
     getUser = async (uid) => {
+        let response
+        // Seleccion de metodo a usar
         if (uid.includes("@")) {
-            const response = await this.service.userSearchByEmail(uid)
-            return (response)
+            response = await this.service.userSearchByEmail(uid.trimEnd())    
         } else {
-            const response = await this.service.userSearch(uid)
-            return (response)
+            response = await this.service.userSearch(uid.trimEnd())
+        }
+        // Gestion de respuesta
+        if (response == null) {
+            return ({status: "error", payload: "usuario no encontrado"})
+        } else {
+            const infoShare = {
+                _id: response._id,
+                first_name: response.first_name, 
+                last_name: response.last_name, 
+                cartId: response.cartId}
+            return (infoShare)
         }
     }
     createUser = async (userData) => {
         // Seteo de variables iniciales
-        const { first_name, last_name, email, age, password } = userData
+        const { first_name, last_name, email, age, password} = userData
         let cartVirtualId
-        try {
-                    // Validación de que el usuario no exista
-            const existAlredy = await this.getUser(email)
-            if (existAlredy.status == "succes") {
-                return ({status: "error", payload:"El correo electronico ya se encuentra registrado"});
-            } else {
-                // Creación de carrito y obtencion de cartId
-                const cartManagerResponse = await this.cartManager.createCart()
-                cartVirtualId = cartManagerResponse.payload._id.toString()
-                // Creación de user con Mongoose
-                let newUser = {
-                    first_name: first_name, 
-                    last_name: last_name, 
-                    email: email, 
-                    age: age,
-                    password: createHash(password), 
-                    cartId: cartVirtualId
-                }
-                newUser = filterCleanStrings (newUser)
-                if (
-                    newUser.email != undefined && 
-                    newUser.password  != undefined && 
-                    newUser.cartId != undefined &&
-                    newUser.first_name != undefined && 
-                    newUser.last_name != undefined
-                    ) {                        
-                    const result = await this.service.create(newUser)
-                    if (result.status == "error") {
-                        cartVirtualId && this.cartManager.deleteCart (cartVirtualId)
-                        return (result)
-                    } else {
-                        return (result)
-                    }
-                } else {
-                    const emptyFields = emptyFieldDetector (newUser)
-                    cartVirtualId && this.cartManager.deleteCart (cartVirtualId)
-                    return  {status: "error", payload: `Faltaron completar datos: ${emptyFields}`}
-                } 
-                             
-
-            } 
-        } catch (error) {
-            cartVirtualId && this.cartManager.deleteCart (cartVirtualId)
-            console.log ("check catch error in controller route",error)
-            return ({status: "error", payload: error})
-        }
-
+        
+        // Validación de que el usuario no exista
+        const existAlredy = await this.getUser(email)
+        if (existAlredy.status) {
+                 // Creación de carrito y obtencion de cartId
+                 const cartManagerResponse = await this.cartManager.createCart()
+                 cartVirtualId = cartManagerResponse._id.toString()
+                 // Creación de user con Mongoose
+                 let newUser = {
+                     first_name: first_name, 
+                     last_name: last_name, 
+                     email: email, 
+                     age: age,
+                     password: password, 
+                     cartId: cartVirtualId
+                 }
+                 newUser = filterCleanStrings (newUser)
+                 if (
+                     newUser.email != undefined && 
+                     newUser.password  != undefined && 
+                     newUser.cartId != undefined &&
+                     newUser.first_name != undefined && 
+                     newUser.last_name != undefined
+                     ) {                        
+                     const result = await this.service.create(newUser)
+                    return (result)
+                    
+                 } else {
+                     const emptyFields = emptyFieldDetector (newUser)
+                     cartVirtualId && this.cartManager.deleteCart (cartVirtualId)
+                     return  {status: "error", payload: `Faltaron completar datos: ${emptyFields}`}
+                 } 
+        } else {
+            return ({status: "error", payload:"El correo electronico ya se encuentra registrado"});
+        } 
     }
     userCheck = async (email, password) =>{
         const data = await this.getUser(email)
-        if (data.status == "succes") {
-            console.log ("check data of userController is userCheck", data)
-            const {payload} = data
-            console.log ("check password Validator en userController is userCheck", passwordValidator(password, payload.password))     
+        console.log ("check data in userController is usercheck", data)
+        if (true) {   
             if (passwordValidator(password, payload.password)) {
                 if (data.email.includes("gmail.com")) {
                     return ({ first_name: data.first_name, last_name: data.last_name, userId: data._id.toString(), role: "admin",cartId: data.cartId})
@@ -111,7 +108,9 @@ class userController{
         }
 
     }
-    updateUser = async () => { }
+    updateUser = async (uid, userData) => { 
+        return await this.service.update (uid, userData)
+    }
     deleteUser = async (uid) => { 
         try {
             // busqueda del usuario
@@ -126,10 +125,10 @@ class userController{
                 return {status: "succes", payload: result}
             } else {
                 console.log ("ingresa al else")
-                return {status: "Error", payload:"El usuario no fue encontrado"}
+                return {status: "error", payload:"El usuario no fue encontrado"}
             }
         } catch (error) {
-            return {status: "Error", payload: error}
+            return {status: "error", payload: error}
         }
 
     }

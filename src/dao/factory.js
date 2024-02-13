@@ -17,7 +17,8 @@ switch (configObject.percistance) {
         
     break;
     default:
-        userDao = require ("./managersMongo/UserMongoManager.js")
+        const userDaoGetter =  require ("./managersMongo/UserMongoManager.js")
+        userDao = userDaoGetter
         productDao = require("./managersMongo/ProductMongoManager.js")
         cartDao = require ("./managersMongo/CartMongoManager.js")
         chatDao = require ("./managersMongo/ChatMongoManager.js")

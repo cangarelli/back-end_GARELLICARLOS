@@ -1,62 +1,64 @@
 const CustomRouter = require("../Routes.js");
 
-
 // Creación de instancias de managers
 const userController = require('../../controller/users.controller.js');
+const cartController = require("../../controller/carts.controller.js");
 const userManager = new userController ()
-
+const cartManager = new cartController()
 
 class userClassRouter extends CustomRouter {
     init (){
 
         //seteo de rutas
-        this.get("/:uid", async (req, res) =>{
+        this.get("/:uid",["public"], async (req, res) =>{ // OK TODA LA RUTA Y SUS CAPAS
             try {
                 const result = await userManager.getUser(req.params.uid)
-              
-                if (result.status == "error") {
-                    return res.sendUserError(result.payload)
-                } else {
-                    const {payload} = result
-                    const infoShare = {first_name: payload.first_name, last_name: payload.last_name}
-                    return res.sendSuccess(infoShare)
-                }
+                console.log ("check result of user Class Rotuer is get route", result)
+                return result.status == "error" ? 
+                    res.sendUserError(result.payload)
+                :
+                    res.sendSuccess(result)
             } catch (error) {
-                return res.sendServerError(error)            }
+                console.log ("check get error of user class router is get method user", error)
+                return res.sendServerError(`${error}`)            }
         })
-        this.post("/", async (req, res) =>{                       
-            const response = await userManager.createUser(req.body)
-            if (response.status == "error") {
-                return res.sendUserError(response.payload)
-            } else if (response.status == "error" && typeof response.payload == "object" ) {
-                return res.sendServerError(response.payload)
-            } else {
-                return res.sendSuccess(response.payload)
-            }
-         })
-        
-            
+        this.post("/", async (req, res) =>{// OK TODA LA RUTA Y SUS CAPAS 
+            try {
+                const response = await userManager.createUser(req.body)
+                return response.status == "error" ?
+                    res.sendUserError(response.payload)
+                :
+                    res.sendSuccess(response)
+            } catch (error) {
+                console.log ("check error of user class router is post method ", error)
+                cartManager.cleanCartsWhitOutUser()
+                return res.sendServerError(`${error}`)
+            } 
+
+        })
         this.put("/:uid", async (req, res) =>{
-            if (response.status == "error") {
-                return res.sendUserError(response.payload)
-            } else if (response.status == "error" && typeof response.payload == "object" ) {
-                return res.sendServerError(response.payload)
-            } else {
-                return res.sendSuccess(response.payload)
-            }
+            try {
+                const response = await userManager.updateUser(req.params.uid, req.body)
+                return response.status == "error" ?
+                    res.sendUserError(response.payload)
+                :
+                    res.sendSuccess(response.payload)
+            } catch (error) {
+                console.log ("check error of user class router is put method", error)
+                return res.sendServerError(`${error}`)
+            } 
         })
         this.delete("/:uid", async (req, res) =>{
-            // llamado al controller
-            const response = await userManager.deleteUser (req.params.uid)
-            console.log ("check delete route response", response)
-            // Seteo re respuesta
-            if (response.status == "error") {
-                return res.sendUserError(response.payload)
-            } else if (response.status == "error" && typeof response.payload == "object" ) {
-                return res.sendServerError(response.payload)
-            } else {
-                return res.sendSuccess(response.payload)
-            }
+            try {
+                const response = await userManager.deleteUser (req.params.uid)
+                return response.status == "error" ?
+                    res.sendUserError(response.payload)
+                :
+                    res.sendSuccess(response)
+            } catch (error) {
+                console.log ("check error of user class router is delete method", error)
+                return res.sendServerError(`${error}`)
+            } 
         })
     }
 }

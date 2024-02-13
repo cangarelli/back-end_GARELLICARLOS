@@ -1,6 +1,6 @@
 const ProductMongoManager = require("../dao/managersMongo/ProductMongoManager");
 const CartMongoManager = require("../dao/managersMongo/CartMongoManager");
-const { productService, cartService } = require ("../repositories/service.js")
+const { productService, cartService, userService } = require ("../repositories/service.js")
 
 const uptadeStock = async (pid, stock, quantity) => {
     
@@ -101,6 +101,7 @@ class cartController{
     constructor(){
         this.service = cartService
         this.productManager = productService
+        this.userManager = userService
     }
     createCart = async () => {
         const response = await this.service.createCart()
@@ -145,8 +146,19 @@ class cartController{
     deleteCart = async (cid) => {
         const response = await this.service.deleteCart (cid)
         return response
-     }
+    }
+    cleanCartsWhitOutUser = async () =>{
+        try {
+            // Recuperar todos los id de carritos de usuarios
+            const cidsArray = await this.service.getAllKeyValues("_id")
+            const userCids = await this.userManager.getAllKeyValues("cartId")
+            const cartsWhitOutUserIds = cidsArray.filter(elemento => !userCids.includes(elemento));
+            cartsWhitOutUserIds.forEach( cid => this.service.deleteCart (cid))
 
+        } catch (error) {
+            console.log ("cleanCartsWhitOutUser of carts controller is catch", error)
+        } 
+    }
 }
 
 module.exports = cartController;

@@ -11,5 +11,6 @@ class cartRepository {
 
     deleteCart = async (cid) => await this.daoService.deleteCart(cid)
     
+    getAllKeyValues = async (key) => await this.daoService.getAllKeyValues (key)
 }
 module.exports = cartRepository

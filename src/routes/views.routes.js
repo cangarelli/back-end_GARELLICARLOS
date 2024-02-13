@@ -5,7 +5,6 @@ const router = Router();
 //Importacion de modulos propios
 const apiCaller = require('../helpers/apiUtils/apiCaller');
 const linkQueryMaker = require('../helpers/apiUtils/linkQueryMaker');
-const userSchema = require ("../dao/models/user.model")
 const sessionLoader = require ("../helpers/middleware/sessionLoader")
 // SETEO DE RUTAS
 

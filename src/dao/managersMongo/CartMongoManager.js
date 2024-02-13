@@ -5,42 +5,24 @@ const apiCaller = require ("../../helpers/apiUtils/apiCaller.js")
 // CLASE CONSTRUCTORA
 class CartMongoManager {
     constructor() {}
-    async createCart (){
-        try {
-            // Creación de cart con Mongoose
-            const newCart = await cartsModel.create({})
-            // Respuesta
-            return ({ status: 'succes', payload: newCart });
-        } catch (error) {
-            console.log (error)
-            return ({ status: 'error', payload: 'cart not created' });
-        }
-    }
-    // GET CART BY ID WORKING
-    async getCartById (cid) {
-        try {
-            const cart = await cartsModel.findOne({_id: cid})
-            console.log ("check getCartById if cart of cart dao manager", cart)
-            return ({ status: 'succes', payload: cart.products });
-        } catch (error) {
-            console.log (error)
-            return ({ status: 'error', payload: error });
-        }
-    }
-    async updateExistingProductQuantity (pid,newQuantity){
-        const result = await cartsModel.updateOne(
+    createCart = async () => await cartsModel.create({})
+
+    getCartById = async (cid) => await cartsModel.findOne({_id: cid})
+
+    updateExistingProductQuantity = async (pid,newQuantity) => 
+        await cartsModel.updateOne(
             { _id: cid, "products.product": pid },
             { $set: { "products.$.quantity": newQuantity } })
-        console.log ("check updateProductQuantity of cart dao manager", result)
-        return result
-    }
-    async addNewProduct (cid, products){
-        const result = await cartsModel.findOneAndUpdate(
+            
+    addNewProduct = async (cid, products) => 
+        await cartsModel.findOneAndUpdate(
             { _id: cid},
             {products},
-        )
-        return result
-    }
+            )
+                
+    deleteCart = async (cid) => await cartsModel.deleteOne({ _id: cid })      
+    getAllKeyValues = async (key) => await cartsModel.distinct(key)
+
     /* En DESUSO
     async addProductToCart (pid, cid, quantity){
         try { // Falta quitar del stock del array de productos cuando suma.
@@ -182,16 +164,6 @@ class CartMongoManager {
         }
     }
     */
-    // Delete cart
-    async deleteCart (cid) {
-        try {
-            const cartDeleted = await cartsModel.deleteOne({ _id: cid })
-            return ({status: "succes", payload: cartDeleted})
-        } catch (error) {
-            console.log (error)
-            return ({ status: 'error', payload: error });
-        }
-    }
 }
 
 module.exports = CartMongoManager;

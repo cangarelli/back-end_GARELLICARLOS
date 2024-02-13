@@ -7,47 +7,63 @@ class cartClassRouter extends CustomRouter {
 
         //seteo de rutas
         this.get("/:cid", async (req, res) =>{
-            const response = await CartManager.getOneCart(req.params.cid)
-            if (response.status == "error") {
-                return res.sendUserError(response.payload)
-            } else if (response.status == "error" && typeof response.payload == "object" ) {
+            try {
+                const response = await CartManager.getOneCart(req.params.cid)
+                return response.status == "error" ?
+                    res.sendUserError(response.payload)
+                :
+                    res.sendSuccess(response.payload)  
+            } catch (error) {
                 return res.sendServerError(response.payload)
-            } else {
-                return res.sendSuccess(response.payload)
-            }    
+            } 
         })
         this.post("/", async (req, res) =>{
-            const response = await CartManager.createCart()
-            if (response.status == "error") {
-                return res.sendUserError(response.payload)
-            } else if (response.status == "error" && typeof response.payload == "object" ) {
+            try {
+                const response = await CartManager.createCart()
+                return response.status == "error" ?
+                    res.sendUserError(response.payload)
+                :
+                    res.sendSuccess(response.payload)  
+            } catch (error) {
                 return res.sendServerError(response.payload)
-            } else {
-                return res.sendSuccess(response.payload)
-            }
+            } 
         })
         this.put("/:cid/product/:pid", async (req, res) =>{
-            const response = await CartManager.createUser(req.body)
-            if (response.status == "error") {
-                return res.sendUserError(response.payload)
-            } else if (response.status == "error" && typeof response.payload == "object" ) {
+            try {
+                const response = await CartManager.updateCart(req.params.pid, req.params.cid, quantity)
+                return response.status == "error" ?
+                    res.sendUserError(response.payload)
+                :
+                    res.sendSuccess(response.payload)  
+            } catch (error) {
                 return res.sendServerError(response.payload)
-            } else {
-                return res.sendSuccess(response.payload)
-            }
+            } 
         })
         // Actualizar todo el carrito ------------------------------ OK
         this.put("/:cid", async (req, res) => {})
         this.delete("/:cid/product/:pid", async (req, res) =>{
-            const response = await CartManager.deleteOneProduct(req.params.pid, req.params.cid)
-            if (response.status == "error") {
-                return res.sendUserError(response.payload)
-            } else if (response.status == "error" && typeof response.payload == "object" ) {
+            try {
+                const response = await CartManager.deleteOneProduct(req.params.pid, req.params.cid)
+                return response.status == "error" ?
+                    res.sendUserError(response.payload)
+                :
+                    res.sendSuccess(response.payload)  
+            } catch (error) {
                 return res.sendServerError(response.payload)
-            } else {
-                return res.sendSuccess(response.payload)
-            }
+            } 
         })
+        this.delete("/:cid", async (req, res) =>{
+            try {
+                const response = await CartManager.deleteCart(req.params.cid)
+                return response.status == "error" ?
+                    res.sendUserError(response.payload)
+                :
+                    res.sendSuccess(response.payload)  
+            } catch (error) {
+                return res.sendServerError(response.payload)
+            } 
+        })
+
     }
 }
 module.exports = cartClassRouter

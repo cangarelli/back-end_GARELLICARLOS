@@ -4,13 +4,19 @@ class usersRepository {
     constructor(dao){
         this.daoService = dao
     }
-    getUser = async (uid) => await this.daoService.getUser(uid)
-    createUser = async (userData) => { 
-        const userDataModified = userDto (userData)
-        return await this.daoService.createUser (userDataModified)
+    create = async(userData) => {
+        const userDataModified = new userDto(userData)
+        return await this.daoService.create (userDataModified)
     }
-    userCheck = async (email, password) => await this.daoService.userCheck(email, password)
-    updateUser = async () => await this.daoService.updateUser()
-    deleteUser = async (uid) => await this.daoService.deleteUser (uid)
+    
+    update = async (userId, data) => await this.daoService.update (userId, data)
+    
+    userSearch = async (uid) => await this.daoService.userSearch (uid)
+   
+    userSearchByEmail = async (email) => await this.daoService.userSearchByEmail (email)
+
+    delete = async (uid) => await this.daoService.delete(uid)
+
+    getAllKeyValues = async (key) => await this.daoService.getAllKeyValues(key)
 }
 module.exports = usersRepository
