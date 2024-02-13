@@ -1,7 +1,5 @@
-const CartMongoManager = require("../dao/managersMongo/CartMongoManager");
-const UserMongoManager = require("../dao/managersMongo/UserMongoManager");
 const { createHash, passwordValidator } = require("../helpers/hashPasswordManager");
-
+const { userService, cartService } = require ("../repositories/service.js")
 // Helpers del controller
 const emptyFieldDetector = (object) =>{
     let emptyFields = []
@@ -30,8 +28,8 @@ const filterCleanStrings = (object) =>{
 
 class userController{
     constructor(){
-        this.service = new UserMongoManager()
-        this.cartManager = new CartMongoManager ()
+        this.service = userService
+        this.cartManager = cartService
     }
     
     getUser = async (uid) => {

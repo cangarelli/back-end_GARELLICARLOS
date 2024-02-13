@@ -1,6 +1,5 @@
 // Modulos importados
-const { usersModel } = require ("../models/user.model.js")
-const apiCaller = require ("../../helpers/apiUtils/apiCaller.js")
+const { usersModel } = require ("./models/user.model.js")
 const {createHash, passwordValidator} = require ("../../helpers/hashPasswordManager.js")
 
 // CLASE CONSTRUCTORA

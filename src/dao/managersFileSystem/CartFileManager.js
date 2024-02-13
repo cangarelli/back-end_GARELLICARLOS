@@ -9,8 +9,7 @@ class CartManager {
     id;
 
     constructor() {
-        CartManager.contador++;
-        this.id = CartManager.contador;
+
 
         this.carts = [];
         this.path = 'src/DB-files/carrito.json';
@@ -28,7 +27,7 @@ class CartManager {
         return true;
     }
 
-    async getProductsByCartId(cid) {
+    async getCartById(cid) {
         // Variables de la funcion y recupero de datos
         this.carts = await recuperarDatos(this.path);
 
@@ -45,6 +44,16 @@ class CartManager {
             console.log('Not found');
             return 'Not found';
         }
+    }
+
+    async updateExistingProductQuantity (pid, quantity) {
+        return ("working on it")
+    }
+    async addNewProduct (cid, products){
+        return ("working on it")
+    }
+    async deleteCart (cid) {
+        return ("working on it")
     }
 
     async addProductById(cid, pid) {

@@ -7,7 +7,7 @@ router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
 
 // Importación modulos propios
-const ChatManager = require ("../../dao/managers/ChatManager.js")
+const ChatManager = require ("../../dao/managersFileSystem/ChatManager.js")
 const { messagesModel } = require ("../../dao/models/message.model.js")
 const ChatMongoManager = require("../../dao/managersMongo/ChatMongoManager.js")
 

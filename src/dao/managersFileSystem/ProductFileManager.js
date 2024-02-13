@@ -10,14 +10,11 @@ class ProductManager {
     id;
 
     constructor() {
-        ProductManager.contador++;
-        this.id = ProductManager.contador;
-
         this.products = [];
         this.path = 'src/DB-files/products.json';
     }
 
-    async getProducts() {
+    async getProducts({filter, pagination}) { // OK SIN PAGINATION
         // Variables de la funcion y recupero de datos
         this.products = await recuperarDatos(this.path);
 
@@ -29,8 +26,10 @@ class ProductManager {
             return { error: 'El producto solicitado no existe' };
         }
     }
-
-    async addProduct({ title, description, price, thumbnail, code, stock }) {
+    async getOneKeyData (key) {
+        return ("working on it")
+    }
+    async productCreate({title, price, category, description, stock, code, thumbnail, status}) {
         // Variables de la funcion y recupero de datos
         this.products = await recuperarDatos(this.path);
         // code check
@@ -62,7 +61,7 @@ class ProductManager {
         });
     }
 
-    async getProductById(idDB) {
+    async getProductsById(idDB) { // OK
         // Variables de la funcion y recupero de datos
         this.products = await recuperarDatos(this.path);
 
@@ -78,7 +77,7 @@ class ProductManager {
         }
     }
 
-    async updateProductById(id, productoObjetc) {
+    async productUpdate(id, productoObjetc) { // OK
         console.log('aca arranca el update Product By Id');
         // Variables de la funcion y recupero de datos
         this.products = await recuperarDatos(this.path);
@@ -105,7 +104,7 @@ class ProductManager {
         });
     }
 
-    async deletProductById(idDB) {
+    async productDelete(idDB) { // OK
         console.log('aca arranca el delet Product By Id');
         // Variables de la funcion y recupero de datos
         this.products = await recuperarDatos(this.path);

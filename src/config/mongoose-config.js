@@ -12,6 +12,7 @@ const configObject = {
     PORT: process.env.PORT || 4000,
     mongo_url: process.env.MONGO_URL,
     jwt_secret_key: process.env.jwt_secret_key,
+    percistance: process.env.PERCISTANCE,
 }
 // Cración de conección
     const connectDB = async () => {
@@ -20,6 +21,6 @@ const configObject = {
     }
 // "mongodb+srv://agarelli91:5d8a6fsFWa6@anlugamescluster.mgh6ee1.mongodb.net/ecommerce?retryWrites=true&w=majority"
 module.exports = {
-    configObject,
+     configObject,
     connectDB 
 };

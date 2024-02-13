@@ -1,5 +1,5 @@
 // Importacion de modulos
-const {messagesModel} = require ("../models/message.model")
+const {messagesModel} = require ("./models/message.model.js")
 
 // CLASE CONSTRUCTORA
 class ChatMongoManager {

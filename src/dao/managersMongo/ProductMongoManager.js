@@ -1,6 +1,6 @@
 // Modulos importados
 const paginateQueryMaker = require("../../helpers/apiUtils/paginateQueryMaker.js")
-const { productsModel } = require ("../models/products.model.js")
+const { productsModel } = require ("./models/products.model.js")
 
 // Funciones de procesamiento de request data
 function selectorQuery(query1, query2, query3, query4) {

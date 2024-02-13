@@ -1,6 +1,6 @@
 const ProductMongoManager = require("../dao/managersMongo/ProductMongoManager");
 const CartMongoManager = require("../dao/managersMongo/CartMongoManager");
-
+const { productService, cartService } = require ("../repositories/service.js")
 
 const uptadeStock = async (pid, stock, quantity) => {
     
@@ -99,8 +99,8 @@ removeProductOfCart = async (pid, cid, quantity) => {
  
 class cartController{
     constructor(){
-        this.service = new CartMongoManager ()
-        this.productManager = new ProductMongoManager()
+        this.service = cartService
+        this.productManager = productService
     }
     createCart = async () => {
         const response = await this.service.createCart()

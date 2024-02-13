@@ -1,10 +1,10 @@
-const ProductMongoManager = require("../dao/managersMongo/ProductMongoManager");
+const { productService } = require ("../repositories/service.js")
 const linkQueryMaker = require("../helpers/apiUtils/linkQueryMaker");
 const paginateQueryMaker = require("../helpers/apiUtils/paginateQueryMaker");
 
 class productController{
     constructor(){
-        this.service = new ProductMongoManager ()
+        this.service = productService
     }
     
     getProducts = async ({category, disponibility, order, limit, onPage}) => {

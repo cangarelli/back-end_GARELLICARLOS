@@ -9,18 +9,18 @@ class ChatManager {
         this.messagesList = [];
         this.path = 'src/DB-files/messageList.json';
     }
-    async reciveMesagge (message) {
+    async sendMessage (message, userMail) {
         // Recuperar datos
         this.messagesList = await leerDB (this.path)
         // Agregar mensaje
-        this.messagesList.push (message)
+        this.messagesList.push ({userMail, message })
         // Guardar Datos
         await guardarDatos (this.path, this.messagesList)
 
         return {succes: `message ${message} upload`}
-        {user, message}
+     
     }
-    async deliverMessagges () {
+    async getMessages () {
         // Recuperar datos
         this.messagesList = await leerDB (this.path)
 

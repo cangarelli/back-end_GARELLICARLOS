@@ -1,6 +1,5 @@
 // Modulos importados
-const { cartsModel } = require ("../models/carts.model.js")
-const { productsModel } = require ("../models/products.model.js")
+const { cartsModel } = require ("./models/carts.model.js")
 const apiCaller = require ("../../helpers/apiUtils/apiCaller.js")
 
 // CLASE CONSTRUCTORA
@@ -28,8 +27,6 @@ class CartMongoManager {
             return ({ status: 'error', payload: error });
         }
     }
-    // ADD PRODUCTS TO CART WORKING
-
     async updateExistingProductQuantity (pid,newQuantity){
         const result = await cartsModel.updateOne(
             { _id: cid, "products.product": pid },
