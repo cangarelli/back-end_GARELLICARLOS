@@ -2,7 +2,7 @@
 const { Server } = require('socket.io');
 
 // Importación y generación de instancias de data managers
-const apiCaller = require ("../helpers/apiUtils/apiCaller")
+const { apiCaller } = require ("../helpers/helpersBarrel.js")
 
 // SETEO DE EVENTOS
 const marketUpdate = ({socket, serverSocket, port}) =>{

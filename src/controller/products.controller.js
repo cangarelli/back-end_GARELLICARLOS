@@ -1,6 +1,8 @@
 const { productService } = require ("../repositories/service.js")
-const linkQueryMaker = require("../helpers/apiUtils/linkQueryMaker");
-const paginateQueryMaker = require("../helpers/apiUtils/paginateQueryMaker");
+const linkQueryMaker = require("../helpers/productsApiUtils/linkQueryMaker.js");
+const paginateQueryMaker = require("../helpers/productsApiUtils/paginateQueryMaker.js");
+// Funciones de procesamiento de request data
+
 
 class productController{
     constructor(){

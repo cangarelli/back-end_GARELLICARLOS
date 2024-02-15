@@ -4,14 +4,13 @@ const local = require ("passport-local")
 const GithubStrategy = require ("passport-github2")
 const jwt = require ("passport-jwt")
 // Importación de modulos propios
-const userMongoManager = require ("../dao/managersMongo/UserMongoManager.js")
-const {createHash, passwordValidator} = require ("../helpers/hashPasswordManager.js")
 const { json_private_key } = require("../helpers/jwt.js")
 const userController = require("../controller/users.controller.js")
-const userManager = new userController
+
 
 //Creacion de instancias de managers
-// const userManager = new userMongoManager();
+const userManager = new userController
+
 // Jwt Strategy
 const JWTStrategy = jwt.Strategy
 const ExtractJWT = jwt.ExtractJwt

@@ -1,7 +1,7 @@
 // Importación de modulo mongoose.connect con destructuring
 const { connect } = require("mongoose")
 const dotenv = require ("dotenv")
-const { program } = require("../helpers/commanders")
+const { program } = require("./commanders")
 
 const { mode } = program.opts()
 dotenv.config({

@@ -20,7 +20,8 @@ class userClassRouter extends CustomRouter {
                     res.sendSuccess(result)
             } catch (error) {
                 console.log ("check get error of user class router is get method user", error)
-                return res.sendServerError(`${error}`)            }
+                return res.sendServerError(`${error}`)
+            }
         })
         this.post("/", async (req, res) =>{// OK TODA LA RUTA Y SUS CAPAS 
             try {

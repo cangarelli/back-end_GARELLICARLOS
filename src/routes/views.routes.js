@@ -3,9 +3,8 @@ const { Router } = require('express');
 const router = Router();
 
 //Importacion de modulos propios
-const apiCaller = require('../helpers/apiUtils/apiCaller');
-const linkQueryMaker = require('../helpers/apiUtils/linkQueryMaker');
-const sessionLoader = require ("../helpers/middleware/sessionLoader")
+const { apiCaller, linkQueryMaker, sessionLoader } = require ("../helpers/helpersBarrel")
+
 // SETEO DE RUTAS
 
 // Register

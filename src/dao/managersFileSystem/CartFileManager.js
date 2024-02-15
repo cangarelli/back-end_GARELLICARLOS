@@ -1,7 +1,7 @@
 //Modulos nativos importados
 const fs = require('fs');
-const recuperarDatos = require('../../helpers/fileManagers/recuperarDatos');
-const persistenciaDatos = require('../../helpers/fileManagers/persistenciaDatos');
+const recuperarDatos = require('./fileManagers/recuperarDatos');
+const persistenciaDatos = require('./fileManagers/persistenciaDatos');
 
 // CLASE CONSTRUCTORA
 class CartManager {
@@ -9,8 +9,6 @@ class CartManager {
     id;
 
     constructor() {
-
-
         this.carts = [];
         this.path = 'src/DB-files/carrito.json';
     }
@@ -49,39 +47,37 @@ class CartManager {
     async updateExistingProductQuantity (pid, quantity) {
         return ("working on it")
     }
+
     async addNewProduct (cid, products){
-        return ("working on it")
+       // Recupero de datos del carrito en carrito virtual
+       this.carts = await recuperarDatos(this.path);
+       //
+       const cartIndex = this.carts.findIndex((cart) => parseInt(cid) === cart.id);
+
+       // Product set
+       if (cartIndex != -1) {
+           const cart = this.carts[cartIndex].products;
+           if (cart.length > 0) {
+               const productIndex = cart.findIndex((product) => parseInt(pid) === parseInt(product.id));
+               if (productIndex != -1) {
+                   cart[productIndex].quantity++;
+               } else {
+                   cart.push({ id: parseInt(pid), quantity: 1 });
+               }
+               this.carts[cartIndex].products = cart;
+           } else {
+               cart.push({ id: parseInt(pid), quantity: 1 });
+               this.carts[cartIndex].products = cart;
+           }
+           await persistenciaDatos(this.path, this.carts);
+           return true;
+       } else {
+           return false;
+       }    
     }
+
     async deleteCart (cid) {
         return ("working on it")
-    }
-
-    async addProductById(cid, pid) {
-        // Recupero de datos del carrito en carrito virtual
-        this.carts = await recuperarDatos(this.path);
-        //
-        const cartIndex = this.carts.findIndex((cart) => parseInt(cid) === cart.id);
-
-        // Product set
-        if (cartIndex != -1) {
-            const cart = this.carts[cartIndex].products;
-            if (cart.length > 0) {
-                const productIndex = cart.findIndex((product) => parseInt(pid) === parseInt(product.id));
-                if (productIndex != -1) {
-                    cart[productIndex].quantity++;
-                } else {
-                    cart.push({ id: parseInt(pid), quantity: 1 });
-                }
-                this.carts[cartIndex].products = cart;
-            } else {
-                cart.push({ id: parseInt(pid), quantity: 1 });
-                this.carts[cartIndex].products = cart;
-            }
-            await persistenciaDatos(this.path, this.carts);
-            return true;
-        } else {
-            return false;
-        }
     }
     
     async removeProductById(DBP, id, cantidad) {
@@ -108,5 +104,7 @@ class CartManager {
                   return 'Este producto no esta en el carrito';
               })();
     }
+
+    getAllKeyValues = async (key) => "woroking on it"
 }
 module.exports = CartManager;

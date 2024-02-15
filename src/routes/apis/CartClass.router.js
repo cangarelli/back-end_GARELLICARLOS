@@ -6,7 +6,7 @@ class cartClassRouter extends CustomRouter {
     init (){
 
         //seteo de rutas
-        this.get("/:cid", async (req, res) =>{
+        this.get("/:cid", ["public"], async (req, res) =>{
             try {
                 const response = await CartManager.getOneCart(req.params.cid)
                 return response.status == "error" ?
@@ -39,7 +39,7 @@ class cartClassRouter extends CustomRouter {
                 return res.sendServerError(response.payload)
             } 
         })
-        // Actualizar todo el carrito ------------------------------ OK
+
         this.put("/:cid", async (req, res) => {})
         this.delete("/:cid/product/:pid", async (req, res) =>{
             try {
@@ -63,7 +63,6 @@ class cartClassRouter extends CustomRouter {
                 return res.sendServerError(response.payload)
             } 
         })
-
     }
 }
 module.exports = cartClassRouter

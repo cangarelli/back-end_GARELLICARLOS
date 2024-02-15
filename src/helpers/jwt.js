@@ -1,7 +1,7 @@
 const jwt = require ("jsonwebtoken")
 const json_private_key = "laClaveQueMásMeGustaAMi"
 
-const createToken = (user) => jwt.sign(user, json_private_key, {expiresIn: "1d"})
+const createToken = (user) => jwt.sign({user}, json_private_key, {expiresIn: "1d"})
 
 const validateToken =  (req, res, next) => {
     const authHeader = req.headers["authorization"]

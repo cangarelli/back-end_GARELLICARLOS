@@ -1,7 +1,7 @@
 //Modulos nativos importados
 const fs = require('fs');
-const recuperarDatos = require('../../helpers/fileManagers/recuperarDatos');
-const persistenciaDatos = require('../../helpers/fileManagers/persistenciaDatos');
+const recuperarDatos = require('./fileManagers/recuperarDatos');
+const persistenciaDatos = require('./fileManagers/persistenciaDatos');
 // import { recuperarDatos, persistenciaDatos } from '../helpers/helpersBarrel';
 
 // CLASE CONSTRUCTORA

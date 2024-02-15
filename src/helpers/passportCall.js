@@ -1,6 +1,6 @@
 const passport = require ("passport")
 
-exports.passportCall = strategy => {
+passportCall = strategy => {
     return async (req, res, next) => {
         console.log ("passport Call")
         passport.authenticate(strategy, function (err, user, info) {
@@ -11,3 +11,5 @@ exports.passportCall = strategy => {
         }) (req, res, next)
     }
 }
+
+module.exports = passportCall

@@ -5,7 +5,7 @@ class chatClassRouter extends CustomRouter {
     init (){
         
         //seteo de rutas
-        this.get("/", async (req, res) =>{
+        this.get("/", ["user"], async (req, res) =>{
             try {
                 const response = await chatService.getMessages()
                 return response.status == "error" ?
@@ -17,7 +17,7 @@ class chatClassRouter extends CustomRouter {
             return res.sendServerError(response.payload)
         } 
         })
-        this.post("/", async (req, res) =>{
+        this.post("/", ["user"] , async (req, res) =>{
             try {
                 const {message, email} = req.body
                 const response = await chatService.sendMessage (message, email)

@@ -1,3 +1,4 @@
+const userGetterDto = require("../dto/userGetterDto.js");
 const { passwordValidator } = require("../helpers/hashPasswordManager")
 const { userService, cartService } = require ("../repositories/service.js")
 
@@ -44,12 +45,7 @@ class userController{
         if (response == null) {
             return ({status: "error", payload: "usuario no encontrado"})
         } else {
-            const infoShare = {
-                _id: response._id,
-                first_name: response.first_name, 
-                last_name: response.last_name, 
-                cartId: response.cartId}
-            return (infoShare)
+            return (response)
         }
     }
     createUser = async (userData) => {
@@ -95,16 +91,15 @@ class userController{
     userCheck = async (email, password) =>{
         const data = await this.getUser(email)
         console.log ("check data in userController is usercheck", data)
-        if (true) {   
-            if (passwordValidator(password, payload.password)) {
-                if (data.email.includes("gmail.com")) {
-                    return ({ first_name: data.first_name, last_name: data.last_name, userId: data._id.toString(), role: "admin",cartId: data.cartId})
-                } else {
-                    return ({ first_name: data.first_name, last_name: data.last_name, userId: data._id.toString(), role: "user", cartId: data.cartId})
-                }     
-            }
-        } else {
+        if (data.status === "error") {   
             return ({status: "error", payload: "El correo eletronico no se encuentra registrado"})
+        } else {
+            console.log ("check pasword validator parameters hash pass y pass", data, password)
+            if (passwordValidator(password, data.password)) {
+                return new userGetterDto (data)
+            } else{
+                return ({status: "error", payload: "La contraseña es incorrecta"})
+            }
         }
 
     }

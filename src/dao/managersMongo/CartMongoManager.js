@@ -1,6 +1,6 @@
 // Modulos importados
 const { cartsModel } = require ("./models/carts.model.js")
-const apiCaller = require ("../../helpers/apiUtils/apiCaller.js")
+const apiCaller = require ("../../helpers/productsApiUtils/apiCaller.js")
 
 // CLASE CONSTRUCTORA
 class CartMongoManager {
@@ -20,7 +20,10 @@ class CartMongoManager {
             {products},
             )
                 
-    deleteCart = async (cid) => await cartsModel.deleteOne({ _id: cid })      
+    deleteCart = async (cid) => await cartsModel.deleteOne({ _id: cid })
+    
+    removeProductById = async (cid, id, cantidad) => "working on it"
+    
     getAllKeyValues = async (key) => await cartsModel.distinct(key)
 
     /* En DESUSO

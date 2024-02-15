@@ -1,5 +1,5 @@
 const productController = require("../../controller/products.controller");
-const CustomRouter = require("./Routes");
+const CustomRouter = require("../Routes.js");
 
 const productManager = new productController()
 
@@ -21,7 +21,7 @@ class productClassRouter extends CustomRouter {
                 return res.sendServerError(`${error}`)
             }
         })
-        this.get("/daokeydata/:key", async (req, res) =>{
+        this.get("/daokeydata/:key", ["public"], async (req, res) =>{
             try {
                 const keyData = await productManager.getSelectiveData(req.params.key)
                 return keyData.status == "error" ?
@@ -33,7 +33,7 @@ class productClassRouter extends CustomRouter {
                     return res.sendServerError(`${error}`)
                 }
             })
-        router.get ("/:pid", async (req, res) => {
+        this.get ("/:pid", ["public"], async (req, res) => {
             try {
                 const response = await productManager.getProduct(req.parms.pid)
                 return response.status == "error" ?
@@ -80,7 +80,7 @@ class productClassRouter extends CustomRouter {
                 :
                     sendSuccess(response.payload)
             } catch (error) {
-                console.log ("check error of x class router is delete method", error)
+                console.log ("check error of productClassRouter class router is delete method", error)
                 return res.sendServerError(`${error}`)
             }
         })

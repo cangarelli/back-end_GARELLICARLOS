@@ -1,6 +1,6 @@
 const { createHash } = require("../helpers/hashPasswordManager")
 
-class userDto{ 
+class userCreateDto{ 
     constructor (userData) {
         this.first_name = userData.first_name.trimEnd()
         this.last_name = userData.last_name.trimEnd()
@@ -9,7 +9,8 @@ class userDto{
         this.password = createHash(userData.password.trimEnd())
         this.cartId = userData.cartId
         this.age = userData.age
+        this.role = userData.email.includes("@coder.com")? "admin" : "user"
     }
 }
 
-module.exports = userDto
+module.exports = userCreateDto
