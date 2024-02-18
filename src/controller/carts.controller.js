@@ -1,108 +1,87 @@
-const ProductMongoManager = require("../dao/managersMongo/ProductMongoManager");
-const CartMongoManager = require("../dao/managersMongo/CartMongoManager");
-const { productService, cartService, userService } = require ("../repositories/service.js")
-
-const uptadeStock = async (pid, stock, quantity) => {
-    
-    const newStock = parseInt(stock) - parseInt(quantity)
-    const updateStock = {stock: parseInt(newStock) }
-
-    await this.productManager.productUpdate(pid,updateStock)    
-}
+const { ticketCodeGenerator, timeGetter, amountCalculator, cartReviewer, stockReviewer } = require("../helpers/helpersBarrel.js")
+const { productService, cartService, userService, ticketService } = require ("../repositories/service.js")
 
 const addProductToCart = async (pid, cid, quantity) => {
-    try { // Falta quitar del stock del array de productos cuando suma.
-        // Carga de datos
-        const hay = await  this.productManager.getProductsById(pid)
-        const virtualCart = await  this.getOneCart(cid)
-        
-        console.log ("check virtualcart", virtualCart)
-        // Chequeo si hay stock del producto.
-        if (hay.stock > 0) {
-            // Si hay stock me fijo si ya hay de ese producto en el carrito
-            let existingProduct = -1
-            
-            const products = virtualCart.payload
-            console.log ("check products", products)
-            products.length > 0 && (() =>  {
-                existingProduct = products.findIndex(products => products.product._id.equals(pid))
-            })(); 
-            console.log ("check existingProducts", existingProduct)
-            // Si ya hay en el carrito agrego 1 al paquete
-            if (existingProduct != -1) {
-                // Manejo de cantidades en carrtio
-                const newQuantity = parseInt(products[existingProduct].quantity) + parseInt(quantity)
-                const result = this.service.updateExistingProductQuantity(pid, newQuantity )
-                
-                await uptadeStock (pid, parseInt(products[existingProduct].product.stock), quantity)
-
-                // RESPUESTA EN RELACION AL MANEJO DEL CARRITO
-                return ({ status: 'succes', payload: result });
-            // Si no hay agrego uno creando el paquete
-            } else {
-                try {
-                    // Manejo de cantidades en carrtio 
-                    products.push({product: pid, quantity: parseInt(quantity)})
-                    const result = await this.service.addNewProduct (cid, products)
-                    
-                    await uptadeStock (pid, hay.stock, quantity)
-
-                    // RESPUESTA EN RELACION AL MANEJO DEL CARRITO
-                    return ({ status: 'succes', payload: result });                    
-                } catch (error) {
-                    console.log (error)
-                }
-            }
-        // Si no hay stock aviso
-        } else {
-            return ({ status: 'error', payload: `el producto ${pid} no existe en la base de datos` });
-        }
-    // Si falla, falla.
-    } catch (error) {
-        console.log (error)
-        return ({ status: 'error', payload: error });
-    }
-}
-removeProductOfCart = async (pid, cid, quantity) => {
-    try { // Falta sumar al array de productos cuando resta
-        // Carga de datos
-        const virtualCart = await  this.getOneCart(cid)
-        console.log ("start removeProductOfCart")
-
-        const products = virtualCart.payload
-
-        // BUSQUEDA DE INDEX DE PRODUCTO A MODIFICAR
-        const productIndex = products.findIndex(productObjetc => productObjetc.product._id.equals(pid))
     
-        if (products[productIndex].quantity > quantity){
-            console.log ("ingresa el primer if")
-        // MANEJO DE CANTIDADES DEL CARRITO
-            const newQuantity = parseInt(products[productIndex].quantity) + parseInt(quantity)
-            const result = await updateExistingProductQuantity (pid,newQuantity)
+    const sellerData = await stockReviewer (this.productManager, [{prod:pid, quantity}])
 
+    // Chequeo si hay stock del producto.
+    if (sellerData.quantity > 0) {
+        const cartData = await cartReviewer (this.service, cid, pid)
 
-            await uptadeStock (pid, parseInt(products[existingProduct].product.stock), quantity)
+        // Si ya hay en el carrito agrego 1 al paquete
+        if (cartData.prodIndex != -1) {
+            // Manejo de cantidades en carrtio
+            const fullRequest = cartData.quantityOnCart + parseInt(quantity)
+            const  newSellerData = await stockReviewer (this.productManager, [{prod:pid, fullRequest}])
+            const result = this.service.updateExistingProductQuantity(pid, newSellerData.quantity )    
+            // RESPUESTA EN RELACION AL MANEJO DEL CARRITO
+            return ({ status: 'succes', payload: result });
+        // Si no hay agrego uno creando el paquete
+        } else {
+            // Manejo de cantidades en carrtio 
+            cartData.products.push({product: pid, quantity: parseInt(quantity)})
+            const result = await this.service.addNewProduct (cid, cartData.products)
+            // RESPUESTA EN RELACION AL MANEJO DEL CARRITO
+            return ({ status: 'succes', payload: result });                    
+        }
+    // Si no hay stock aviso
+    } else {
+        return ({ status: 'error', payload: `el producto ${pid} no existe en la base de datos o no hay stock` });
+    } 
+}
 
-        // RESPONDE LO QUE RESPONDE DEL MANEJO DEL CARRITO
-            return result
-        } else if (products[productIndex].quantity <= quantity) {
-            console.log ("ingresa al segundo if")
+removeProductOfCart = async (pid, cid, quantity) => {
+    // obtener datos del carrito
+    const cartData = await cartReviewer (this.service, cid, pid)
+    
+    if (cartData.prodIndex != -1) {// si esta en el carrito que actualice
+        const newQuantity = cartData.quantityOnCart + parseInt(quantity)
+
+        if (newQuantity <= 0) {
             const response = await this.service.deleteOneProduct (pid, cid)
             return response
+        } else {
+            const response = await this.service.updateExistingProductQuantity (pid,newQuantity)
+            return response
         }
-     f
-    } catch (error) {
-        console.log (error)
-        return { status: 'error', payload: error }
+    } else { // si no esta en el carrito que avise
+        return {status: "error", payload: "producto no encontrado en el carrito"}
     }
+
 }
- 
+
+
 class cartController{
     constructor(){
         this.service = cartService
         this.productManager = productService
         this.userManager = userService
+        this.ticketManager= ticketService
     }
+    purchase = async ({ purchaseList, purchaser, cid }) => {
+        
+        // Chequear stock
+        const virtualProductList = await stockReviewer (this.productManager, purchaseList )
+        
+        // Calcular el precio total
+        const totalAmount = await amountCalculator (virtualProductList)
+
+        // Genero el ticket
+        const tiketData = { code: ticketCodeGenerator(), purchase_datetime: timeGetter(), amount: totalAmount, purchaser }
+        const response = await this.ticketManager.makeATicket (tiketData)
+        const result = await this.ticketManager.getOneTiket (TId)
+
+        // Actualizo el stock y el carrito
+        virtualProductList.forEach((prod)=>{
+            this.productManager.productUpdate(prod.pid, {stock: prod.remainingStock})
+            this.service.updateExistingProductQuantity(prod.pid, cid, prod.remainingForBuying)
+        })
+        return response
+    }
+
+    tiketGetter = () => {}
+
     createCart = async () => {
         const response = await this.service.createCart()
         return response
@@ -135,8 +114,6 @@ class cartController{
             return response
         }
     }
-
-    
 
     emptyCart = async (cid) => {
         const response = await this.service.emptyCart(cid)

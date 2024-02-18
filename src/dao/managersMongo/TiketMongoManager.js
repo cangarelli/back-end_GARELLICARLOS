@@ -6,6 +6,9 @@ const {createHash, passwordValidator} = require ("../../helpers/hashPasswordMana
 class TiketMongoManager {
     constructor() {}
     
+    getOneTicket = async (tiketId) => await productsModel.findOne({_id: tiketId})
+
+    makeATicket = async (purchaseData) => await tiketModel.create(purchaseData)
 
 }
 

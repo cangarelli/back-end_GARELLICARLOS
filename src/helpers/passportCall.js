@@ -1,6 +1,6 @@
 const passport = require ("passport")
 
-passportCall = strategy => {
+const passportCall = strategy => {
     return async (req, res, next) => {
         console.log ("passport Call")
         passport.authenticate(strategy, function (err, user, info) {

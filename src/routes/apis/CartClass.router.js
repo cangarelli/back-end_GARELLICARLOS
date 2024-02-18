@@ -6,6 +6,21 @@ class cartClassRouter extends CustomRouter {
     init (){
 
         //seteo de rutas
+
+
+        this.post("/:cid/purchase", async (req, res) =>{ // COMPLETAR
+            try {
+                const response = await CartManager.purchase({pid, quantity, purchaser })
+                return response.status == "error" ?
+                res.sendUserError(response.payload)
+            :
+                res.sendSuccess(response)  
+            } catch (error) {
+                console.log ("check error of cart class router is post method /:cid/purchase", error)
+                return res.sendServerError(error)
+            }
+        })
+
         this.get("/:cid", ["public"], async (req, res) =>{
             try {
                 const response = await CartManager.getOneCart(req.params.cid)
@@ -14,7 +29,8 @@ class cartClassRouter extends CustomRouter {
                 :
                     res.sendSuccess(response.payload)  
             } catch (error) {
-                return res.sendServerError(response.payload)
+                console.log ("check error of cart class router is get method /:cid", error)
+                return res.sendServerError(error)
             } 
         })
         this.post("/", async (req, res) =>{

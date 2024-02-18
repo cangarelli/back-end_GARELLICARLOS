@@ -9,7 +9,7 @@ class CartMongoManager {
 
     getCartById = async (cid) => await cartsModel.findOne({_id: cid})
 
-    updateExistingProductQuantity = async (pid,newQuantity) => 
+    updateExistingProductQuantity = async (pid, cid, newQuantity) => 
         await cartsModel.updateOne(
             { _id: cid, "products.product": pid },
             { $set: { "products.$.quantity": newQuantity } })
