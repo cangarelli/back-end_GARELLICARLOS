@@ -1,5 +1,5 @@
 const userGetterDto = require("../dto/userGetterDto.js");
-const { passwordValidator } = require("../helpers/hashPasswordManager")
+const { passwordValidator } = require("../helpers/userApiUtils/hashPasswordManager.js")
 const { userService, cartService } = require ("../repositories/service.js")
 
 // Helpers del controller

@@ -11,6 +11,8 @@ const authorizationJWT = require ("./sessionApiUtils/authorizationJWT.middleware
 const passportCall = require ("./sessionApiUtils/passportCall.js")
 
 // User api utils
+const { createHash, passwordValidator } = require ("./userApiUtils/hashPasswordManager.js")
+
 
 // Views api utils
 const sessionLoader = require ("./viewsApiUtils/sessionLoader.js")
@@ -30,6 +32,7 @@ module.exports = {
     linkQueryMaker,
     paginateQueryMaker,
     selectorQuery,
+    createHash, passwordValidator,
     createToken, validateToken, json_private_key,
     authorizationJWT,
     sessionLoader,

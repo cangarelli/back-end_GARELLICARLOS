@@ -1,4 +1,4 @@
-const { createHash } = require("../helpers/hashPasswordManager")
+const { createHash } = require("../helpers/userApiUtils/hashPasswordManager")
 
 class userCreateDto{ 
     constructor (userData) {

@@ -1,6 +1,6 @@
 // Modulos importados
 const { usersModel } = require ("./models/user.model.js")
-const {createHash, passwordValidator} = require ("../../helpers/hashPasswordManager.js")
+const {createHash, passwordValidator} = require ("../../helpers/userApiUtils/hashPasswordManager.js")
 
 // CLASE CONSTRUCTORA
 class UserMongoManager {
