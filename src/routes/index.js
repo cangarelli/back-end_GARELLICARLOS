@@ -14,6 +14,7 @@ const cartRouter = new cartsRouter()
 const chatRouter = new chatsRouter()
 const productRouter = new productsRouter()
 const sessionRouter = new sessionsRouter()
+
 // Renderizado de rutas 
 
 /* rutas de la api */
@@ -24,7 +25,7 @@ router.use('/api/users', userRouter.getRouter())
 router.use('/api/sessions', sessionRouter.getRouter())
 
 /* Rutas de handelbars */
-router.use('/views', viewsRouter);
+// router.use('/views', viewsRouter);
 
 /* Manejo de errores en el servidor */
 router.use((err, req, res, next) => {

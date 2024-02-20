@@ -1,7 +1,7 @@
 const CustomRouter = require("../Routes.js");
 
 const passport = require('passport');
-const { createToken } = require('../../helpers/jwt.js');
+const { createToken } = require('../../helpers/sessionApiUtils/jwt.js');
 const { authorizationJWT, passportCall } = require('../../helpers/helpersBarrel.js');
 const userController = require('../../controller/users.controller.js');
   
@@ -13,7 +13,7 @@ class SessionClassRouter extends CustomRouter {
     init (){
 
         //seteo de rutas
-        this.get("/loguin", async (req, res) =>{
+        this.get("/loguin", ["public"], async (req, res) =>{
             try {
                 const response = await userManager.userCheck(req.body.email, req.body.password)
                 if (response.status == "error") {
@@ -41,16 +41,16 @@ class SessionClassRouter extends CustomRouter {
                 return res.sendServerError(`${error}`)
             }
         })
-        this.get("/current", ["public"], passportCall("jwt"), authorizationJWT("admin"), async (req, res) =>{
+        this.get("/current", ["public"], passportCall("jwt"), authorizationJWT('admin'), async (req, res) =>{
             try {
                 res.send({message: "datos sencibles", user: req.user})
-                if (condition) {
-                    sendUserError(error)
-                } else {
-                    sendSuccess(dato)
-                }
+                // if (condition) {
+                //     sendUserError(error)
+                // } else {
+                    // return send.sendSuccess(dato)
+                // }
             } catch (error) {
-                console.log ("check error of x class router is put method", error)
+                console.log ("check error of Session Class Router  is get method /current", error)
                 return res.sendServerError(`${error}`)
             }
         })

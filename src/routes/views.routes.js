@@ -41,7 +41,7 @@ router.get('/login', async (req, res) => {
        }
 })
 // Home
-router.get('/products', sessionLoader, async (req, res) => {
+router.get('/products', async (req, res) => {
     // Gestion de loguin
     const { saludo, userId, cartId, role } = req.userSession;
 
@@ -92,7 +92,7 @@ router.get('/products', sessionLoader, async (req, res) => {
 
 });
 // Product Detail
-router.get ("/product/:pid", sessionLoader, async (req, res) => {
+router.get ("/product/:pid", async (req, res) => {
     console.log ("pega en ruta /product/:pid")
 
     // Gestion de loguin
@@ -124,7 +124,7 @@ router.get('/realtimeproducts', async (req, res) => {
 });
 */
 // Chat
-router.get("/chatApp/", sessionLoader, async (req, res) => {
+router.get("/chatApp/", async (req, res) => {
     
     // Gestion de loguin
     const { first_name, last_name, userId, role } = req.userSession;
@@ -143,7 +143,7 @@ router.get("/chatApp/", sessionLoader, async (req, res) => {
         role} )
 })
 // Carrito
-router.get("/cart/:cartid", sessionLoader, async (req, res) => {
+router.get("/cart/:cartid", async (req, res) => {
 
     // Gestion de loguin
     

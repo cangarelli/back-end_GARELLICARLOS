@@ -7,9 +7,10 @@ class productClassRouter extends CustomRouter {
     init (){
 
         //seteo de rutas
-        this.get("/", ["public"], async (req, res) =>{
+        this.get("/", ["admin"], async (req, res) =>{
             try {
                 let {category, disponibility, order, limit, onPage} = req.query
+                console.log ("check querys of productClassRouter is get method route / ", req.query)
                 const response = await productManager.getProducts({category, disponibility, order, limit, onPage})               
                 
                 return response.status == "error" ?

@@ -4,7 +4,7 @@ const local = require ("passport-local")
 const GithubStrategy = require ("passport-github2")
 const jwt = require ("passport-jwt")
 // Importación de modulos propios
-const { json_private_key } = require("../helpers/jwt.js")
+const { json_private_key } = require("../helpers/sessionApiUtils/jwt.js")
 const userController = require("../controller/users.controller.js")
 
 

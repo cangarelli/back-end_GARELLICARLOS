@@ -5,13 +5,15 @@ const paginateQueryMaker = require ("./productsApiUtils/paginateQueryMaker.js")
 const selectorQuery = require ("./productsApiUtils/selectorQuery.js")
 
 // session api utils
-const auth = require ("./sessionApiUtils/auth.middlewere.js")
-const authorizationJWT = require ("./sessionApiUtils/jwt_passport.middleware.js")
-const sessionLoader = require ("./sessionApiUtils/sessionLoader.js")
-const passportCall = require ("./passportCall.js")
+const { createToken, validateToken, json_private_key} = require ("./sessionApiUtils/jwt.js")
+const authorizationJWT = require ("./sessionApiUtils/authorizationJWT.middleware.js")
+
+const passportCall = require ("./sessionApiUtils/passportCall.js")
 
 // User api utils
 
+// Views api utils
+const sessionLoader = require ("./viewsApiUtils/sessionLoader.js")
 
 // Cart api Utils
 
@@ -28,7 +30,7 @@ module.exports = {
     linkQueryMaker,
     paginateQueryMaker,
     selectorQuery,
-    auth,
+    createToken, validateToken, json_private_key,
     authorizationJWT,
     sessionLoader,
     passportCall,

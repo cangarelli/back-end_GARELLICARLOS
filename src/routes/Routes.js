@@ -2,7 +2,7 @@ const  { Router } = require ("express")
 // Modulos para que interprete el body del request
 const bodyParser = require('body-parser');
 
-const { validateToken, json_private_key } = require("../helpers/jwt")
+const { validateToken, json_private_key } = require("../helpers/sessionApiUtils/jwt")
 const jwt = require ("jsonwebtoken")
 class CustomRouter {
     constructor(){
@@ -18,7 +18,7 @@ class CustomRouter {
     init(){} // Metodo a completar en clase hija para agregar setear rutas.
 
     generateCustomResponses = (req, res, next) =>{
-        res.sendSuccess = (data) => res.send({status: "success", payload, data})
+        res.sendSuccess = (data) => res.send({status: "success", payload: data})
         res.sendServerError = (error) => res.status(500).send({status: "error", payload: error})
         res.sendUserError = (error) => res.status(400).send({status: "error", payload: error})
         res.sendTokenSucces = (data, cookieName, token) => res.cookie(cookieName, token, {maxAge: 60*60*1000}).send({status: "succes", payload: data, token})
@@ -32,8 +32,9 @@ class CustomRouter {
         const token = authHeaders.split(" ")[1]
     
         let user =  jwt.verify (token, json_private_key)
-        if (!politics.includes(user.role.toLowerCase())) return res.status(400).send({status: "error", error: "algo malo paso"})
-        req.user = user
+
+        if (!politics.includes(user.user.role)) return res.status(400).send({status: "error", error: "algo malo paso"})
+        req.user = user.user
         next()
     }
 

@@ -4,7 +4,7 @@ const router = Router();
 
 // Importación de modulos propios
 const passport = require('passport');
-const { createToken } = require('../../helpers/jwt.js');
+const { createToken } = require('../../helpers/sessionApiUtils/jwt.js');
 const { authorizationJWT, passportCall } = require('../../helpers/helpersBarrel.js');
 const userController = require('../../controller/users.controller.js');
   
