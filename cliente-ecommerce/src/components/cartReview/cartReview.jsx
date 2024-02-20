@@ -1,4 +1,4 @@
-export const cartReview = () => {
+export const CartReview = () => {
   return (
     <div>cartReview</div>
   )

@@ -1,4 +1,4 @@
-export const chat = () => {
+export const ChatBox = () => {
   return (
     <div>chat</div>
   )

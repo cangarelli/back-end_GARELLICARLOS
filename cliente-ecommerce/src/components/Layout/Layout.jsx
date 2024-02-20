@@ -1,5 +1,9 @@
-import { Footer } from "../footer/footer"
-import { NavBar } from "../navBar/navBar"
+// Estilos
+import "./style.css";
+
+// Importacion de componentes
+import { Footer, NavBar } from "../componentsBarrel"
+
 
 export const Layout = () => {
   return (

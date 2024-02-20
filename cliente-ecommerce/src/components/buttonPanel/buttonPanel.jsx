@@ -1,5 +1,5 @@
 
-export const buttonPanel = () => {
+export const ButtonPanel = () => {
   return (
     <div>buttonPanel</div>
   )

@@ -8,7 +8,7 @@ class cartClassRouter extends CustomRouter {
         //seteo de rutas
 
 
-        this.post("/:cid/purchase", async (req, res) =>{ // COMPLETAR
+        this.post("/:cid/purchase", ["user"], async (req, res) =>{ // COMPLETAR
             try {
                 const response = await CartManager.purchase({pid, quantity, purchaser })
                 return response.status == "error" ?
@@ -33,7 +33,7 @@ class cartClassRouter extends CustomRouter {
                 return res.sendServerError(error)
             } 
         })
-        this.post("/", async (req, res) =>{
+        this.post("/", ["user"], async (req, res) =>{
             try {
                 const response = await CartManager.createCart()
                 return response.status == "error" ?
@@ -44,7 +44,7 @@ class cartClassRouter extends CustomRouter {
                 return res.sendServerError(response.payload)
             } 
         })
-        this.put("/:cid/product/:pid", async (req, res) =>{
+        this.put("/:cid/product/:pid", ["user"],async (req, res) =>{
             try {
                 const response = await CartManager.updateCart(req.params.pid, req.params.cid, quantity)
                 return response.status == "error" ?
@@ -57,7 +57,7 @@ class cartClassRouter extends CustomRouter {
         })
 
         this.put("/:cid", async (req, res) => {})
-        this.delete("/:cid/product/:pid", async (req, res) =>{
+        this.delete("/:cid/product/:pid", ["user"],async (req, res) =>{
             try {
                 const response = await CartManager.deleteOneProduct(req.params.pid, req.params.cid)
                 return response.status == "error" ?

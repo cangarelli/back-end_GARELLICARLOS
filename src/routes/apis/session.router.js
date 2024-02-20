@@ -33,7 +33,7 @@ router.post('/register', async (req, res) => {
 // Loguin con JWT
 router.get('/loguin', async (req, res) => {
     try {
-        response = await userManager.userCheck(req.body.email, req.body.password)
+        const response = await userManager.userCheck(req.body.email, req.body.password)
     if (response.status == "error") {
         return res.status(401).send(response)
 

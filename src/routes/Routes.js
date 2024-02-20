@@ -18,9 +18,10 @@ class CustomRouter {
     init(){} // Metodo a completar en clase hija para agregar setear rutas.
 
     generateCustomResponses = (req, res, next) =>{
-        res.sendSuccess = (payload) => res.send({status: "success", payload})
-        res.sendServerError = (error) => res.status(500).send({status: "error", error})
-        res.sendUserError = (error) => res.status(400).send({status: "error", error})
+        res.sendSuccess = (data) => res.send({status: "success", payload, data})
+        res.sendServerError = (error) => res.status(500).send({status: "error", payload: error})
+        res.sendUserError = (error) => res.status(400).send({status: "error", payload: error})
+        res.sendTokenSucces = (data, cookieName, token) => res.cookie(cookieName, token, {maxAge: 60*60*1000}).send({status: "succes", payload: data, token})
         next()
     }
     // politics = ["public", "user", "user_premium", "admin"]
@@ -50,7 +51,7 @@ class CustomRouter {
         })
     }
     get(path, politics, ...callbacks){
-        this.routes.get(path, this.generateCustomResponses, this.handdlePolitics(politics), this.generateCustomResponses, this.applyCallBacks(callbacks))
+        this.routes.get(path, this.handdlePolitics(politics), this.generateCustomResponses, this.applyCallBacks(callbacks))
     }
     post(path, ...callbacks){
         this.routes.post(path, this.generateCustomResponses, this.applyCallBacks(callbacks))

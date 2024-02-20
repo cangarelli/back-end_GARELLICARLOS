@@ -85,17 +85,22 @@ const formDataManager = (nodos) => {
 };
 
 // Funciones de 4º orden para enviar la información
-async function formFetchtData({ route, info, method }) {
-    console.log("check formFetchtData is method parameter",method)
-    console.log("check formFetchtData is info parameter",info)
-    console.log ("check formFetchtData is route parameter", route)
+async function formFetchtData({ route, info, method, header }) {
+    console.log(method)
+    console.log(info)
+    console.log ("form fetch route", route)
     return new Promise((resolve, reject) => {
-        const auth = localStorage.getItem("token")
         fetch(route, {
         method: method,
         headers: {
             'Content-Type': 'application/json',
-            "authorization": `Bearer ${auth}`
+            "authorization": ((header)=>{
+                if (header) {
+                    return (localStorage.getItem("token"))
+                } else{
+                    return (null)
+                }
+            })()
         },
         body: JSON.stringify(info),
     })

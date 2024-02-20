@@ -45,7 +45,7 @@ class productClassRouter extends CustomRouter {
                 return res.sendServerError(`${error}`)
             }
         })
-        this.post("/", async (req, res) =>{
+        this.post("/",["admin"], async (req, res) =>{
             try {
                 const response = await productManager.createProduct(req.body)
                 return response.status == "error" ?
@@ -57,7 +57,7 @@ class productClassRouter extends CustomRouter {
                 return res.sendServerError(`${error}`)
             }
         })
-        this.put("/:pid", async (req, res) =>{
+        this.put("/:pid", ["admin"], async (req, res) =>{
             try {
                 const response = await productManager.updateProduct(req.params.pid, req.body) 
 
@@ -71,7 +71,7 @@ class productClassRouter extends CustomRouter {
                 return res.sendServerError(`${error}`)
             }
         })
-        this.delete("/:pid", async (req, res) =>{
+        this.delete("/:pid", ["admin"], async (req, res) =>{
             try {
                 const response = await productManager.deleteProduct(req.params.pid) 
 
