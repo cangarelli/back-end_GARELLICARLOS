@@ -6,7 +6,7 @@ import React from 'react'
 
 const Logo = (props) => {
   return (
-    <img class= "logo" src={props.src} alt={props.alt} />
+    <img className= "logo" src={props.src} alt={props.alt} />
   )
 }
 

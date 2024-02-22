@@ -6,7 +6,7 @@ import React from 'react'
 
 const SubTitle = (props) => {
   return (
-    <p class= "SubTitle">
+    <p className= "SubTitle">
       {props.texto}
     </p>  
   )  

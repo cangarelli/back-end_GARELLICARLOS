@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from 'react'
 
 import { CartWidget, Logo, SearchBar, SubTitle } from "../componentsBarrel";
-import { fetchData, serverConfig } from "../../hooks/hooksBarrel";
+import { devHost, fetchData } from "../../hooks/hooksBarrel";
 
 import logoMarca from "../../assets/png/Logo-marca.png"
 
@@ -17,7 +17,7 @@ const NavBar = (props) => {
   //Logica
   useEffect(() => {
     // Con mi backend
-    fetchData({ route: `${hostDev}/api/products/daokeydata/category`, method: "get" })
+    fetchData({ route: `${devHost()}/api/products/daokeydata/category`, method: "get" })
       .then((res) => {
         setCategoryOptions(res.payload)
       })

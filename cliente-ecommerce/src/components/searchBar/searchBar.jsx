@@ -5,41 +5,41 @@ import "./style.css"
 import { ButtonOption, SubTitle } from '../componentsBarrel'
 
 const SearchBar = (props) => {
- const { categories } = props
+  const { categories } = props
   return (
-    <form class="SearchBar">
-      <div class="SearchBar__prodCategories">
+    <form className="SearchBar">
+      <div className="SearchBar__prodCategories">
         <SubTitle texto="Categorias" />
-        <div class= "SearchBar__prodCategories--option">
+        <div className="SearchBar__prodCategories--option">
           {categories.map((categorie) => {
             return (
-              <div class= "SearchBar__prodCategories--optionMenu">
-                <label for={categorie}> {categorie.toUpperCase()}</label>
+              <div className="SearchBar__prodCategories--optionMenu">
+                <label for={categorie} > {categorie.toUpperCase()} </label>
                 <input type="checkbox" name={categorie} id={categorie} />
               </div>
             )
           })}
         </div>
       </div>
-        <div class="SearchBar__order">
-          <SubTitle texto= "Orden" />
-          <div>
-            <label for="orderHigh">Mayor precio</label>
-            <input type="checkbox" name="orderHeigh" id="orderHeigh" />
-            <label for="orderLow">Menor precio</label>
-            <input type="checkbox" name="orderLow" id="orderLow" /> 
-          </div>
+      <div className="SearchBar__order">
+        <SubTitle texto="Orden" />
+        <div>
+          <label for="orderHigh">Mayor precio</label>
+          <input type="checkbox" name="orderHeigh" id="orderHeigh" />
+          <label for="orderLow">Menor precio</label>
+          <input type="checkbox" name="orderLow" id="orderLow" />
         </div>
-          <div class="SearchBar__disponibility">
-            <SubTitle texto= "Disponinilidad" />
-            <div>
-              <label for="disponibility">Solo disponibles</label>
-              <input type="checkbox" name="disponibility" id="status" />
-            </div>
+      </div>
+      <div className="SearchBar__disponibility">
+        <SubTitle texto="Disponinilidad" />
+        <div>
+          <label for="disponibility">Solo disponibles</label>
+          <input type="checkbox" name="disponibility" id="status" />
         </div>
-        <div className='SearchBar__buttonPad'>
-          <ButtonOption  value="Filter Search"/>
-        </div>
+      </div>
+      <div className='SearchBar__buttonPad'>
+        <ButtonOption value="Filter Search" />
+      </div>
     </form>
   )
 }

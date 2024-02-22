@@ -5,7 +5,7 @@ import "./style.css"
 
 const ButtonOption = (props) => {
   return (
-    <input class= "optionButton" type="button" value={props.value} />  
+    <input className= "optionButton" type="button" value={props.value} />  
   )
 }
 

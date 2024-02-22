@@ -26,11 +26,15 @@ const chatUpdate = ({socket, serverSocket, port}) =>{
 // Configuración
 const initializeSoketServer = (serverHTTP, port) => {
     // Configuración Sockey.io
-    const serverSocket = new Server(serverHTTP);
+    const serverSocket = new Server(serverHTTP, {
+        cors: {
+            origin: "*"
+        }
+    });
 
     // Configuración de Eventlisteners de socket.io
     serverSocket.on('connection', (socket) => {
-        console.log('server connected');
+        console.log('server.io connected');
         socket.on('conection', (data) => {
             console.log(data);
         });
