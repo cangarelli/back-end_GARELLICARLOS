@@ -5,12 +5,16 @@ import "./style.css";
 import { Footer, NavBar } from "../componentsBarrel"
 
 
-export const Layout = () => {
+import React from 'react'
+
+const Layout = (props) => {
   return (
     <div>
-        <NavBar/>
-            {props.children}
-        <Footer/>
+      <NavBar/>
+        {props.children}
+      <Footer/>
     </div>
   )
 }
+
+export default Layout

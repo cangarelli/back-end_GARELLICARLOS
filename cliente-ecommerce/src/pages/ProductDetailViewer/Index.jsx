@@ -2,11 +2,16 @@
 import "./style.css";
 
 // Importacion de componentes
+import { Layout } from "../../components/componentsBarrel";
 
 import React from 'react'
 
-export const ProductDetailViewer = () => {
+const ProductDetailViewer = () => {
   return (
-    <div>ProductDetailViewer</div>
+    <Layout>
+    
+    </Layout>
   )
 }
+
+export default ProductDetailViewer

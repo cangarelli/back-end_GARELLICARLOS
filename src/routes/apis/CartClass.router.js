@@ -10,6 +10,7 @@ class cartClassRouter extends CustomRouter {
 
         this.post("/:cid/purchase", ["user"], async (req, res) =>{ // COMPLETAR
             try {
+                const {email, cartId, full_name, id, role }= req.user
                 const response = await CartManager.purchase({pid, quantity, purchaser })
                 return response.status == "error" ?
                 res.sendUserError(response.payload)
@@ -33,7 +34,7 @@ class cartClassRouter extends CustomRouter {
                 return res.sendServerError(error)
             } 
         })
-        this.post("/", ["user"], async (req, res) =>{
+        this.post("/", ["public"], async (req, res) =>{
             try {
                 const response = await CartManager.createCart()
                 return response.status == "error" ?
@@ -46,7 +47,9 @@ class cartClassRouter extends CustomRouter {
         })
         this.put("/:cid/product/:pid", ["user"],async (req, res) =>{
             try {
-                const response = await CartManager.updateCart(req.params.pid, req.params.cid, quantity)
+                const {email, cartId, full_name, id, role }= req.user
+
+                const response = await CartManager.updateCart(req.params.pid, cartId, quantity)
                 return response.status == "error" ?
                     res.sendUserError(response.payload)
                 :
@@ -56,10 +59,13 @@ class cartClassRouter extends CustomRouter {
             } 
         })
 
-        this.put("/:cid", async (req, res) => {})
+        this.put("/:cid", ["user"], async (req, res) => {
+            const {email, cartId, full_name, id, role }= req.user
+        })
         this.delete("/:cid/product/:pid", ["user"],async (req, res) =>{
             try {
-                const response = await CartManager.deleteOneProduct(req.params.pid, req.params.cid)
+                const {email, cartId, full_name, id, role }= req.user
+                const response = await CartManager.deleteOneProduct(req.params.pid, cartId)
                 return response.status == "error" ?
                     res.sendUserError(response.payload)
                 :

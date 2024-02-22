@@ -7,7 +7,7 @@ class productClassRouter extends CustomRouter {
     init (){
 
         //seteo de rutas
-        this.get("/", ["admin"], async (req, res) =>{
+        this.get("/", ["public"], async (req, res) =>{
             try {
                 let {category, disponibility, order, limit, onPage} = req.query
                 console.log ("check querys of productClassRouter is get method route / ", req.query)

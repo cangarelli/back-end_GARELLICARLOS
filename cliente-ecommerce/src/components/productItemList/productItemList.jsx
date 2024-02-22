@@ -5,7 +5,9 @@ import "./style.css";
 import { ProductCard } from "../componentsBarrel";
 
 
-export const ProductItemList = (props) => {
+import React from 'react'
+
+const ProductItemList = (props) => {
     //Parametros
     const {productlist} = props;
   
@@ -24,3 +26,5 @@ export const ProductItemList = (props) => {
       </div>
     ) 
 }
+
+export default ProductItemList

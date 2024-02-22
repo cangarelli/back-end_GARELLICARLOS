@@ -1,22 +1,25 @@
 // Atomo
-export { CartWidget } from "./CartWidget/CartWidget.jsx"
-export { Title } from "./Title/Title.jsx"
-export { SubTitle } from "./SubTitle/SubTitle.jsx"
+export {default as CartWidget  } from "./CartWidget/CartWidget.jsx"
+export {default as Title  } from "./Title/Title.jsx"
+export {default as SubTitle  } from "./SubTitle/SubTitle.jsx"
+export {default as Logo } from "./Logo/Logo.jsx"
+export {default as ButtonOption } from "./ButtonOption/ButtonOption.jsx"
+export {default as ButtonMain } from "./ButtonMain/ButtonMain.jsx"
 
 // Molecula
-export { SearchBar } from "./SearchBar/SearchBar.jsx"
-export { ProductCard } from "./ProductCard/ProductCard.jsx"
-export { ButtonPanel } from "./ButtonPanel/ButtonPanel.jsx"
-export { ChatBox } from "./ChatBox/ChatBox.jsx"
-export { CartReview } from "./CartReview/CartReview.jsx"
+export {default as SearchBar } from "./SearchBar/SearchBar.jsx"
+export {default as ProductCard } from "./ProductCard/ProductCard.jsx"
+export {default as ButtonPanel } from "./ButtonPanel/ButtonPanel.jsx"
+export {default as ChatBox } from "./ChatBox/ChatBox.jsx"
+export {default as CartReview } from "./CartReview/CartReview.jsx"
 
 // Sustancia
-export { ProductItemList } from "./ProductItemList/ProductItemList.jsx"
-export { Footer } from "./Footer/Footer.jsx"
-export { NavBar } from "./NavBar/NavBar.jsx"
+export {default as ProductItemList } from "./ProductItemList/ProductItemList.jsx"
+export {default as Footer } from "./Footer/Footer.jsx"
+export {default as NavBar } from "./NavBar/NavBar.jsx"
 
 // Frascos
-export { ProductItemListConteiner } from "./ProductItemListConteiner/ProductItemListConteiner.jsx"
+export {default as ProductItemListConteiner } from "./ProductItemListConteiner/ProductItemListConteiner.jsx"
 
 // Cajas
-export { default as Layout } from "./Layout/Layout.jsx"
+export {default as Layout } from "./Layout/Layout.jsx"

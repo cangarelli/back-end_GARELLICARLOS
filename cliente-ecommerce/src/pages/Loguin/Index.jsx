@@ -2,11 +2,16 @@
 import "./style.css";
 
 // Importacion de componentes
+import { Layout } from "../../components/componentsBarrel";
 
 import React from 'react'
 
-export const Loguin = () => {
+const Loguin = () => {
   return (
-    <div>Loguin</div>
+    <Layout>
+
+    </Layout>
   )
 }
+
+export default Loguin

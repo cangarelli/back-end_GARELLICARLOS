@@ -1,6 +1,14 @@
+import React from 'react'
 
-export const ButtonPanel = () => {
+
+// Estilos
+import "./style.css";
+
+const ButtonPanel = () => {
   return (
-    <div>buttonPanel</div>
+    <div>ButtonPanel</div>
   )
 }
+
+export default ButtonPanel
+

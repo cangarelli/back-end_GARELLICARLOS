@@ -1,5 +1,13 @@
-export const ChatBox = () => {
+import React from 'react'
+
+// Estilos
+import "./style.css";
+
+
+const ChatBox = () => {
   return (
-    <div>chat</div>
+    <div>ChatBox</div>
   )
 }
+
+export default ChatBox

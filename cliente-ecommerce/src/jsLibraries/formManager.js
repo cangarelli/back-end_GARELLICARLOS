@@ -1,3 +1,5 @@
+
+const formManager = async () => {  
 // Funciones de 1ª orden para manejar el DOM
 function formWindowMaker({formId, optionsObjectsArray, buttonValue, prodId}) {
     //Seleccionar nodo padre
@@ -123,3 +125,15 @@ async function upLoadData({ apiRoute, method, formId, updatableData}) {
     formId && deleteElement(formId);
     return response
 };
+  return (
+    {
+        upLoadData,
+        formFetchtData,
+        productFormManager,
+        deleteElement,
+        formWindowMaker,
+    } 
+  )
+}
+
+export default formManager

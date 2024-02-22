@@ -3,7 +3,12 @@ import React from 'react'
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 //Modulos Propios
-import { Home, ItemListCategory, ItemDetail, Consultas, Carrito, CheckOut } from '../pages/pagesBarrel';
+import Home from '../pages/Home/Index.jsx';
+import ProductDetailViewer from '../pages/ProductDetailViewer/Index.jsx';
+import ChatView from '../pages/ChatView/Index.jsx';
+import Loguin from '../pages/Loguin/Index.jsx';
+import CartView from '../pages/CartView/Index.jsx';
+import CheckOut from '../pages/CheckOut/Index.jsx';
 
 
 const routes = createBrowserRouter([
@@ -13,19 +18,19 @@ const routes = createBrowserRouter([
     },
     {
       path: "/:productid",
-      element: <ItemDetail/>,
-    },
-    {
-      path: "/category/:id",
-      element: <ItemListCategory/>,
+      element: <ProductDetailViewer />,
     },
     {
       path: "/contacto",
-      element: <Consultas/>,
+      element: <ChatView/>,
+    },
+    {
+      path: "/loguin",
+      element: <Loguin/>,
     },
     {
       path: "/carrito",
-      element: <Carrito/>,
+      element: <CartView/>,
     },
     {
       path: "/checkout",

@@ -2,11 +2,16 @@
 import "./style.css";
 
 // Importacion de componentes
+import { Layout } from "../../components/componentsBarrel";
 
 import React from 'react'
 
-export const CheckOut = () => {
+const CheckOut = () => {
   return (
-    <div>CartView</div>
+    <Layout>
+
+    </Layout>
   )
 }
+
+export default CheckOut

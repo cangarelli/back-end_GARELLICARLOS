@@ -1,16 +1,13 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import React from 'react'
+
 import './App.css'
-import { Layout } from './components/layout/layout'
+import NavegationMap from './routes/NavegationMap'
 
 function App() {
-  const [count, setCount] = useState(0)
+  // const [count, setCount] = useState(0)
 
   return (
-    <>  
-      <Layout/>
-    </>
+    <NavegationMap />
   )
 }
 

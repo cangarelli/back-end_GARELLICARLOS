@@ -1,5 +1,12 @@
-export const ProductDetail = () => {
+import React from 'react'
+
+// Estilos
+import "./style.css";
+
+const ProductDetail = (props) => {
   return (
-    <div>productDetail</div>
+    <div>ProductDetail</div>
   )
 }
+
+export default ProductDetail

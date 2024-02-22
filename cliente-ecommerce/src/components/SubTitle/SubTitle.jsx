@@ -2,9 +2,14 @@
 import "./style.css";
 
 
+import React from 'react'
 
-export const SubTitle = () => {
+const SubTitle = (props) => {
   return (
-    <div>SubTitle</div>
-  )
+    <p class= "SubTitle">
+      {props.texto}
+    </p>  
+  )  
 }
+
+export default SubTitle

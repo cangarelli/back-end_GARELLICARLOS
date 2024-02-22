@@ -7,7 +7,9 @@ import "./style.css";
 // Importacion de componentes
 import { SubTitle, Title } from "../componentsBarrel";
 
-export const ProductCard = (props) => {
+import React from 'react'
+
+const ProductCard = (props) => {
   const { producto, id } = props
   const {stock, descripcion, imagen, precio, categoria, titulo } = producto
 
@@ -23,3 +25,5 @@ export const ProductCard = (props) => {
     </div>
   );
 }
+
+export default ProductCard

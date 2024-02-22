@@ -2,11 +2,16 @@
 import "./style.css";
 
 // Importacion de componentes
+import { Layout, ProductItemListConteiner } from "../../components/componentsBarrel";
 
 import React from 'react'
 
-export const Home = () => {
+const Home = () => {
   return (
-    <div>Home</div>
+    <Layout>
+      <ProductItemListConteiner />
+    </Layout>
   )
 }
+
+export default Home
