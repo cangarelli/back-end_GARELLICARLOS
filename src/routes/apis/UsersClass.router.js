@@ -1,8 +1,8 @@
-const CustomRouter = require("./Routes.js");
+const CustomRouter = require("../Routes.js");
 
 // Creación de instancias de managers
-const userController = require('../controller/users.controller.js');
-const cartController = require("../controller/carts.controller.js");
+const userController = require('../../controller/users.controller.js');
+const cartController = require("../../controller/carts.controller.js");
 const userManager = new userController ()
 const cartManager = new cartController()
 
