@@ -4,7 +4,7 @@ const router = Router()
 // Importacion de rutas de expres
 const productsRouter = require('./apis/ProductClass.router.js');
 const cartsRouter = require('./apis/CartClass.router.js');
-const usersRouter = require('./UsersClass.router.js');
+const usersRouter = require('./apis/UsersClass.router.js');
 const chatsRouter = require ("./apis/ChatClass.router.js")
 const sessionsRouter = require ("./apis/SessionClass.router.js")
 const viewsRouter = require("./views.routes.js");
