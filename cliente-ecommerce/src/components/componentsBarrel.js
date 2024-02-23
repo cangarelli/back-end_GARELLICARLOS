@@ -9,6 +9,8 @@ export {default as ButtonMain } from "./ButtonMain/ButtonMain.jsx"
 // Molecula
 export {default as SearchBar } from "./SearchBar/SearchBar.jsx"
 export {default as ProductCard } from "./ProductCard/ProductCard.jsx"
+export {default as ProductDetail } from "./ProductDetail/ProductDetail.jsx"
+
 export {default as ButtonPanel } from "./ButtonPanel/ButtonPanel.jsx"
 export {default as ChatBox } from "./ChatBox/ChatBox.jsx"
 export {default as CartReview } from "./CartReview/CartReview.jsx"

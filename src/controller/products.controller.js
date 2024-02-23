@@ -20,10 +20,6 @@ class productController{
         // Gestion de datos
         const result = await this.service.getProducts({filter: querys.filter, pagination: querys.pagination})
         
-        // Gestion de respuesta
-        if (result.status) {
-            return result
-        } else {
         // Destructuring
         const {
             docs,
@@ -37,26 +33,24 @@ class productController{
         // Creacion de querys
         const nextLink = `/views/products${linkQueryMaker(
             {category: category, disponibility: disponibility, order: order, limit: limit, thePage: nextPage}
-            )}`
+        )}`
         const prevLink = `/views/products${linkQueryMaker(
             {category: category, disponibility: disponibility, order: order, limit: limit, thePage: prevPage}
-            )}`
+        )}`
         // respuesta
         return ({
-            status:"success",
-            payload: {
-                docs: docs,
-                totalPages: totalPages,
-                prevPage: prevPage,
-                nextPage: nextPage,
-                page: page,
-                hasPrevPage: hasPrevPage,
-                hasNextPage: hasNextPage,
-                prevLink: prevLink,
-                nextLink: nextLink 
-            }})
-        }
-     }
+            docs: docs,
+            totalPages: totalPages,
+            prevPage: prevPage,
+            nextPage: nextPage,
+            page: page,
+            hasPrevPage: hasPrevPage,
+            hasNextPage: hasNextPage,
+            prevLink: prevLink,
+            nextLink: nextLink 
+        })
+    }
+
     getProduct = async (pid) => {
             const response = await this.service.getProductsById(pid)
             return (response)

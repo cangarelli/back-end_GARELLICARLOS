@@ -12,31 +12,31 @@ import CheckOut from '../pages/CheckOut/Index.jsx';
 
 
 const routes = createBrowserRouter([
-    {
-      path: "/",
-      element: <Home />,
-    },
-    {
-      path: "/:productid",
-      element: <ProductDetailViewer />,
-    },
-    {
-      path: "/contacto",
-      element: <ChatView/>,
-    },
-    {
-      path: "/loguin",
-      element: <Loguin/>,
-    },
-    {
-      path: "/carrito",
-      element: <CartView/>,
-    },
-    {
-      path: "/checkout",
-      element: <CheckOut/>,
-    }
-  ]);
+  {
+    path: "/",
+    element: <Home />,
+  },
+  {
+    path: "/item/:pid",
+    element: <ProductDetailViewer />,
+  },
+  {
+    path: "/contacto",
+    element: <ChatView />,
+  },
+  {
+    path: "/loguin",
+    element: <Loguin />,
+  },
+  {
+    path: "/carrito",
+    element: <CartView />,
+  },
+  {
+    path: "/checkout",
+    element: <CheckOut />,
+  }
+]);
 
 // Componente
 const NavegationMap = () => {

@@ -4,8 +4,11 @@ import React from 'react'
 import "./style.css"
 
 const ButtonOption = (props) => {
+
+  const { buttonData } = props
+    
   return (
-    <input className= "optionButton" type="button" value={props.value} />  
+    <input className= "optionButton" type="button" value={`${buttonData.value}`} />  
   )
 }
 

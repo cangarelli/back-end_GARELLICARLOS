@@ -8,23 +8,23 @@ import { ProductCard } from "../componentsBarrel";
 import React from 'react'
 
 const ProductItemList = (props) => {
-    //Parametros
-    const {productlist} = props;
+  //Parametros
+  const {productlist} = props;
+
+  // Logica
+  // const { carrito, agregarAlCarrito, cantidadEnCarrito, precioTotal } = useContext (CartContext);
   
-    // Logica
-    const { carrito, agregarAlCarrito, cantidadEnCarrito, precioTotal } = useContext (CartContext);
-  
-    // Renderizado
-    return (
-      <div className='itemList'>
-        {productlist.map((producto) => {
+  // Renderizado
+  return (
+    <div className='productItemList'>
+      {productlist.map((product) => {
           
-          return (
-            <ProductCard id={producto.id} producto={producto}/>
-          )
-        })}
-      </div>
-    ) 
+        return (
+          <ProductCard productData={product}/>
+        )
+      })}
+    </div>
+  ) 
 }
 
 export default ProductItemList

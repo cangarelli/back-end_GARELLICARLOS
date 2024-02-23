@@ -1,8 +1,13 @@
 import React from 'react'
 
-const Title = () => {
+// Estilos
+import "./style.css";
+
+const Title = (props) => {
   return (
-    <div>Title</div>
+    <h2 className='title'>
+     {props.texto}
+    </h2>
   )
 }
 

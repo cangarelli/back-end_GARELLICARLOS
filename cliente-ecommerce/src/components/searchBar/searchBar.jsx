@@ -38,7 +38,7 @@ const SearchBar = (props) => {
         </div>
       </div>
       <div className='SearchBar__buttonPad'>
-        <ButtonOption value="Filter Search" />
+        <ButtonOption buttonData={{value:"Filter Search"}} />
       </div>
     </form>
   )

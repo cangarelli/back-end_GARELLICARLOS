@@ -1,4 +1,4 @@
-const productController = require("../../controller/products.controller");
+const productController = require("../../controller/products.controller.js");
 const CustomRouter = require("../Routes.js");
 
 const productManager = new productController()
@@ -16,7 +16,7 @@ class productClassRouter extends CustomRouter {
                 return response.status == "error" ?
                     res.sendUserError(response.payload)
                 :
-                    res.sendSuccess(response.payload)
+                    res.sendSuccess(response)
             } catch (error) {
                 console.log ("check error of productClassRouter class router is get method", error)
                 return res.sendServerError(`${error}`)
@@ -36,13 +36,15 @@ class productClassRouter extends CustomRouter {
             })
         this.get ("/:pid", ["public"], async (req, res) => {
             try {
-                const response = await productManager.getProduct(req.parms.pid)
+                console.log ("check req.parms of of productClassRouter class router is get method /:pid", req.params)
+                const response = await productManager.getProduct(req.params.pid)
+                console.log ("check response of of productClassRouter class router is get method /:pid", response)
                 return response.status == "error" ?
                     res.sendUserError(response.payload)
                 :
-                    res.sendSuccess(response.payload)  
+                    res.sendSuccess(response)  
             } catch (error) {
-                console.log ("check error of productClassRouter class router is post method", error)
+                console.log ("check error of productClassRouter class router is get method /:pid", error)
                 return res.sendServerError(`${error}`)
             }
         })
@@ -52,7 +54,7 @@ class productClassRouter extends CustomRouter {
                 return response.status == "error" ?
                     res.sendUserError(response.payload)
                 :
-                    res.sendSuccess(response.payload)
+                    res.sendSuccess(response)
             } catch (error) {
                 console.log ("check error of productClassRouter class router is post method", error)
                 return res.sendServerError(`${error}`)
@@ -65,7 +67,7 @@ class productClassRouter extends CustomRouter {
                 return response.status == "error" ?
                     sendUserError(response.payload)
                 :
-                    sendSuccess(response.payload)
+                    sendSuccess(response)
                 
             } catch (error) {
                 console.log ("check error of productClassRouter class router is put method", error)
@@ -79,7 +81,7 @@ class productClassRouter extends CustomRouter {
                 return response.status == "error" ?
                     sendUserError(response.payload)
                 :
-                    sendSuccess(response.payload)
+                    sendSuccess(response)
             } catch (error) {
                 console.log ("check error of productClassRouter class router is delete method", error)
                 return res.sendServerError(`${error}`)

@@ -10,18 +10,18 @@ import { SubTitle, Title } from "../componentsBarrel";
 import React from 'react'
 
 const ProductCard = (props) => {
-  const { producto, id } = props
-  const {stock, descripcion, imagen, precio, categoria, titulo } = producto
+  const { productData } = props
+  console.log ("check productData of ProductCard component", productData)
 
   return (
     <div className= "card">
-      <img className= "--img" src={imagen} alt="ilustración de producto" />
+      <img className= "--img" src={productData.thumbnail} alt="ilustración de producto" />
       <div className="__infoDiv">
-        <Title texto= {titulo} />
-        <SubTitle texto= {`$ ${precio}`}/>
-        <p>Quendan {stock}</p>
+        <Title texto= {productData.title} />
+        <SubTitle texto= {`$ ${productData.price}`}/>
+        <p>Quendan {productData.stock}</p>
       </div>  
-      <Link to={`/item/${id}`} className= "--verDetalleButton">Ver detalle</Link>
+      <Link to={`/item/${productData._id}`} className= "--verDetalleButton">Ver detalle</Link>
     </div>
   );
 }
