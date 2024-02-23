@@ -8,16 +8,16 @@ let chatDao
 let ticketDao
 
 switch (configObject.percistance) {
-    case "file":
-        userDao = require ("./managersFileSystem/UserFileManager.js")
-        productDao = require("./managersFileSystem/ProductFileManager.js")
-        cartDao = require ("./managersFileSystem/CartFileManager.js")
-        chatDao = require ("./managersFileSystem/ChatFileManager.js")
-        ticketDao= null
-    break;
-    case "memory":
+    // case "file":
+    //     userDao = require ("./managersFileSystem/UserFileManager.js")
+    //     productDao = require("./managersFileSystem/ProductFileManager.js")
+    //     cartDao = require ("./managersFileSystem/CartFileManager.js")
+    //     chatDao = require ("./managersFileSystem/ChatFileManager.js")
+    //     ticketDao= null
+    // break;
+    // case "memory":
         
-    break;
+    // break;
     default:
         const userDaoGetter =  require ("./managersMongo/UserMongoManager.js")
         userDao = userDaoGetter
