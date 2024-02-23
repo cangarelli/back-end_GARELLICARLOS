@@ -9,7 +9,8 @@ class TiketMongoManager {
     getOneTicket = async (tiketId) => await productsModel.findOne({_id: tiketId})
 
     makeATicket = async (purchaseData) => await tiketModel.create(purchaseData)
-
+    
+    getOneKeyData = async (key) => await productsModel.distinct(key)
 }
 
 module.exports = TiketMongoManager;

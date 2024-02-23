@@ -65,12 +65,14 @@ class cartController{
         const virtualProductList = await stockReviewer (this.productManager, purchaseList )
         
         // Calcular el precio total
-        const totalAmount = await amountCalculator (virtualProductList)
+        const totalAmount = amountCalculator (virtualProductList)
+        // Obtener codigos existentes
+        const codesArray = await this.ticketManager.getOneKeyData(code)
 
         // Genero el ticket
-        const tiketData = { code: ticketCodeGenerator(), purchase_datetime: timeGetter(), amount: totalAmount, purchaser }
+        const tiketData = { code: ticketCodeGenerator(codesArray, 5), purchase_datetime: timeGetter(), amount: totalAmount, purchaser }
         const response = await this.ticketManager.makeATicket (tiketData)
-        const result = await this.ticketManager.getOneTiket (TId)
+        // const result = await this.ticketManager.getOneTiket (TId)
 
         // Actualizo el stock y el carrito
         virtualProductList.forEach((prod)=>{

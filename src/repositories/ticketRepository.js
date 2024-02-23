@@ -6,5 +6,7 @@ class ticketRepository {
     getOneTicket = async (tiketId) => await this.daoService.findOne({ _id: tiketId })
 
     makeATicket = async (purchaseData) => await this.daoService.create(purchaseData)
+
+    getOneKeyData = async (key) => await this.daoService.getOneKeyData(key)
 }
 module.exports = ticketRepository
