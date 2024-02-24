@@ -63,16 +63,15 @@ class cartController{
         
         // Chequear stock
         const virtualProductList = await stockReviewer (this.productManager, purchaseList )
-        
         // Calcular el precio total
         const totalAmount = amountCalculator (virtualProductList)
         // Obtener codigos existentes
-        const codesArray = await this.ticketManager.getOneKeyData(code)
-
+        const codesArray = await this.ticketManager.getOneKeyData("code")
         // Genero el ticket
         const tiketData = { code: ticketCodeGenerator(codesArray, 5), purchase_datetime: timeGetter(), amount: totalAmount, purchaser }
+        console.log ("check tiketData un purchase method of cart controller", tiketData )
+
         const response = await this.ticketManager.makeATicket (tiketData)
-        // const result = await this.ticketManager.getOneTiket (TId)
 
         // Actualizo el stock y el carrito
         virtualProductList.forEach((prod)=>{

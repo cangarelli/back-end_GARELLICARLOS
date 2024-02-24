@@ -54,14 +54,14 @@ class CustomRouter {
     get(path, politics, ...callbacks){
         this.routes.get(path, this.handdlePolitics(politics), this.generateCustomResponses, this.applyCallBacks(callbacks))
     }
-    post(path, ...callbacks){
-        this.routes.post(path, this.generateCustomResponses, this.applyCallBacks(callbacks))
+    post(path, politics, ...callbacks){
+        this.routes.post(path, this.handdlePolitics(politics), this.generateCustomResponses, this.applyCallBacks(callbacks))
     }
-    put(path, ...callbacks){
-        this.routes.put(path, this.generateCustomResponses, this.applyCallBacks(callbacks))
+    put(path, politics, ...callbacks){
+        this.routes.put(path, this.handdlePolitics(politics), this.generateCustomResponses, this.applyCallBacks(callbacks))
     }
-    delete(path, ...callbacks){
-        this.routes.delete(path, this.generateCustomResponses, this.applyCallBacks(callbacks))
+    delete(path, politics, ...callbacks){
+        this.routes.delete(path, this.handdlePolitics(politics), this.generateCustomResponses, this.applyCallBacks(callbacks))
     }
 }
 module.exports = CustomRouter

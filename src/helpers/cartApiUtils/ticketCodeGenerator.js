@@ -16,9 +16,10 @@ const generateRandomCode = (length) => {
 
 const ticketCodeGenerator = (codesArray, length) => {
     let newCode
+
     do {
         newCode = generateRandomCode(length)
-    } while (!codesArray.includes(newCode));
+    } while (codesArray.includes(newCode));
     return newCode
 }
 

@@ -1,5 +1,6 @@
 const timeGetter = () =>{
     const actualDate = new Date()
-    return (`${actualDate.getDate()}/${actualDate.getMonth()}/${actualDate.getFullYear()} at ${actualDate.getHours()}:${actualDate.getMinutes()} hs`)`${actualDate.getDate()}/${actualDate.getMonth()}/${actualDate.getFullYear()} at ${actualDate.getHours()}:${actualDate.getMinutes()} hs`
+    const date = `${actualDate.getDate()}/${actualDate.getMonth()}/${actualDate.getFullYear()} at ${actualDate.getHours()}:${actualDate.getMinutes()} hs`
+    return (date)
 }
 module.exports = timeGetter

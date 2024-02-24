@@ -11,6 +11,7 @@ class cartClassRouter extends CustomRouter {
         this.post("/:cid/purchase", ["user"], async (req, res) =>{ // COMPLETAR
             try {
                 const {email, cartId, full_name, id, role }= req.user
+                console.log ("check req.user in post method of /:cid/purchase route ", req.user)
                 const response = await CartManager.purchase({ purchaseList: req.body, purchaser:email, cid: cartId })
                 return response.status == "error" ?
                 res.sendUserError(response.payload)
@@ -18,7 +19,7 @@ class cartClassRouter extends CustomRouter {
                 res.sendSuccess(response)  
             } catch (error) {
                 console.log ("check error of cart class router is post method /:cid/purchase", error)
-                return res.sendServerError(error)
+                return res.sendServerError(`${error}`)
             }
         })
 
