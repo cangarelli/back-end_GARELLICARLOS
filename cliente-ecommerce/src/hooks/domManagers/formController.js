@@ -1,6 +1,6 @@
-import {deleteElement, formWindowMaker} from '..hooksBarrel.js';
+import {deleteElement, formWindowMaker} from '../hooksBarrel.js';
 
-const productFormController = (action, id, idProd) => {
+const formController = (action, id, idProd) => {
     const formUserCreateObjetc = [
         {type: "text", id: "name",  label:"Nombre"},
         {type: "text", id: "lastName",  label:"Apelido"},
@@ -16,6 +16,7 @@ const productFormController = (action, id, idProd) => {
         {type: "text", id: "code", label: "Ingresa el codigo del producto"},
         {type: "text", id: "thumbnail", label: "Ingresa la ruta a una img del producto"},
     ]
+    
     switch (action) {
         case 'create':
             const existe = document.getElementById(id);
@@ -28,11 +29,11 @@ const productFormController = (action, id, idProd) => {
             const existeUpdate = document.getElementById(id);
             existeUpdate === null && formWindowMaker({formId: id, optionsObjectsArray: formProductManagerObjetc, buttonValue: "update-producto",  prodId: idProd});
             break;
-        case "create-user":
+        case "register-user":
             const existeCreateUser = document.getElementById(id);
-            existeCreateUser === null && formWindowMaker ({formId: id, optionsObjectsArray: formUserCreateObjetc, buttonValue: "create-user"});
+            existeCreateUser === null && formWindowMaker ({formId: id, optionsObjectsArray: formUserCreateObjetc, buttonValue: action });
             break;
     }
 }
 
-export default productFormController
+export default formController

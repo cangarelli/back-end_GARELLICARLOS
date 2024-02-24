@@ -1,6 +1,6 @@
 const formWindowMaker = ({formId, optionsObjectsArray, buttonValue, prodId}) => {
     //Seleccionar nodo padre
-    const father = document.getElementById('mainRoot');
+    const father = document.getElementById('root');
 
     //Crear Ventana de formulario
     const windowForm = document.createElement("form")

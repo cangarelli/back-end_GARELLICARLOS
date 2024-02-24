@@ -13,8 +13,9 @@ class SessionClassRouter extends CustomRouter {
     init (){
 
         //seteo de rutas
-        this.get("/loguin", ["public"], async (req, res) =>{
+        this.post("/loguin", ["public"], async (req, res) =>{
             try {
+                console.log ("chekk req.body of get method is loguin route ", req.body)
                 const response = await userManager.userCheck(req.body.email, req.body.password)
                 if (response.status == "error") {
                    return  res.sendUserError(response.payload)
