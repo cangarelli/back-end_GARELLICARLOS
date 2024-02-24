@@ -18,4 +18,6 @@ export { default as formWindowMaker } from "./domManagers/formWindowMaker.js"
 
 // Utils
 export { default as queryMaker } from "./utils/queryMaker.js"
+export { default as queryGetter } from "./utils/queryGetter.js"
+
 

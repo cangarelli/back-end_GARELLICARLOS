@@ -1,9 +1,9 @@
 import React from 'react'
 
 const fetchData = async ({ route, info, method, token }) => {
-    console.log("Check Fetch Data Hook is method", method)
-    console.log("Check Fetch Data Hook is info", info)
-    console.log ("Check Fetch Data Hook is route", route)
+    // console.log("Check Fetch Data Hook is method", method)
+    // console.log("Check Fetch Data Hook is info", info)
+    // console.log ("Check Fetch Data Hook is route", route)
     return new Promise((resolve, reject) => {
         fetch(route, {
         method: method,

@@ -15,8 +15,11 @@ class productController{
         if (category != undefined) {
             categoriesArray = category.split(',');
         }
+
+       console.log ("check params of product Controller is getProducts", category, disponibility, order, limit, onPage)
+
         const querys = paginateQueryMaker({category: categoriesArray, disponibility, order, limit, page: onPage})
-       
+       console.log ("check querys of product Controller is getProducts", querys)
         // Gestion de datos
         const result = await this.service.getProducts({filter: querys.filter, pagination: querys.pagination})
         
@@ -31,10 +34,10 @@ class productController{
             hasNextPage
         } = result 
         // Creacion de querys
-        const nextLink = `/views/products${linkQueryMaker(
+        const nextLink = `${linkQueryMaker(
             {category: category, disponibility: disponibility, order: order, limit: limit, thePage: nextPage}
         )}`
-        const prevLink = `/views/products${linkQueryMaker(
+        const prevLink = `${linkQueryMaker(
             {category: category, disponibility: disponibility, order: order, limit: limit, thePage: prevPage}
         )}`
         // respuesta

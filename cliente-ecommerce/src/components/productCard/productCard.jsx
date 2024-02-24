@@ -11,7 +11,7 @@ import React from 'react'
 
 const ProductCard = (props) => {
   const { productData } = props
-  console.log ("check productData of ProductCard component", productData)
+  // console.log ("check productData of ProductCard component", productData)
 
   return (
     <div className= "card">

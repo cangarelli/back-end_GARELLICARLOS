@@ -17,6 +17,7 @@ export {default as CartReview } from "./CartReview/CartReview.jsx"
 
 // Sustancia
 export {default as ProductItemList } from "./ProductItemList/ProductItemList.jsx"
+export {default as LoguinForm } from "./LoguinForm/LoguinForm.jsx"
 export {default as Footer } from "./Footer/Footer.jsx"
 export {default as NavBar } from "./NavBar/NavBar.jsx"
 

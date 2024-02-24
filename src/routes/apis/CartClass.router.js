@@ -8,7 +8,7 @@ class cartClassRouter extends CustomRouter {
         //seteo de rutas
 
 
-        this.post("/:cid/purchase", ["user"], async (req, res) =>{ // COMPLETAR
+        this.post("/:cid/purchase", ["user"], async (req, res) =>{ // OK TODA LA RUTA Y SUS CAPAS
             try {
                 const {email, cartId, full_name, id, role }= req.user
                 console.log ("check req.user in post method of /:cid/purchase route ", req.user)
@@ -23,7 +23,7 @@ class cartClassRouter extends CustomRouter {
             }
         })
 
-        this.get("/:cid", ["public"], async (req, res) =>{
+        this.get("/:cid", ["public"], async (req, res) =>{// OK TODA LA RUTA Y SUS CAPAS
             try {
                 const response = await CartManager.getOneCart(req.params.cid)
                 return response.status == "error" ?
@@ -35,7 +35,7 @@ class cartClassRouter extends CustomRouter {
                 return res.sendServerError(error)
             } 
         })
-        this.post("/", ["public"], async (req, res) =>{
+        this.post("/", ["public"], async (req, res) =>{ // OK TODA LA RUTA Y SUS CAPAS
             try {
                 const response = await CartManager.createCart()
                 return response.status == "error" ?
@@ -46,7 +46,7 @@ class cartClassRouter extends CustomRouter {
                 return res.sendServerError(response.payload)
             } 
         })
-        this.put("/:cid/product/:pid", ["user"],async (req, res) =>{
+        this.put("/:cid/product/:pid", ["user"],async (req, res) =>{ // OK TODA LA RUTA Y SUS CAPAS
             try {
                 const {email, cartId, full_name, id, role }= req.user
 
