@@ -9,6 +9,7 @@ import ChatView from '../pages/ChatView/Index.jsx';
 import Loguin from '../pages/Loguin/Index.jsx';
 import CartView from '../pages/CartView/Index.jsx';
 import CheckOut from '../pages/CheckOut/Index.jsx';
+import Register from '../pages/Register/Index.jsx';
 
 
 const routes = createBrowserRouter([
@@ -27,6 +28,10 @@ const routes = createBrowserRouter([
   {
     path: "/loguin",
     element: <Loguin />,
+  },
+  {
+    path: "/register",
+    element: <Register />,
   },
   {
     path: "/carrito",

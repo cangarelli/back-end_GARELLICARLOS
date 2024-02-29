@@ -7,6 +7,22 @@ class productClassRouter extends CustomRouter {
     init (){
 
         //seteo de rutas
+
+        // RUTA DE MOKS
+        this.get ("/mockingproducts", ["public"], async (req, res) => {
+            // DEBE ENTREGAR 100 productos usando mocks
+            try {
+                let products = []
+                for (let i = 0; i <100; i++ ){
+                    products.push(generateProduct())
+                } ge
+                res.sendSuccess(products)
+            } catch (error) {
+                console.log ("check error of productClassRouter class router is get method /mockingproducts", error)
+                return res.sendServerError(`${error}`)
+
+            }
+        })
         this.get("/", ["public"], async (req, res) =>{
             try {
                 let {category, disponibility, order, limit, onPage} = req.query

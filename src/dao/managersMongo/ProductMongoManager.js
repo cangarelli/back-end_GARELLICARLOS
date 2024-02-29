@@ -18,6 +18,8 @@ class ProductMongoManager {
     productUpdate = async (pid, productArray) => await productsModel.updateOne({_id: pid}, productArray)
        
     productDelete = async (pid) => await productsModel.deleteOne({ _id: pid })
+    
+    getType = async (key) => await productsModel.path("correo").type
 }
 
 module.exports = ProductMongoManager;

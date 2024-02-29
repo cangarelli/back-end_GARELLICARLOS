@@ -17,5 +17,7 @@ class productRepository {
     productUpdate = async (pid, productArray) => await this.daoService.productUpdate(pid, productArray)
        
     productDelete = async (pid) => await this.daoService.productDelete(pid)
+
+    getType = async (key) => await this.daoService-getType(key)
 }
 module.exports = productRepository

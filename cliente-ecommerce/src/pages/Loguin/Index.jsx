@@ -2,14 +2,13 @@
 import "./style.css";
 
 // Importacion de componentes
-import { Layout, LoguinForm } from "../../components/componentsBarrel";
-
-import React from 'react'
+import { Layout, LogDataFormConteiner } from "../../components/componentsBarrel";
 
 const Loguin = () => {
+  
   return (
-    <Layout>
-      <LoguinForm />
+    <Layout> 
+      <LogDataFormConteiner path="loguin"/>
     </Layout>
   )
 }

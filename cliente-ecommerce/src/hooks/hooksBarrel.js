@@ -6,6 +6,8 @@ export { default as devHost } from "./serverManagers/devConfigurator.js"
 export { default as fetchData } from "./dataManagers/fetchData.js"
 export { default as formProcesor } from "./dataManagers/formProcesor.js"
 export { default as dataUploader } from "./dataManagers/dataUploader.js"
+export { default as handleSubmit } from "./dataManagers/handleSubmit.js"
+
 
 // Dom Managers
 export { default as deleteElement } from "./domManagers/deleteElement.js"

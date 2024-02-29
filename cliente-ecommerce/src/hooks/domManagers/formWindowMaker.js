@@ -1,13 +1,15 @@
-const formWindowMaker = ({formId, optionsObjectsArray, buttonValue, prodId}) => {
+import deleteElement from "./deleteElement";
+
+const formWindowMaker = ({formId, parentNode, optionsObjectsArray, buttonValue, prodId}) => {
     //Seleccionar nodo padre
-    const father = document.getElementById('root');
+    const father = document.getElementById(parentNode);
 
     //Crear Ventana de formulario
     const windowForm = document.createElement("form")
     windowForm.className = 'form';
     windowForm.method = 'post';
-    windowForm.id = formId;
-    windowForm.innerHTML= `<button type="button" value="close">X</button>`
+    windowForm.id = formId; 
+    windowForm.innerHTML= `<button type="button" onClick={deleteElement(${formId})}"close">X</button>`
     father.appendChild(windowForm)
 
     // Crear opciones de Menu
@@ -25,7 +27,7 @@ const formWindowMaker = ({formId, optionsObjectsArray, buttonValue, prodId}) => 
     const button = document.createElement ("button")
     button.type= `submit`
     button.value= `${buttonValue}`
-    button.id= `${prodId}`
+    if (prodId) return button.id= `${prodId}`
     button.innerHTML= `OK`
     windowForm.appendChild(button)
 }

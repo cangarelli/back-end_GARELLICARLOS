@@ -3,6 +3,7 @@ const apiCaller = require ("./productsApiUtils/apiCaller.js")
 const linkQueryMaker = require ("./productsApiUtils/linkQueryMaker.js")
 const paginateQueryMaker = require ("./productsApiUtils/paginateQueryMaker.js")
 const selectorQuery = require ("./productsApiUtils/selectorQuery.js")
+const { generateProduct } = require ("./productsApiUtils/mokingUtils.js")
 
 // session api utils
 const { createToken, validateToken, json_private_key} = require ("./sessionApiUtils/jwt.js")
@@ -29,6 +30,7 @@ const ticketCodeGenerator = require ("./cartApiUtils/ticketCodeGenerator.js")
 
 module.exports = {
     apiCaller,
+    generateProduct,
     linkQueryMaker,
     paginateQueryMaker,
     selectorQuery,

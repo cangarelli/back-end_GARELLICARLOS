@@ -9,6 +9,7 @@
     const MongoStore = require ("connect-mongo") /* Para generar storage de la sesion en mongo db/atlas */
     const passport = require ("passport") /* Base de libreras de loguins con diferentes estrategias */
     const cors = require ("cors") /* Permite que la base de datos se use desde otros puertos */
+    const compression = require ("express-compression")
 // Config express
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
@@ -17,6 +18,9 @@
     app.use(bodyParser.json());
     app.use(cookieParser("SecretWords"))
     app.use(cors())
+    app.use(compression({
+        brotli: {enabled: true, zlib: {}}
+    }))
     /* Configuración de app.use(session...) con mogostorage ver clase sesion I min 61 v*/
     app.use(session({
         store: MongoStore.create({

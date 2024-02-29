@@ -1,6 +1,7 @@
 const { productService } = require ("../repositories/service.js")
 const linkQueryMaker = require("../helpers/productsApiUtils/linkQueryMaker.js");
 const paginateQueryMaker = require("../helpers/productsApiUtils/paginateQueryMaker.js");
+const { default: userDataTester } = require("../services/errors/userDataTester.js");
 // Funciones de procesamiento de request data
 
 
@@ -15,7 +16,6 @@ class productController{
         if (category != undefined) {
             categoriesArray = category.split(',');
         }
-
        console.log ("check params of product Controller is getProducts", category, disponibility, order, limit, onPage)
 
         const querys = paginateQueryMaker({category: categoriesArray, disponibility, order, limit, page: onPage})
@@ -64,10 +64,16 @@ class productController{
     }
     createProduct = async (productArray) => {
         const {title, price, category, description, stock, code, thumbnail} = productArray
+        try {
+        userDataTester({title, price, category, description, stock, code, thumbnail}, this.service)
         const response = await this.service.productCreate({
             title, price, category, description, stock, code, thumbnail, status: true
         })
         return response
+            
+        } catch (error) {
+            throw error
+        }
      }
     updateProduct = async (pid, data) => {
         const result = await this.service.productUpdate(pid, data)

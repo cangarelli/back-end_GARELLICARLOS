@@ -8,7 +8,6 @@ class sessionController{
     constructor(){
         this.service = new UserMongoManager ()
     }
-    crea
     register = async (gi) => {
         try {
             console.log ("check result del middlework de register route", req.user)
