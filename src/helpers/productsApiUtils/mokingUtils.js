@@ -8,10 +8,11 @@ const generateProduct = () => {
     return {
         title: spanishFaker.commerce.productName(),
         price: spanishFaker.commerce.price(),
-        description: spanishFaker.commerce.description(),
-        stock: spanishFaker.random.numeric(1),
+        description: spanishFaker.commerce.productAdjective(),
+        stock: Number(spanishFaker.string.numeric(1)), 
         _id: spanishFaker.database.mongodbObjectId(),
-        image: spanishFaker.image.image(),
+        image: spanishFaker.image.url(),
+
     }
 }
 

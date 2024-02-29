@@ -1,8 +1,8 @@
 const productController = require("../../controller/products.controller.js");
+const { generateProduct } = require("../../helpers/helpersBarrel.js");
 const CustomRouter = require("../Routes.js");
 
 const productManager = new productController()
-
 class productClassRouter extends CustomRouter {
     init (){
 
@@ -15,7 +15,7 @@ class productClassRouter extends CustomRouter {
                 let products = []
                 for (let i = 0; i <100; i++ ){
                     products.push(generateProduct())
-                } ge
+                } 
                 res.sendSuccess(products)
             } catch (error) {
                 console.log ("check error of productClassRouter class router is get method /mockingproducts", error)
