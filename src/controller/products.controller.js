@@ -1,10 +1,7 @@
 const { productService } = require ("../repositories/service.js")
-const linkQueryMaker = require("../helpers/productsApiUtils/linkQueryMaker.js");
-const paginateQueryMaker = require("../helpers/productsApiUtils/paginateQueryMaker.js");
-const { default: userDataTester } = require("../services/errors/userDataTester.js");
+const { userDataTester, paginateQueryMaker, linkQueryMaker } = require("../helpers/helpersBarrel.js");
+
 // Funciones de procesamiento de request data
-
-
 class productController{
     constructor(){
         this.service = productService

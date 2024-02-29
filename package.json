@@ -5,8 +5,8 @@
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon src/app.js --mode development",
-    "prod": "nodemon src/app.js --mode production",
+    "dev": "node --watch src/app.js --mode development",
+    "prod": "node --watch src/app.js --mode production",
     "nodemon-desde-node": "node --watch src/app.js"
   },
   "keywords": [],

@@ -8,7 +8,6 @@ const { generateProduct } = require ("./productsApiUtils/mokingUtils.js")
 // session api utils
 const { createToken, validateToken, json_private_key} = require ("./sessionApiUtils/jwt.js")
 const authorizationJWT = require ("./sessionApiUtils/authorizationJWT.middleware.js")
-
 const passportCall = require ("./sessionApiUtils/passportCall.js")
 
 // User api utils
@@ -26,6 +25,12 @@ const stockReviewer = require ("./cartApiUtils/stockReviewer.js")
 const timeGetter = require ("./cartApiUtils/timeGetter.js")
 const ticketCodeGenerator = require ("./cartApiUtils/ticketCodeGenerator.js")
 
+// Errors Utils
+const CustomErrors = require ("./errorsUtils/CustomErrors.js")
+const EErrors = require ("./errorsUtils/EErrors.js")
+const { userDataErrorInfo } = require ("./errorsUtils/generateErrorInfo.js")
+const userDataTester = require ("./errorsUtils/userDataTester.js")
+
 
 
 module.exports = {
@@ -33,7 +38,7 @@ module.exports = {
     generateProduct,
     linkQueryMaker,
     paginateQueryMaker,
-    selectorQuery,
+    selectorQuery,     
     createHash, passwordValidator,
     createToken, validateToken, json_private_key,
     authorizationJWT,
@@ -43,5 +48,9 @@ module.exports = {
     cartReviewer,
     stockReviewer,
     timeGetter,
-    ticketCodeGenerator
+    ticketCodeGenerator,
+    CustomErrors,
+    EErrors,
+    userDataErrorInfo,
+    userDataTester
 }

@@ -1,6 +1,4 @@
-const EErrors = require ("./EErrors.js")
-const CustomErrors = require ("./customErrors.js")
-const { userDataErrorInfo } = require ("./generateErrorInfo")
+const { CustomErrors, EErrors, userDataErrorInfo } = require("../helpersBarrel.js")
 
 function firstControl(data) {
     if (data === undefined ) {
@@ -55,6 +53,5 @@ const userDataTester = async (data, manager) => {
     }
 }
 
-module.exports = {
-     userDataTester  
-    }
+module.exports = userDataTester  
+    
