@@ -2,10 +2,9 @@ const  { Router } = require ("express")
 // Modulos para que interprete el body del request
 const bodyParser = require('body-parser');
 
-const { validateToken, json_private_key } = require("../helpers/sessionApiUtils/jwt")
+const { validateToken, json_private_key, CustomErrors, EErrors } = require("../helpers/helpersBarrel.js")
 const jwt = require ("jsonwebtoken");
-const { default: CustomErrors } = require("../services/errors/customErrors");
-const { default: EErrors } = require("../services/errors/EErrors");
+
 class CustomRouter {
     constructor(){
         this.routes = Router ()
@@ -25,7 +24,7 @@ class CustomRouter {
         res.sendUserError = (error) => res.status(400).send({status: "error", payload: error})
         res.sendTokenSucces = (data, cookieName, token) => res.cookie(cookieName, token, {maxAge: 60*60*1000}).send({status: "succes", payload: data, token})
         next()
-    }
+    } 
     // politics = ["public", "user", "user_premium", "admin"]
     handdlePolitics = (politics) => (req, res, next) =>  {
         if (politics[0] == "public") return next()

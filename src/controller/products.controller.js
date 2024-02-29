@@ -1,5 +1,6 @@
 const { productService } = require ("../repositories/service.js")
-const { userDataTester, paginateQueryMaker, linkQueryMaker } = require("../helpers/helpersBarrel.js");
+const { paginateQueryMaker, linkQueryMaker } = require("../helpers/helpersBarrel.js");
+const userDataTester = require("../helpers/errorsUtils/userDataTester.js");
 
 // Funciones de procesamiento de request data
 class productController{

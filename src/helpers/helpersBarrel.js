@@ -29,7 +29,7 @@ const ticketCodeGenerator = require ("./cartApiUtils/ticketCodeGenerator.js")
 const CustomErrors = require ("./errorsUtils/CustomErrors.js")
 const EErrors = require ("./errorsUtils/EErrors.js")
 const { userDataErrorInfo } = require ("./errorsUtils/generateErrorInfo.js")
-const userDataTester = require ("./errorsUtils/userDataTester.js")
+// const userDataTester = require ("./errorsUtils/userDataTester.js")
 
 
 
@@ -52,5 +52,5 @@ module.exports = {
     CustomErrors,
     EErrors,
     userDataErrorInfo,
-    userDataTester
+    // userDataTester
 }
