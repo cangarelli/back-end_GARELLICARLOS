@@ -38,20 +38,9 @@ const DataForm = (props) => {
           )
         })
         }
-        <div className='requestDataForm__buttonPad'>
-          {buttonsOption.map ((button)=>{
-            return (
-              button.link != null ?
-                (<button key={useId(button.label)} className='requestDataForm__buttonPad--formButton' type={button.type} >
-                (<Link to={button.link}>{button.label}</Link>)
-                </button>)
-              :
-              (<button key={useId(button.label)} onClick={button.onClick(event, {dataToUpdate: dataQuestions, fetchRoute: fetchRoute})} className='requestDataForm__buttonPad--formButton' type={button.type} >
-                (button.label)
-              </button>)              
-            )
-          })} 
-        </div>
+        <button key={useId("Aceptar")} onClick={handleSubmit} className='requestDataForm--formButton' type={button.type} >
+          Aceptar
+        </button>
       </form>
   )
 }

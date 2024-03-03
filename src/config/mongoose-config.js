@@ -1,7 +1,8 @@
 // Importación de modulo mongoose.connect con destructuring
 const { connect } = require("mongoose")
 const dotenv = require ("dotenv")
-const { program } = require("./commanders")
+// const { opts } = require("./configBarrel.js")
+const program = require("./commanders.js")
 
 const { mode } = program.opts()
 dotenv.config({
@@ -15,12 +16,12 @@ const configObject = {
     percistance: process.env.PERCISTANCE,
 }
 // Cración de conección
-    const connectDB = async () => {
-        await connect(process.env.MONGO_URL)
-        console.log ("Base de datos conectada")
-    }
+const connectDB = async () => {
+    await connect(process.env.MONGO_URL)
+    console.log ("Base de datos conectada")
+}
 // "mongodb+srv://agarelli91:5d8a6fsFWa6@anlugamescluster.mgh6ee1.mongodb.net/ecommerce?retryWrites=true&w=majority"
 module.exports = {
-     configObject,
+    configObject,
     connectDB 
 };
