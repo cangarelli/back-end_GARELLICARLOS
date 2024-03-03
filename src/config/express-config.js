@@ -7,6 +7,8 @@ const session = require('express-session'); /*Para generar que se guarden cookie
 const MongoStore = require('connect-mongo'); /* Para generar storage de la sesion en mongo db/atlas */
 const cors = require('cors'); /* Permite que la base de datos se use desde otros puertos */
 const compression = require('express-compression'); /* Modulos para comprimir response: Gzip y Brotli*/
+const { logger, addLogger } = require('../helpers/helpersBarrel.js');
+
 
 // Config express
 const expressConfig = (app) => {
@@ -55,6 +57,9 @@ const expressConfig = (app) => {
             saveUninitialized: false,
         })
     );
+
+    // Manejo de logs
+    app.use(addLogger)
 };
 
 module.exports = expressConfig;

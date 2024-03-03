@@ -28,7 +28,7 @@ const ticketCodeGenerator = require('./cartApiUtils/ticketCodeGenerator.js');
 const CustomErrors = require('./errorsUtils/CustomErrors.js');
 const EErrors = require('./errorsUtils/EErrors.js');
 const { userDataErrorInfo } = require('./errorsUtils/generateErrorInfo.js');
-// const userDataTester = require ("./errorsUtils/userDataTester.js")
+const { logger, addLogger } = require('./errorsUtils/logger.js');
 
 module.exports = {
     apiCaller,
@@ -52,5 +52,6 @@ module.exports = {
     CustomErrors,
     EErrors,
     userDataErrorInfo,
-    // userDataTester
+    logger,
+    addLogger,
 };
