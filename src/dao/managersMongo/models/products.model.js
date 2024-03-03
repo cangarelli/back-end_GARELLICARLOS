@@ -1,49 +1,47 @@
-const {Schema, model, default: mongoose} = require('mongoose')
-const mongoosePaginate = require ("mongoose-paginate-v2")
-const productsCollection = 'Products'
+const { Schema, model, default: mongoose } = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate-v2');
+const productsCollection = 'Products';
 
 const productsSchema = new Schema({
     title: {
         type: String,
-        required: true
+        required: true,
     },
     category: {
         type: String,
-        required: true
+        required: true,
     },
     description: {
         type: String,
-        required: true
+        required: true,
     },
     price: {
         type: Number,
-        required: true
+        required: true,
     },
     stock: {
         type: Number,
-        required: true
+        required: true,
     },
     code: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
     },
     thumbnail: {
         type: String,
-        required: true
+        required: true,
     },
     status: {
         type: Boolean,
-        required: true
-    }
-    
+        required: true,
+    },
+});
 
-})
+productsSchema.plugin(mongoosePaginate);
 
-productsSchema.plugin(mongoosePaginate)
-
-const productsModel = model(productsCollection, productsSchema)
+const productsModel = model(productsCollection, productsSchema);
 
 module.exports = {
-    productsModel
-}
+    productsModel,
+};

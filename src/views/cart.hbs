@@ -1,19 +1,19 @@
 <div class="cart">
     <button value="clear-cart">Vaciar el carrito</button>
     {{#each products}}
-        <div class="cart__productCard" >
-            <h1>{{this.product.title}}</h1>
-            <h2>Cuesta ${{this.product.price}}</h2>
-            <p>En el carrito: {{this.quantity}}</p>
-            <p>Quedan: {{this.product.stock}}</p>
-            <p>{{this.product.description}}</p>
-            <div id={{this.product._id}}>
-                <button value="substract-of-cart">Quitar uno</button>
-                <button value="delete-of-cart">Quitar producto del carrito</button>
-                <label for="quantity">Ingresa la cantidad que queres agregar</label>
-                <input type="number" name="quantity" id="quantity{{this.product._id}}">
-                <button value="add-to-cart">Agregar</button>
-            </div>
+    <div class="cart__productCard">
+        <h1>{{this.product.title}}</h1>
+        <h2>Cuesta ${{this.product.price}}</h2>
+        <p>En el carrito: {{this.quantity}}</p>
+        <p>Quedan: {{this.product.stock}}</p>
+        <p>{{this.product.description}}</p>
+        <div id="{{this.product._id}}">
+            <button value="substract-of-cart">Quitar uno</button>
+            <button value="delete-of-cart">Quitar producto del carrito</button>
+            <label for="quantity">Ingresa la cantidad que queres agregar</label>
+            <input type="number" name="quantity" id="quantity{{this.product._id}}" />
+            <button value="add-to-cart">Agregar</button>
         </div>
+    </div>
     {{/each}}
 </div>

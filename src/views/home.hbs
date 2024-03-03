@@ -15,12 +15,12 @@
             <h2>Cuesta ${{this.price}}</h2>
             <p>Quedan: {{this.stock}}</p>
             <p>{{this.description}}</p>
-            <div id={{this._id}}>
+            <div id="{{this._id}}">
                 {{!-- {{#if role}} --}}
-                    <div class="adminButtons">
-                        <button value="create-update">Update</button>
-                        <button value="delete">Eliminar</button>
-                    </div>
+                <div class="adminButtons">
+                    <button value="create-update">Update</button>
+                    <button value="delete">Eliminar</button>
+                </div>
                 {{!-- {{/if}} --}}
                 <div class="userButtons">
                     <button><a href="/views/product/{{this._id}}">Ver detalle</a></button>
@@ -40,6 +40,6 @@
         </div>
     </div>
     <script>
-        let cartId = "{{cartId}}"
+        let cartId = '{{cartId}}';
     </script>
 </div>

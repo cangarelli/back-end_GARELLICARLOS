@@ -1,42 +1,43 @@
 // Importación de modulos nativos para express
 const express = require('express');
 const app = express();
-const { expressConfig, handelbarsConfig, connectDB, initializePassportJWT, configObject: {PORT}, initializeSoketServer } = require ("./config/configBarrel.js")
+const {
+    expressConfig,
+    handelbarsConfig,
+    connectDB,
+    initializePassportJWT,
+    initializeSoketServer,
+} = require('./config/configBarrel.js');
 
 // Express config
-expressConfig (app)
-app.locals.port= PORT
-
+expressConfig(app);
 
 //Passport config
-const passport = require ("passport"); /* Base de libreras de loguins con diferentes estrategias */
-
+const passport = require('passport'); /* Base de libreras de loguins con diferentes estrategias */
 // Estrategia JWT
-initializePassportJWT ()
-app.use (passport.initialize())
-app.use (passport.session())
-    
+initializePassportJWT();
+app.use(passport.initialize());
+app.use(passport.session());
+
 // Coneccion a mongoose
-connectDB  ();
+connectDB();
 
 // Configuración de handlebars
-handelbarsConfig (app)
-
+handelbarsConfig(app);
 
 // Importacion y seteo de rutas en express
-const appRouter = require ("./routes/index.js")
-app.use (appRouter)
+const appRouter = require('./routes/index.js');
+app.use(appRouter);
 
 // Creacion de servidor HTTP
-const serverHTTP = app.listen(PORT, () => {
-    console.log(`server is running on http://localhost:${PORT}`);
+const serverHTTP = app.listen(app.locals.port, () => {
+    console.log(`server is running on http://localhost:${app.locals.port}`);
 });
-
 
 // Configuración de serverSocket
 // Modulos nativos y express
-const io = require("socket.io");
+const io = require('socket.io');
 app.set('socketio', io);
 
 // Modulos propios y config
-initializeSoketServer (serverHTTP, PORT)
+initializeSoketServer(serverHTTP, app.locals.port);

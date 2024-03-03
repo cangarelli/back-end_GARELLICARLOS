@@ -1,4 +1,4 @@
-<div class="productPakage" >
+<div class="productPakage">
     <h1>{{product.title}}</h1>
     <h2>Cuesta ${{product.price}}</h2>
     <p>Quedan: {{product.stock}}</p>
@@ -7,15 +7,15 @@
     <p>{{product.description}}</p>
     <div class="productPakage__buttonPad" id="{{product._id}}">
         <div>
-            <input type="number" name="quantity+" id="quantity+">
+            <input type="number" name="quantity+" id="quantity+" />
             <button value="add-to-cart">Agregar al carrito</button>
         </div>
         <div>
-            <input type="number" name="quantity-" id="quantity-">
+            <input type="number" name="quantity-" id="quantity-" />
             <button value="substract-of-cart">Retirar del carrito</button>
         </div>
     </div>
     <script>
-        let cartId = "{{cartId}}"
+        let cartId = '{{cartId}}';
     </script>
 </div>

@@ -9,17 +9,19 @@
     </div>
 
     <form class="chat__postman">
-        <input type="text" name="chatBox" class="chat__postman--letter" id="chatBox">
-        <input type="button" value="Enviar">
+        <input type="text" name="chatBox" class="chat__postman--letter" id="chatBox" />
+        <input type="button" value="Enviar" />
     </form>
 </div>
-    {{#if inn}}
-    <script >
-        console.log ("ingresa")
-        console.log ("{{first_name}}", "{{last_name}}","{{userId}}")
-        let userData = { user: "{{first_name}} {{last_name}}", userId: "{{userId}}" }
-    </script>
-    {{else}}
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        <script>window.location.href = `/views/login`; </script>
-    {{/if}}
+{{#if inn}}
+<script>
+    console.log('ingresa');
+    console.log('{{first_name}}', '{{last_name}}', '{{userId}}');
+    let userData = { user: '{{first_name}} {{last_name}}', userId: '{{userId}}' };
+</script>
+{{else}}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    window.location.href = `/views/login`;
+</script>
+{{/if}}

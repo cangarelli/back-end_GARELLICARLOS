@@ -1,29 +1,29 @@
-const {Schema, model, default: mongoose} = require('mongoose')
+const { Schema, model, default: mongoose } = require('mongoose');
 
-const usersCollection = 'usuarios'
+const usersCollection = 'usuarios';
 
 const UsersSchema = Schema({
     full_name: {
         type: String,
-        required: true
+        required: true,
     },
     first_name: {
         type: String,
-        required: true
+        required: true,
     },
     last_name: String,
     email: {
         type: String,
         index: true,
         required: true,
-        unique: true
+        unique: true,
     },
     age: {
         type: Number,
     },
     password: {
         type: String,
-        required: true
+        required: true,
     },
     cartId: {
         type: String,
@@ -33,12 +33,12 @@ const UsersSchema = Schema({
     },
     role: {
         type: String,
-        default: "user"
-    }
-})
+        default: 'user',
+    },
+});
 
-const usersModel = model(usersCollection, UsersSchema)
+const usersModel = model(usersCollection, UsersSchema);
 
 module.exports = {
-    usersModel
+    usersModel,
 };

@@ -1,20 +1,20 @@
-const {Schema, model} = require('mongoose')
+const { Schema, model } = require('mongoose');
 
-const messageCollection = 'messages'
+const messageCollection = 'messages';
 
 const MessageSchema = Schema({
     userMail: {
         type: String,
-        required: true
+        required: true,
     },
     message: {
         type: String,
-        required: true
-    }
-})
+        required: true,
+    },
+});
 
-const messagesModel = model(messageCollection, MessageSchema)
+const messagesModel = model(messageCollection, MessageSchema);
 
 module.exports = {
-    messagesModel
-}
+    messagesModel,
+};

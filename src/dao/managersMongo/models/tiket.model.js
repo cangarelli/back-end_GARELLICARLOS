@@ -1,29 +1,28 @@
-const {Schema, model, default: mongoose} = require('mongoose')
+const { Schema, model, default: mongoose } = require('mongoose');
 
-const tiketsCollection = 'tikets'
+const tiketsCollection = 'tikets';
 
 const TiketsSchema = Schema({
     code: {
         type: String,
-        required: true
+        required: true,
     },
     purchase_datetime: {
         type: String,
-        required: true
+        required: true,
     },
-    amount:  {
+    amount: {
         type: Number,
-        required: true
+        required: true,
     },
     purchaser: {
         type: String,
         required: true,
-        },
+    },
+});
 
-})
-
-const tiketsModel = model(tiketsCollection, TiketsSchema)
+const tiketsModel = model(tiketsCollection, TiketsSchema);
 
 module.exports = {
-    tiketsModel
+    tiketsModel,
 };

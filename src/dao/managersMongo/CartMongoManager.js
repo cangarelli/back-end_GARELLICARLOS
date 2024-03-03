@@ -1,30 +1,27 @@
 // Modulos importados
-const { cartsModel } = require ("./models/carts.model.js")
-const apiCaller = require ("../../helpers/productsApiUtils/apiCaller.js")
+const { cartsModel } = require('./models/carts.model.js');
+const apiCaller = require('../../helpers/productsApiUtils/apiCaller.js');
 
 // CLASE CONSTRUCTORA
 class CartMongoManager {
     constructor() {}
-    createCart = async () => await cartsModel.create({})
+    createCart = async () => await cartsModel.create({});
 
-    getCartById = async (cid) => await cartsModel.findOne({_id: cid})
+    getCartById = async (cid) => await cartsModel.findOne({ _id: cid });
 
-    updateExistingProductQuantity = async (pid, cid, newQuantity) => 
+    updateExistingProductQuantity = async (pid, cid, newQuantity) =>
         await cartsModel.updateOne(
-            { _id: cid, "products.product": pid },
-            { $set: { "products.$.quantity": newQuantity } })
-            
-    addNewProduct = async (cid, products) => 
-        await cartsModel.findOneAndUpdate(
-            { _id: cid},
-            {products},
-            )
-                
-    deleteCart = async (cid) => await cartsModel.deleteOne({ _id: cid })
-    
-    removeProductById = async (cid, id, cantidad) => "working on it"
-    
-    getAllKeyValues = async (key) => await cartsModel.distinct(key)
+            { _id: cid, 'products.product': pid },
+            { $set: { 'products.$.quantity': newQuantity } }
+        );
+
+    addNewProduct = async (cid, products) => await cartsModel.findOneAndUpdate({ _id: cid }, { products });
+
+    deleteCart = async (cid) => await cartsModel.deleteOne({ _id: cid });
+
+    removeProductById = async (cid, id, cantidad) => 'working on it';
+
+    getAllKeyValues = async (key) => await cartsModel.distinct(key);
 
     /* En DESUSO
     async addProductToCart (pid, cid, quantity){
