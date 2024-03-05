@@ -1,13 +1,10 @@
-import React from 'react'
+import React from 'react';
 
 // Estilos
-import "./style.css"
-
+import './style.css';
 
 const ButtonMain = () => {
-  return (
-    <div>ButtonMain</div>
-  )
-}
+  return <div>ButtonMain</div>;
+};
 
-export default ButtonMain
+export default ButtonMain;

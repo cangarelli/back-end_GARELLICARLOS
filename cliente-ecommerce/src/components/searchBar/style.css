@@ -1,30 +1,33 @@
 .SearchBar {
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .SearchBar__prodCategories {
-    display: flex;
-    flex-direction: column;
-    margin: 0 5px;
+  display: flex;
+  flex-direction: column;
+  margin: 0 5px;
 }
 
 .SearchBar__prodCategories--option {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    margin: 0 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin: 0 1px;
 }
 
-.SearchBar__prodCategories--optionMenu {}
+.SearchBar__prodCategories--optionMenu {
+}
 
-.SearchBar__order {}
+.SearchBar__order {
+}
 
-.SearchBar__disponibility {}
+.SearchBar__disponibility {
+}
 
 .SearchBar__buttonPad {
-    display: inline;
+  display: inline;
 }

@@ -1,16 +1,12 @@
-import React from 'react'
+import React from 'react';
 
 // Estilos
-import "./style.css"
+import './style.css';
 
 const ButtonOption = (props) => {
+  const { buttonData } = props;
 
-  const { buttonData } = props
-    
-  return (
-    <input className= "optionButton" type="button" value={`${buttonData.value}`} />  
-  )
-}
+  return <input className="optionButton" type="button" value={`${buttonData.value}`} />;
+};
 
-
-export default ButtonOption
+export default ButtonOption;

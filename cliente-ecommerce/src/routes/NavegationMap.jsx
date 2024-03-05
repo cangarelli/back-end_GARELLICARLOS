@@ -1,6 +1,6 @@
 // Modulos de REACT
-import React from 'react'
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import React from 'react';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 //Modulos Propios
 import Home from '../pages/Home/Index.jsx';
@@ -11,44 +11,40 @@ import CartView from '../pages/CartView/Index.jsx';
 import CheckOut from '../pages/CheckOut/Index.jsx';
 import Register from '../pages/Register/Index.jsx';
 
-
 const routes = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <Home />,
   },
   {
-    path: "/item/:pid",
+    path: '/item/:pid',
     element: <ProductDetailViewer />,
   },
   {
-    path: "/contacto",
+    path: '/contacto',
     element: <ChatView />,
   },
   {
-    path: "/loguin",
+    path: '/loguin',
     element: <Loguin />,
   },
   {
-    path: "/register",
+    path: '/register',
     element: <Register />,
   },
   {
-    path: "/carrito",
+    path: '/carrito',
     element: <CartView />,
   },
   {
-    path: "/checkout",
+    path: '/checkout',
     element: <CheckOut />,
-  }
+  },
 ]);
 
 // Componente
 const NavegationMap = () => {
-
-  return (
-    <RouterProvider router={routes} />
-  )
+  return <RouterProvider router={routes} />;
 };
 
 export default NavegationMap;

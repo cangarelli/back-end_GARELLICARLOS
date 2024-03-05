@@ -1,4 +1,4 @@
-.productItemList{
-    display: flex;
-    flex-flow: row wrap;
+.productItemList {
+  display: flex;
+  flex-flow: row wrap;
 }

@@ -1,13 +1,10 @@
 // Estilos
-import "./style.css";
+import './style.css';
 
-
-import React from 'react'
+import React from 'react';
 
 const Logo = (props) => {
-  return (
-    <img className= "logo" src={props.src} alt={props.alt} />
-  )
-}
+  return <img className="logo" src={props.src} alt={props.alt} />;
+};
 
-export default Logo
+export default Logo;

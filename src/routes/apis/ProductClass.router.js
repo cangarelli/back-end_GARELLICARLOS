@@ -29,7 +29,7 @@ class productClassRouter extends CustomRouter {
                 let { category, disponibility, order, limit, onPage } = req.query;
 
                 if (!limit) limit = 3;
-                req.logger.Info('check querys of productClassRouter is get method route / ', req.query, limit);
+                req.logger.Debug('check querys of productClassRouter is get method route / ', req.query, limit);
                 const response = await productManager.getProducts({
                     category,
                     disponibility,

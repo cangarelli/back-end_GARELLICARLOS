@@ -1,17 +1,17 @@
 // Estilos
-import "./style.css";
+import './style.css';
 
 // Importacion de componentes
-import { Layout, ProductItemListConteiner } from "../../components/componentsBarrel";
+import { Layout, ProductItemListConteiner } from '../../components/componentsBarrel';
 
-import React from 'react'
+import React from 'react';
 
 const Home = () => {
   return (
     <Layout>
       <ProductItemListConteiner />
     </Layout>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

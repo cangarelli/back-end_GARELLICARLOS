@@ -1,51 +1,43 @@
 // Estilos
-import "./style.css";
+import './style.css';
 
 // Importacion de componentes
-import { ButtonPanel, ProductItemList } from "../componentsBarrel";
+import { ButtonPanel, ProductItemList } from '../componentsBarrel';
 
-
-import { useEffect, useState } from 'react'
-import { devHost, fetchData, queryGetter, queryMaker } from "../../hooks/hooksBarrel";
-import { Link, useLocation, useParams, useSearchParams } from "react-router-dom";
+import { useEffect, useState } from 'react';
+import { devHost, fetchData, queryGetter, queryMaker } from '../../hooks/hooksBarrel';
+import { Link, useLocation, useParams, useSearchParams } from 'react-router-dom';
 
 const ProductItemListConteiner = (props) => {
-  const [pageData, setPageData] = useState({})
+  const [pageData, setPageData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const { pathname, search } = useLocation();
   const [searchParams] = useSearchParams();
 
-const pagination = searchParams.get("onPage")
+  const pagination = searchParams.get('onPage');
 
-  useEffect(() => {// Hacer Fecth
-    const token = document.cookie
+  useEffect(() => {
+    // Hacer Fecth
+    const token = document.cookie;
     // console.log ("check useEffect fetch of ProductItemListConteiner is token", token)
 
-    const virtualQuerys= queryGetter(searchParams, "category", "disponibility", "order", "limit", "onPage")
-    const queryString = queryMaker(virtualQuerys)
+    const virtualQuerys = queryGetter(searchParams, 'category', 'disponibility', 'order', 'limit', 'onPage');
+    const queryString = queryMaker(virtualQuerys);
 
-    fetchData({ route: `${devHost()}/api/products/${queryString}`, method: "GET", token })
-      .then(res => {
+    fetchData({ route: `${devHost()}/api/products/${queryString}`, method: 'GET', token })
+      .then((res) => {
         // console.log ("check useEffect fetch of ProductItemListConteiner is res", res)
-        if (res.status == "success") {
-          setPageData(res.payload)
-          setIsLoading(false)
+        if (res.status == 'success') {
+          setPageData(res.payload);
+          setIsLoading(false);
         }
-      }).catch(err => {
-        console.log("check useEffect fetch of ProductItemListConteiner is err", err)
       })
-    return () => { }
+      .catch((err) => {
+        console.log('check useEffect fetch of ProductItemListConteiner is err', err);
+      });
+    return () => {};
   }, [pagination]);
-  const {
-    hasNextPage,
-    hasPrevPage,
-    nextLink,
-    nextPage,
-    page,
-    prevLink,
-    prevPage,
-    totalPages
-  } = pageData
+  const { hasNextPage, hasPrevPage, nextLink, nextPage, page, prevLink, prevPage, totalPages } = pageData;
 
   // console.log ("check pageData of ProductItemListConteiner component" , pageData)
   // Renderización  de componente
@@ -53,25 +45,27 @@ const pagination = searchParams.get("onPage")
   return (
     <div>
       {/* <ButtonPanel/> */}
-      {isLoading ?
+      {isLoading ? (
         <h2> CARGANDO... </h2>
-        :
+      ) : (
         // <h2> No esta cargando ya</h2>
         <ProductItemList productlist={pageData.docs} />
-      }
-      {hasPrevPage ?
+      )}
+      {hasPrevPage ? (
         <Link to={`/${prevLink}`}>Pagina anterior</Link>
-        :
-        <button disabled >Pagina anterior</button>
-      }
+      ) : (
+        <button disabled>Pagina anterior</button>
+      )}
       <span>{page}</span>
-      {hasNextPage ?
-        <button><Link to={`/${nextLink}`}>Pagina siguiente</Link></button>
-        :
-        <button disabled >Pagina siguiente</button>
-      }
+      {hasNextPage ? (
+        <button>
+          <Link to={`/${nextLink}`}>Pagina siguiente</Link>
+        </button>
+      ) : (
+        <button disabled>Pagina siguiente</button>
+      )}
     </div>
-  )
-}
+  );
+};
 
-export default ProductItemListConteiner
+export default ProductItemListConteiner;

@@ -1,6 +1,6 @@
 const deleteElement = (id) => {
-    const elementSelect = document.getElementById(id);
-    elementSelect != null && elementSelect.remove();
-}
+  const elementSelect = document.getElementById(id);
+  elementSelect != null && elementSelect.remove();
+};
 
-export default deleteElement
+export default deleteElement;

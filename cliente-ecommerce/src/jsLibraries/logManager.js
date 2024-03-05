@@ -1,11 +1,9 @@
 function logDataGetter(params) {
-    // Gestion de valores de nodos
-
-    // Devuelve Info
+  // Gestion de valores de nodos
+  // Devuelve Info
 }
 function userRegistrator(params) {
-    // recupero de valores
-    logDataGetter()
-    formFetchtData (formFetchtData)
-    
+  // recupero de valores
+  logDataGetter();
+  formFetchtData(formFetchtData);
 }

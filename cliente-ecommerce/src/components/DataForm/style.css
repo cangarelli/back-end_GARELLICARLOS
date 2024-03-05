@@ -1,28 +1,28 @@
-.requestDataForm{
-background-color: beige;
-padding: 10px;
+.requestDataForm {
+  background-color: beige;
+  padding: 10px;
 }
 
-.requestDataForm__option{
-margin: 10px 2px;
-display: flex;
-flex-direction: column;
-align-items: center;
-justify-content: center;
+.requestDataForm__option {
+  margin: 10px 2px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
-.requestDataForm__option--label{
-    text-align:  center;
-    margin: 0px 3px;
+.requestDataForm__option--label {
+  text-align: center;
+  margin: 0px 3px;
 }
-.requestDataForm__option--input{
-    text-align:  center;
+.requestDataForm__option--input {
+  text-align: center;
 }
-.requestDataForm__buttonPad{
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.requestDataForm__buttonPad {
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.requestDataForm__buttonPad--formButton{
- margin: 5px;
+.requestDataForm__buttonPad--formButton {
+  margin: 5px;
 }

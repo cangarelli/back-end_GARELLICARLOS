@@ -1,6 +1,5 @@
 // Importación de modulos nativos para express
 const express = require('express');
-const app = express();
 const {
     expressConfig,
     handelbarsConfig,
@@ -10,6 +9,7 @@ const {
 } = require('./config/configBarrel.js');
 const { logger } = require('./helpers/helpersBarrel.js');
 
+const app = express();
 // Express config
 expressConfig(app);
 

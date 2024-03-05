@@ -1,13 +1,10 @@
-import React from 'react'
+import React from 'react';
 
 // Estilos
-import "./style.css";
-
+import './style.css';
 
 const CartWidget = () => {
-  return (
-    <div>CartWidget</div>
-  )
-}
+  return <div>CartWidget</div>;
+};
 
-export default CartWidget
+export default CartWidget;

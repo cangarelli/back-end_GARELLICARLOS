@@ -1,36 +1,35 @@
 // Estilos
-import "./style.css";
+import './style.css';
 
-import { Link } from "react-router-dom";
-import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
-import { CartWidget, Logo, SearchBar, SubTitle } from "../componentsBarrel";
-import { devHost, fetchData } from "../../hooks/hooksBarrel";
+import { CartWidget, Logo, SearchBar, SubTitle } from '../componentsBarrel';
+import { devHost, fetchData } from '../../hooks/hooksBarrel';
 
-import logoMarca from "../../assets/png/Logo-marca.png"
+import logoMarca from '../../assets/png/Logo-marca.png';
 
-const hostDev = "http://localhost:8080"
+const hostDev = 'http://localhost:8080';
 const NavBar = (props) => {
   // Variables
-  const [categoryOptions, setCategoryOptions] = useState([])
+  const [categoryOptions, setCategoryOptions] = useState([]);
 
   //Logica
   useEffect(() => {
     // Con mi backend
-    fetchData({ route: `${devHost()}/api/products/daokeydata/category`, method: "get" })
-      .then((res) => {
-        setCategoryOptions(res.payload)
-      })
+    fetchData({ route: `${devHost()}/api/products/daokeydata/category`, method: 'get' }).then((res) => {
+      setCategoryOptions(res.payload);
+    });
   }, []);
   //Renderización
   return (
     <div className="navMarco">
-      <div className="navBar" >
-        <div className='conteiner'>
-          <Link to={"/"}>
+      <div className="navBar">
+        <div className="conteiner">
+          <Link to={'/'}>
             <Logo src={logoMarca} alt="Icono de acceso a pagina princial" />
           </Link>
-          <SearchBar categories={categoryOptions.length > 0 ? categoryOptions : [""]} />
+          <SearchBar categories={categoryOptions.length > 0 ? categoryOptions : ['']} />
 
           <Link to="/contacto">
             <SubTitle texto="Chat" />
@@ -41,11 +40,10 @@ const NavBar = (props) => {
           <Link to="/loguin">
             <SubTitle texto="Loguin" />
           </Link>
-
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default NavBar
+export default NavBar;

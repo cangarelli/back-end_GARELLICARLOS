@@ -1,13 +1,12 @@
-import React from 'react'
+import React from 'react';
 
 const queryGetter = (hook, ...params) => {
-    
-    const queryParams = params.reduce((obj, param) => {
-            obj[param] = hook.get(param);
-        return obj;
-    }, {});
+  const queryParams = params.reduce((obj, param) => {
+    obj[param] = hook.get(param);
+    return obj;
+  }, {});
 
-  return queryParams
-}
+  return queryParams;
+};
 
-export default queryGetter
+export default queryGetter;

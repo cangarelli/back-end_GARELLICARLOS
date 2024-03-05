@@ -1,20 +1,19 @@
 // Estilos
-import "./style.css";
+import './style.css';
 
 // Importacion de componentes
-import { Footer, NavBar } from "../componentsBarrel"
+import { Footer, NavBar } from '../componentsBarrel';
 
-
-import React from 'react'
+import React from 'react';
 
 const Layout = (props) => {
   return (
     <div>
-      <NavBar/>
-        {props.children}
-      <Footer/>
+      <NavBar />
+      {props.children}
+      <Footer />
     </div>
-  )
-}
+  );
+};
 
-export default Layout
+export default Layout;

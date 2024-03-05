@@ -1,11 +1,11 @@
-import React from 'react'
+import React from 'react';
 
 // Estilos
-import "./style.css"
-import { ButtonOption, SubTitle } from '../componentsBarrel'
+import './style.css';
+import { ButtonOption, SubTitle } from '../componentsBarrel';
 
 const SearchBar = (props) => {
-  const { categories } = props
+  const { categories } = props;
   return (
     <form className="SearchBar">
       <div className="SearchBar__prodCategories">
@@ -14,10 +14,10 @@ const SearchBar = (props) => {
           {categories.map((categorie) => {
             return (
               <div className="SearchBar__prodCategories--optionMenu">
-                <label for={categorie} > {categorie.toUpperCase()} </label>
+                <label for={categorie}> {categorie.toUpperCase()} </label>
                 <input type="checkbox" name={categorie} id={categorie} />
               </div>
-            )
+            );
           })}
         </div>
       </div>
@@ -37,11 +37,11 @@ const SearchBar = (props) => {
           <input type="checkbox" name="disponibility" id="status" />
         </div>
       </div>
-      <div className='SearchBar__buttonPad'>
-        <ButtonOption buttonData={{value:"Filter Search"}} />
+      <div className="SearchBar__buttonPad">
+        <ButtonOption buttonData={{ value: 'Filter Search' }} />
       </div>
     </form>
-  )
-}
+  );
+};
 
-export default SearchBar
+export default SearchBar;

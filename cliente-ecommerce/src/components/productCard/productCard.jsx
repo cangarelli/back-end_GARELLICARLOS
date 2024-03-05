@@ -2,28 +2,30 @@
 import { Link } from 'react-router-dom';
 
 // Estilos
-import "./style.css";
+import './style.css';
 
 // Importacion de componentes
-import { SubTitle, Title } from "../componentsBarrel";
+import { SubTitle, Title } from '../componentsBarrel';
 
-import React from 'react'
+import React from 'react';
 
 const ProductCard = (props) => {
-  const { productData } = props
+  const { productData } = props;
   // console.log ("check productData of ProductCard component", productData)
 
   return (
-    <div className= "card">
-      <img className= "--img" src={productData.thumbnail} alt="ilustración de producto" />
+    <div className="card">
+      <img className="--img" src={productData.thumbnail} alt="ilustración de producto" />
       <div className="__infoDiv">
-        <Title texto= {productData.title} />
-        <SubTitle texto= {`$ ${productData.price}`}/>
+        <Title texto={productData.title} />
+        <SubTitle texto={`$ ${productData.price}`} />
         <p>Quendan {productData.stock}</p>
-      </div>  
-      <Link to={`/item/${productData._id}`} className= "--verDetalleButton">Ver detalle</Link>
+      </div>
+      <Link to={`/item/${productData._id}`} className="--verDetalleButton">
+        Ver detalle
+      </Link>
     </div>
   );
-}
+};
 
-export default ProductCard
+export default ProductCard;
