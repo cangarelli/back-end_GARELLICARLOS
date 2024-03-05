@@ -1,11 +1,11 @@
-// products api utils
+// Products api utils
 const apiCaller = require('./productsApiUtils/apiCaller.js');
 const linkQueryMaker = require('./productsApiUtils/linkQueryMaker.js');
 const paginateQueryMaker = require('./productsApiUtils/paginateQueryMaker.js');
 const selectorQuery = require('./productsApiUtils/selectorQuery.js');
 const { generateProduct } = require('./productsApiUtils/mokingUtils.js');
 
-// session api utils
+// Session api utils
 const { createToken, validateToken, json_private_key } = require('./sessionApiUtils/jwt.js');
 const authorizationJWT = require('./sessionApiUtils/authorizationJWT.middleware.js');
 const passportCall = require('./sessionApiUtils/passportCall.js');

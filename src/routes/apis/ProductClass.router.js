@@ -17,7 +17,7 @@ class productClassRouter extends CustomRouter {
                 }
                 res.sendSuccess(products);
             } catch (error) {
-                req.logger.fatal(
+                req.logger.Fatal(
                     'check error of productClassRouter class router is get method /mockingproducts',
                     error
                 );
@@ -29,7 +29,7 @@ class productClassRouter extends CustomRouter {
                 let { category, disponibility, order, limit, onPage } = req.query;
 
                 if (!limit) limit = 3;
-                req.logger.info('check querys of productClassRouter is get method route / ', req.query, limit);
+                req.logger.Info('check querys of productClassRouter is get method route / ', req.query, limit);
                 const response = await productManager.getProducts({
                     category,
                     disponibility,
@@ -42,7 +42,7 @@ class productClassRouter extends CustomRouter {
                     ? res.sendUserError(response.payload)
                     : res.sendSuccess(response);
             } catch (error) {
-                req.logger.fatal('check error of productClassRouter class router is get method', error);
+                req.logger.Fatal('check error of productClassRouter class router is get method', error);
                 return res.sendServerError(`${error}`);
             }
         });
@@ -51,18 +51,18 @@ class productClassRouter extends CustomRouter {
                 const keyData = await productManager.getSelectiveData(req.params.key);
                 return keyData.status == 'error' ? res.sendUserError(keyData) : res.sendSuccess(keyData);
             } catch (error) {
-                req.logger.fatal('check error of x class router is post method', error);
+                req.logger.Fatal('check error of x class router is post method', error);
                 return res.sendServerError(`${error}`);
             }
         });
         this.get('/:pid', ['public'], async (req, res) => {
             try {
-                req.logger.info(
+                req.logger.Info(
                     'check req.parms of of productClassRouter class router is get method /:pid',
                     req.params
                 );
                 const response = await productManager.getProduct(req.params.pid);
-                req.logger.info(
+                req.logger.Info(
                     'check response of of productClassRouter class router is get method /:pid',
                     response
                 );
@@ -70,7 +70,7 @@ class productClassRouter extends CustomRouter {
                     ? res.sendUserError(response.payload)
                     : res.sendSuccess(response);
             } catch (error) {
-                req.logger.fatal('check error of productClassRouter class router is get method /:pid', error);
+                req.logger.Fatal('check error of productClassRouter class router is get method /:pid', error);
                 return res.sendServerError(`${error}`);
             }
         });
@@ -81,7 +81,7 @@ class productClassRouter extends CustomRouter {
                     ? res.sendUserError(response.payload)
                     : res.sendSuccess(response);
             } catch (error) {
-                req.logger.fatal('check error of productClassRouter class router is post method', error);
+                req.logger.Fatal('check error of productClassRouter class router is post method', error);
                 return res.sendServerError(`${error}`);
             }
         });
@@ -91,7 +91,7 @@ class productClassRouter extends CustomRouter {
 
                 return response.status == 'error' ? sendUserError(response.payload) : sendSuccess(response);
             } catch (error) {
-                req.logger.fatal('check error of productClassRouter class router is put method', error);
+                req.logger.Fatal('check error of productClassRouter class router is put method', error);
                 return res.sendServerError(`${error}`);
             }
         });
@@ -101,7 +101,7 @@ class productClassRouter extends CustomRouter {
 
                 return response.status == 'error' ? sendUserError(response.payload) : sendSuccess(response);
             } catch (error) {
-                req.logger.fatal('check error of productClassRouter class router is delete method', error);
+                req.logger.Fatal('check error of productClassRouter class router is delete method', error);
                 return res.sendServerError(`${error}`);
             }
         });

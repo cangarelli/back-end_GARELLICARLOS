@@ -14,7 +14,7 @@ class SessionClassRouter extends CustomRouter {
         //seteo de rutas
         this.post('/loguin', ['public'], async (req, res) => {
             try {
-                console.log('chekk req.body of get method is loguin route ', req.body);
+                req.logger.Info('check req.body of get method is loguin route ', req.body);
                 const response = await userManager.userCheck(req.body.email, req.body.password);
                 if (response.status == 'error') {
                     return res.sendUserError(response.payload);
@@ -23,7 +23,7 @@ class SessionClassRouter extends CustomRouter {
                     return res.sendTokenSucces(response, nameCookie, token);
                 }
             } catch (error) {
-                console.log('check error of session router is get method /loguin', error);
+                req.logger.Fatal('check error of session router is get method /loguin', error);
                 return res.sendServerError(`${error}`);
             }
         });
@@ -37,20 +37,15 @@ class SessionClassRouter extends CustomRouter {
                     return res.sendSuccess(response);
                 }
             } catch (error) {
-                console.log('check error of session router is post method /register', error);
+                req.logger.Fatal('check error of session router is post method /register', error);
                 return res.sendServerError(`${error}`);
             }
         });
         this.get('/current', ['public'], passportCall('jwt'), authorizationJWT('admin'), async (req, res) => {
             try {
                 res.send({ message: 'datos sencibles', user: req.user });
-                // if (condition) {
-                //     sendUserError(error)
-                // } else {
-                // return send.sendSuccess(dato)
-                // }
             } catch (error) {
-                console.log('check error of Session Class Router  is get method /current', error);
+                req.logger.Fatal('check error of Session Class Router  is get method /current', error);
                 return res.sendServerError(`${error}`);
             }
         });
@@ -65,7 +60,7 @@ class SessionClassRouter extends CustomRouter {
                     }
                 });
             } catch (error) {
-                console.log('check error of x class router is delete method', error);
+                req.logger.Fatal('check error of x class router is delete method', error);
                 return res.sendServerError(`${error}`);
             }
         });

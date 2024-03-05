@@ -8,6 +8,7 @@ const {
     initializePassportJWT,
     initializeSoketServer,
 } = require('./config/configBarrel.js');
+const { logger } = require('./helpers/helpersBarrel.js');
 
 // Express config
 expressConfig(app);
@@ -31,7 +32,7 @@ app.use(appRouter);
 
 // Creacion de servidor HTTP
 const serverHTTP = app.listen(app.locals.port, () => {
-    console.log(`server is running on http://localhost:${app.locals.port}`);
+    logger.Info(`Server is running on http://localhost:${app.locals.port}`);
 });
 
 // Configuración de serverSocket

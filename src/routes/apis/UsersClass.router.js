@@ -13,10 +13,10 @@ class userClassRouter extends CustomRouter {
             // OK TODA LA RUTA Y SUS CAPAS
             try {
                 const result = await userManager.getUser(req.params.uid);
-                console.log('check result of user Class Rotuer is get route', result);
+                req.logger.Info('check result of user Class Rotuer is get route', result);
                 return result.status == 'error' ? res.sendUserError(result.payload) : res.sendSuccess(result);
             } catch (error) {
-                console.log('check get error of user class router is get method user', error);
+                req.logger.Fatal('check get error of user class router is get method user', error);
                 return res.sendServerError(`${error}`);
             }
         });
@@ -28,7 +28,7 @@ class userClassRouter extends CustomRouter {
                     ? res.sendUserError(response.payload)
                     : res.sendSuccess(response);
             } catch (error) {
-                console.log('check error of user class router is post method ', error);
+                req.logger.Fatal('check error of user class router is post method ', error);
                 cartManager.cleanCartsWhitOutUser();
                 return res.sendServerError(`${error}`);
             }
@@ -40,7 +40,7 @@ class userClassRouter extends CustomRouter {
                     ? res.sendUserError(response.payload)
                     : res.sendSuccess(response.payload);
             } catch (error) {
-                console.log('check error of user class router is put method', error);
+                req.logger.Fatal('check error of user class router is put method', error);
                 return res.sendServerError(`${error}`);
             }
         });
@@ -51,7 +51,7 @@ class userClassRouter extends CustomRouter {
                     ? res.sendUserError(response.payload)
                     : res.sendSuccess(response);
             } catch (error) {
-                console.log('check error of user class router is delete method', error);
+                req.logger.Fatal('check error of user class router is delete method', error);
                 return res.sendServerError(`${error}`);
             }
         });

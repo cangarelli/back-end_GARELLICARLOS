@@ -1,28 +1,31 @@
 const winston = require('winston');
+const { configObject } = require('../../config/configBarrel.js');
 
 const customLevelsOption = {
     levels: {
-        fatal: 0,
-        error: 1,
-        warning: 2,
-        info: 3,
-        debug: 4,
-        http: 5,
+        Fatal: 0,
+        Error: 1,
+        Warning: 2,
+        Info: 3,
+        Debug: 4,
+        Http: 5,
     },
     colors: {
-        fatal: 'red',
-        error: 'orange',
-        warning: 'yellow',
-        info: 'green',
-        debug: 'blue',
-        http: 'white',
+        Fatal: 'red',
+        Error: 'orange',
+        Warning: 'yellow',
+        Info: 'green',
+        Debug: 'blue',
+        Http: 'white',
     },
 };
+if (configObject.logger === 'dev') {
+}
 const logger = winston.createLogger({
     levels: customLevelsOption.levels,
     transports: [
         new winston.transports.Console({
-            level: 'http',
+            level: configObject.logger === 'dev' ? 'Http' : 'Info',
             format: winston.format.combine(
                 winston.format.colorize({ colors: customLevelsOption.colors }),
                 winston.format.simple()
@@ -30,7 +33,7 @@ const logger = winston.createLogger({
         }),
         new winston.transports.File({
             filename: './errors.log',
-            level: 'warning',
+            level: configObject.logger === 'dev' ? 'Warning' : 'Fatal',
             format: winston.format.simple(),
         }),
     ],

@@ -29,7 +29,7 @@ router.use('/api/sessions', sessionRouter.getRouter());
 
 /* Manejo de errores en el servidor */
 router.use((err, req, res, next) => {
-    console.error(err.stack);
+    req.logger.Fatal(err.stack);
     res.status(500).send('error de server');
 });
 
