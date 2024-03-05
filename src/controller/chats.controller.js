@@ -1,3 +1,4 @@
+const { logger } = require('../helpers/helpersBarrel.js');
 const { chatService } = require('../repositories/service.js');
 
 class cartController {
@@ -12,7 +13,7 @@ class cartController {
         if (messages.length > 0) {
             return messages;
         } else {
-            console.log('no hay mensajes');
+            logger.Info('no hay mensajes');
             return { status: 'error', payload: 'Aún no se han enviado mensajes' };
         }
     };

@@ -1,8 +1,9 @@
 const passport = require('passport');
+const { logger } = require('../helpersBarrel.js');
 
 const passportCall = (strategy) => {
     return async (req, res, next) => {
-        console.log('check passport Call is req initial');
+        logger.Debug('check passport Call is req initial');
         passport.authenticate(strategy, function (err, user, info) {
             if (err) {
                 return next(err);

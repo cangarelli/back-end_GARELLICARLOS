@@ -1,8 +1,10 @@
+const { logger } = require("../helpersBarrel");
+
 const cartReviewer = async (serviceManager, cid, pid) => {
     const virtualCart = await serviceManager.getOneCart(cid);
     let existingProduct = -1;
     const products = virtualCart.payload;
-    console.log('check products', products);
+    logger.Debug('check products', products);
 
     products.length > 0 &&
         (() => {

@@ -1,4 +1,5 @@
 const userGetterDto = require('../dto/userGetterDto.js');
+const { logger } = require('../helpers/helpersBarrel.js');
 const { passwordValidator } = require('../helpers/userApiUtils/hashPasswordManager.js');
 const { userService, cartService } = require('../repositories/service.js');
 
@@ -89,11 +90,11 @@ class userController {
     };
     userCheck = async (email, password) => {
         const data = await this.getUser(email);
-        console.log('check data in userController is usercheck', data);
+        logger.Debug('check data in userController is usercheck', data);
         if (data.status === 'error') {
             return { status: 'error', payload: 'El correo eletronico no se encuentra registrado' };
         } else {
-            console.log('check pasword validator parameters hash pass y pass', data, password);
+            logger.Debug('check pasword validator parameters hash pass y pass', data, password);
             if (passwordValidator(password, data.password)) {
                 return new userGetterDto(data);
             } else {
@@ -108,16 +109,14 @@ class userController {
         try {
             // busqueda del usuario
             const userFind = await this.getUser(uid);
-            console.log('check userFind in user controller is deleteUser', userFind);
+            logger.Debug('check userFind in user controller is deleteUser', userFind);
             if (userFind && userFind._id) {
-                console.log('ingresa al if');
                 // Elminación del carrito del usuario
                 await this.cartManager.deleteCart(userFind.cartId);
                 // Eliminación del usuario
                 const result = await this.service.delete(uid);
                 return { status: 'succes', payload: result };
             } else {
-                console.log('ingresa al else');
                 return { status: 'error', payload: 'El usuario no fue encontrado' };
             }
         } catch (error) {

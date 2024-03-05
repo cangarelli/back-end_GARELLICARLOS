@@ -5,6 +5,7 @@ const jwt = require('passport-jwt');
 // Importación de modulos propios
 const { json_private_key } = require('../helpers/sessionApiUtils/jwt.js');
 const userController = require('../controller/users.controller.js');
+const { logger } = require('../helpers/helpersBarrel.js');
 
 //Creacion de instancias de managers
 const userManager = new userController();
@@ -32,7 +33,7 @@ exports.initializePassportJWT = () => {
                 try {
                     return done(null, jwt_payload);
                 } catch (error) {
-                    console.log('error en intializePassportJWT', error);
+                    logger.Fatal('error en intializePassportJWT', error);
                     return done(error);
                 }
             }
@@ -54,7 +55,7 @@ exports.initializePassportLocal = () => {
                 try {
                     // Seteo de variables
                     const { first_name, last_name, email, age } = req.body;
-                    console.log('check users router post body', req.body);
+                    logger.Debug('check users router post body', req.body);
                     // Gestion de datos
                     const result = await userManager.createUser({
                         first_name: first_name,
@@ -65,7 +66,7 @@ exports.initializePassportLocal = () => {
                     });
                     // Manejo de respuesta
                     if (typeof result == 'object') {
-                        console.log('ES POR ACA PAPA');
+                        logger.Debug('ES POR ACA PAPA');
                         return done(null, result);
                     } else {
                         return done('Error al crear el usuario: ' + result);
@@ -77,11 +78,11 @@ exports.initializePassportLocal = () => {
         )
     );
     passport.serializeUser((user, done) => {
-        console.log('check user in  serializeUser', user);
+        logger.Debug('check user in  serializeUser', user);
         done(null, user.payload._id);
     });
     passport.deserializeUser(async (id, done) => {
-        console.log('check id in  deserializeUser', id);
+        logger.Debug('check id in  deserializeUser', id);
         let user = await userManager.getUser(id); //busqueda por id de los datos del usuario
         done(null, user);
     });

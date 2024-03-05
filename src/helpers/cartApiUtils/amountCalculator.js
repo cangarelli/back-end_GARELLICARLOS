@@ -1,3 +1,5 @@
+const { logger } = require("../helpersBarrel");
+
 const amountCalculator = (purchaseList) => {
     let cuenta = [];
     let totalAmount;
@@ -7,7 +9,7 @@ const amountCalculator = (purchaseList) => {
         cuenta.push(result);
     });
     totalAmount = cuenta.reduce((acc, product) => acc + product.amount, 0);
-    console.log('check totalAmount of amountCalculator', totalAmount);
+    logger.Debug('check totalAmount of amountCalculator', totalAmount);
 
     return totalAmount;
 };

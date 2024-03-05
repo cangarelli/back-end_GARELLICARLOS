@@ -4,6 +4,7 @@ const {
     amountCalculator,
     cartReviewer,
     stockReviewer,
+    logger,
 } = require('../helpers/helpersBarrel.js');
 const { productService, cartService, userService, ticketService } = require('../repositories/service.js');
 
@@ -81,7 +82,7 @@ class cartController {
             amount: totalAmount,
             purchaser,
         };
-        console.log('check tiketData un purchase method of cart controller', tiketData);
+        logger.Debug('check tiketData un purchase method of cart controller', tiketData);
 
         const response = await this.ticketManager.makeATicket(tiketData);
 
@@ -144,7 +145,7 @@ class cartController {
             const cartsWhitOutUserIds = cidsArray.filter((elemento) => !userCids.includes(elemento));
             cartsWhitOutUserIds.forEach((cid) => this.service.deleteCart(cid));
         } catch (error) {
-            console.log('cleanCartsWhitOutUser of carts controller is catch', error);
+           logger.Fatal('cleanCartsWhitOutUser of carts controller is catch', error);
         }
     };
 }

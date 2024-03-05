@@ -1,5 +1,5 @@
 const { productService } = require('../repositories/service.js');
-const { paginateQueryMaker, linkQueryMaker } = require('../helpers/helpersBarrel.js');
+const { paginateQueryMaker, linkQueryMaker, logger } = require('../helpers/helpersBarrel.js');
 const userDataTester = require('../helpers/errorsUtils/userDataTester.js');
 
 // Funciones de procesamiento de request data
@@ -14,7 +14,7 @@ class productController {
         if (category != undefined) {
             categoriesArray = category.split(',');
         }
-        console.log(
+        logger.Debug(
             'check params of product Controller is getProducts',
             category,
             disponibility,
@@ -30,7 +30,7 @@ class productController {
             limit,
             page: onPage,
         });
-        console.log('check querys of product Controller is getProducts', querys);
+        logger.Debug('check querys of product Controller is getProducts', querys);
         // Gestion de datos
         const result = await this.service.getProducts({
             filter: querys.filter,

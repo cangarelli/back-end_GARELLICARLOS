@@ -1,4 +1,4 @@
-const { CustomErrors, EErrors, userDataErrorInfo } = require('../helpersBarrel.js');
+const { CustomErrors, EErrors, userDataErrorInfo, logger } = require('../helpersBarrel.js');
 
 function firstControl(data) {
     if (data === undefined) {
@@ -23,7 +23,7 @@ async function thirdControl(data, manager) {
     let dataTypes = {};
     for (const key of data) {
         const dataType = await manager.getType(`${key}`);
-        console.log('check dataType of user data tester', dataType);
+        logger.Debug('check dataType of user data tester', dataType);
         dataTypes[key] = dataType;
         typeof data[key] === dataType && checker.push(true);
     }

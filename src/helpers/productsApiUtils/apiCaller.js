@@ -1,3 +1,5 @@
+const { logger } = require("../helpersBarrel");
+
 async function apiCaller({ route, info, method }) {
     try {
         const response = await fetch(route, {
@@ -11,7 +13,7 @@ async function apiCaller({ route, info, method }) {
         const resolve = data.payload;
         return resolve;
     } catch (error) {
-        console.error('Error al enviar la solicitud:', error);
+        logger.Fatal('Error al enviar la solicitud:', error);
     }
 }
 
