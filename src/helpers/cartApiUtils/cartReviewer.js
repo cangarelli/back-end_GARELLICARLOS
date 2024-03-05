@@ -1,4 +1,4 @@
-const { logger } = require("../helpersBarrel");
+const { logger } = require("../errorsUtils/logger.js");
 
 const cartReviewer = async (serviceManager, cid, pid) => {
     const virtualCart = await serviceManager.getOneCart(cid);

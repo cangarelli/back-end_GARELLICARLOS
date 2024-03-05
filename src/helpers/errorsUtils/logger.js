@@ -1,5 +1,5 @@
 const winston = require('winston');
-const { configObject } = require('../../config/configBarrel.js');
+const configObject = require('../../config/configObjetc.js');
 
 const customLevelsOption = {
     levels: {
@@ -19,8 +19,7 @@ const customLevelsOption = {
         Http: 'white',
     },
 };
-if (configObject.logger === 'dev') {
-}
+
 const logger = winston.createLogger({
     levels: customLevelsOption.levels,
     transports: [

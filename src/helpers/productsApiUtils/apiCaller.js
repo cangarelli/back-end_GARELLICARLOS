@@ -1,4 +1,4 @@
-const { logger } = require("../helpersBarrel");
+const { logger } = require("../errorsUtils/logger.js");
 
 async function apiCaller({ route, info, method }) {
     try {

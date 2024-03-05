@@ -1,5 +1,5 @@
 const passport = require('passport');
-const { logger } = require('../helpersBarrel.js');
+const { logger } = require('../errorsUtils/logger.js');
 
 const passportCall = (strategy) => {
     return async (req, res, next) => {

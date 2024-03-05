@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const { logger } = require('../helpersBarrel.js');
+const { logger } = require('../errorsUtils/logger.js');
 const json_private_key = 'laClaveQueMásMeGustaAMi';
 
 const createToken = (user) => jwt.sign({ user }, json_private_key, { expiresIn: '1d' });
