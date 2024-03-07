@@ -1,39 +1,44 @@
-import { useId } from 'react';
+import { useEffect, useId, useState } from "react";
 
 // Estilos
-import './style.css';
-import { handleSubmit } from '../../hooks/hooksBarrel.js';
-import { dv } from '@faker-js/faker';
-import { Link } from 'react-router-dom';
+import "./style.css";
+import { dataUploader, handleSubmit } from "../../hooks/hooksBarrel.js";
+import { dv } from "@faker-js/faker";
+import { Link } from "react-router-dom";
 
 const DataForm = (props) => {
   // Parametros
   const { dataQuestions, fetchRoute } = props;
-  // Logica
-  handleSubmit(event, { dataToUpdate: dataQuestions, fetchRoute: fetchRoute });
-  //   const handleSubmit = (event, dataToUpdate, fetchRoute) => {
-  //     event.preventDefault()
-  //     console.log ("check params of handleSubmit", event, dataToUpdate, fetchRoute)
-  //     const token = document.cookie
-  //     console.log ("check dataToUpdate of handleSubmit", dataToUpdate)
 
-  //     const updatableData = []
-  //     if ( dataToUpdate.type == "Object") {
-  //         dataToUpdate.forEach(element => {
-  //             updatableData.push(element.id)
-  //         });
-  //     }
-  //     console.log ("check updatableData of handleSubmit", updatableData)
-  //     dataUploader ({ apiRoute: fetchRoute, method:"post", updatableData: updatableData}, token)
-  // };
+  // Logica
+  console.log("check dataQuestions at data form", dataQuestions);
+  const [dataToUpdate, setDataToUpdate] = useState(
+    dataQuestions.reduce((obj, element) => {
+      obj[element.id] = "";
+      return obj;
+    }, {})
+  );
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    dataUploader({
+      apiRoute: fetchRoute,
+      method: "post",
+      updatableData: Object.keys(dataToUpdate),
+    });
+  };
 
   // Renderizado
   return (
-    <form className="requestDataForm" onClick={handleSubmit}>
+    <form className="requestDataForm">
       {dataQuestions.map((point) => {
         return (
           <div key={useId(point.id)} className="requestDataForm__option">
-            <label htmlFor={point.id} className="requestDataForm__option--label">
+            <label
+              htmlFor={point.id}
+              className="requestDataForm__option--label"
+            >
               {point.label}
             </label>
             <input
@@ -47,7 +52,7 @@ const DataForm = (props) => {
         );
       })}
       <button
-        key={useId('Aceptar')}
+        key={useId("Aceptar")}
         onClick={handleSubmit}
         className="requestDataForm--formButton"
         type="submit"

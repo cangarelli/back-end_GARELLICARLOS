@@ -9,7 +9,6 @@ const cors = require('cors'); /* Permite que la base de datos se use desde otros
 const compression = require('express-compression'); /* Modulos para comprimir response: Gzip y Brotli*/
 const { logger, addLogger } = require('../helpers/helpersBarrel.js');
 
-
 // Config express
 const expressConfig = (app) => {
     const { configObject } = require('./configBarrel.js');
@@ -25,24 +24,27 @@ const expressConfig = (app) => {
     app.locals.port = configObject.PORT;
 
     // Seguridad y optimización de manejo de datos
-    app.use(cors());
     app.use(
-        compression({
-            brotli: { enabled: true, zlib: {} },
+        cors({
+            origin: '*',
+            credentials: true,
+            methods: ['GET', 'POST', 'PUT'],
         })
     );
 
     // Cookies y session
-    app.use(cookieParser('SecretWords'));
+    // app.use(cookieParser('SecretWords'));
     app.use(
         session({
             store: MongoStore.create({
                 mongoUrl:
                     'mongodb+srv://agarelli91:5d8a6fsFWa6@anlugamescluster.mgh6ee1.mongodb.net/ecommerce',
-                ttl: 3600000, // Tiempo de expiración en milisegundos (1 hora)
+                ttl: 60 * 60 * 1000, // Tiempo de expiración en milisegundos (1 hora)
             }),
             cookie: {
-                maxAge: 3600000, // Tiempo de expiración en milisegundos (1 hora)
+                maxAge: 60 * 60 * 1000, // Tiempo de expiración en milisegundos (1 hora)
+                SameSite: 'none',
+                domain: 'http://localhost:5173',
             },
             secret: 'coderSecret', // Encriptado
             resave: false,
@@ -51,15 +53,13 @@ const expressConfig = (app) => {
     );
 
     app.use(
-        session({
-            secret: 'SecretWords',
-            resave: false,
-            saveUninitialized: false,
+        compression({
+            brotli: { enabled: true, zlib: {} },
         })
     );
 
     // Manejo de logs
-    app.use(addLogger)
+    app.use(addLogger);
 };
 
 module.exports = expressConfig;

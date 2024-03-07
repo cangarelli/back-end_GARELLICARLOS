@@ -14,7 +14,10 @@ class SessionClassRouter extends CustomRouter {
         //seteo de rutas
         this.post('/loguin', ['public'], async (req, res) => {
             try {
-                req.logger.Info('check req.body of get method is loguin route ', req.body);
+                req.logger.Debug(
+                    'check req.body of SessionClassRouter is get method of /loguin route',
+                    req.body
+                );
                 const response = await userManager.userCheck(req.body.email, req.body.password);
                 if (response.status == 'error') {
                     return res.sendUserError(response.payload);
@@ -23,7 +26,7 @@ class SessionClassRouter extends CustomRouter {
                     return res.sendTokenSucces(response, nameCookie, token);
                 }
             } catch (error) {
-                req.logger.Fatal('check error of session router is get method /loguin', error);
+                req.logger.Fatal('check error of SessionClassRouter is get method of /loguin route', error);
                 return res.sendServerError(`${error}`);
             }
         });
