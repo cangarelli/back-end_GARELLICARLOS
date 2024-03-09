@@ -53,18 +53,20 @@ class SessionClassRouter extends CustomRouter {
                 return res.sendServerError(`${error}`);
             }
         });
-        this.delete('/logout', async (req, res) => {
+        this.delete('/logout', ['user', 'admin', 'premium'], async (req, res) => {
             try {
                 res.clearCookie(nameCookie);
-                req.session.destroy((err) => {
-                    if (err) {
-                        sendUserError(err);
-                    } else {
-                        sendSuccess('logout exitoso');
-                    }
-                });
+                if (req && req.session) {
+                    req.session.destroy((err) => {
+                        if (err) {
+                            res.sendUserError(err);
+                        } else {
+                            res.sendSuccess('logout exitoso');
+                        }
+                    });
+                }
             } catch (error) {
-                req.logger.Fatal('check error of x class router is delete method', error);
+                req.logger.Fatal('check error of session class router is delete method /logout', error);
                 return res.sendServerError(`${error}`);
             }
         });

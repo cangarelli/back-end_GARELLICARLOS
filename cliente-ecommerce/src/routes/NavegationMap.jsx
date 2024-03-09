@@ -21,7 +21,7 @@ const routes = createBrowserRouter([
     element: <ProductDetailViewer />,
   },
   {
-    path: '/contacto',
+    path: '/contacto/:uid',
     element: <ChatView />,
   },
   {
@@ -33,7 +33,7 @@ const routes = createBrowserRouter([
     element: <Register />,
   },
   {
-    path: '/carrito',
+    path: '/carrito/:cid',
     element: <CartView />,
   },
   {

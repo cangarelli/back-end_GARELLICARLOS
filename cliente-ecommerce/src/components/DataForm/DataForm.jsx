@@ -62,7 +62,6 @@ const DataForm = (props) => {
       })}
       <button
         key={useId("Aceptar")}
-        u
         onClick={handleSubmit}
         className="requestDataForm--formButton"
         type="submit"

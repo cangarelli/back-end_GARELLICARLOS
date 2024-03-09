@@ -1,8 +1,8 @@
-import React, { useId } from "react";
+import React, { useId } from 'react';
 
 // Estilos
-import "./style.css";
-import { ButtonOption, SubTitle } from "../componentsBarrel";
+import './style.css';
+import { ButtonOption, SubTitle } from '../componentsBarrel';
 
 const SearchBar = (props) => {
   const { categories } = props;
@@ -13,10 +13,7 @@ const SearchBar = (props) => {
         <div className="SearchBar__prodCategories--option">
           {categories.map((categorie) => {
             return (
-              <div
-                key={categorie}
-                className="SearchBar__prodCategories--optionMenu"
-              >
+              <div key={categorie} className="SearchBar__prodCategories--optionMenu">
                 <label htmlFor={categorie}> {categorie.toUpperCase()} </label>
                 <input type="checkbox" name={categorie} id={categorie} />
               </div>
@@ -41,7 +38,7 @@ const SearchBar = (props) => {
         </div>
       </div>
       <div className="SearchBar__buttonPad">
-        <ButtonOption buttonData={{ value: "Filter Search" }} />
+        <ButtonOption buttonData={{ value: 'Filter Search' }} />
       </div>
     </form>
   );

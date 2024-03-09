@@ -1,54 +1,60 @@
 // Estilos
-import "./style.css";
+import './style.css';
 
-import { Link } from "react-router-dom";
-import { useContext, useEffect, useState } from "react";
+// Componentes de react
+import { Link } from 'react-router-dom';
+import { useContext, useEffect, useState } from 'react';
 
-import { CartWidget, Logo, SearchBar, SubTitle } from "../componentsBarrel";
-import { devHost, fetchData } from "../../hooks/hooksBarrel";
+// Componentes propios
+import { Logo, SearchBar, UserPad } from '../componentsBarrel';
+import { devHost, fetchData } from '../../hooks/hooksBarrel';
+import { UserContext } from '../../context/UserContext.jsx';
 
-import logoMarca from "../../assets/png/Logo-marca.png";
-import { UserContext } from "../../context/UserContext.jsx";
+// Assets
+import logoMarca from '../../assets/png/Logo-marca.png';
 
-const hostDev = "http://localhost:8080";
+const hostDev = 'http://localhost:8080';
 const NavBar = (props) => {
   // Variables
   const [categoryOptions, setCategoryOptions] = useState([]);
-  //Logica
-  const { getUserName, getUserCartId, getUserCartQuantitys } =
-    useContext(UserContext);
-  // const { userSetter } = useContext(UserContext);
-  // userSetter(data.payload, data.token);
+  const [UData, setUData] = useState({});
+  const { user } = useContext(UserContext);
+
+  // Gestión de datos de session
+  useEffect(() => {
+    let userInfo;
+    if (user && user.Uid) {
+      userInfo = {
+        uId: user.Uid,
+        cart: user.cartId,
+      };
+    } else {
+      userInfo = null;
+    }
+    setUData(userInfo);
+  }, [user]);
+
+  // Gestion de datos Search Bar
   useEffect(() => {
     // Con mi backend
     fetchData({
       route: `${devHost()}/api/products/daokeydata/category`,
-      method: "get",
+      method: 'get',
     }).then((res) => {
       setCategoryOptions(res.payload);
     });
   }, []);
+
   //Renderización
   return (
     <div className="navMarco">
       <div className="navBar">
         <div className="conteiner">
-          <Link to={"/"}>
+          <Link to={'/'}>
             <Logo src={logoMarca} alt="Icono de acceso a pagina princial" />
           </Link>
-          <SearchBar
-            categories={categoryOptions.length > 0 ? categoryOptions : [""]}
-          />
-
-          <Link to="/contacto">
-            <SubTitle texto="Chat" />
-          </Link>
-          <Link to="/carrito">
-            <CartWidget />
-          </Link>
-          <Link to="/loguin">
-            <SubTitle texto="Loguin" />
-          </Link>
+          <SearchBar categories={categoryOptions.length > 0 ? categoryOptions : ['']} />
+          <UserPad userData={UData} />
         </div>
       </div>
     </div>

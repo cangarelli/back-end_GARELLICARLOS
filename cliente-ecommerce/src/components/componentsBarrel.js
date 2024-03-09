@@ -17,10 +17,11 @@ export { default as CartReview } from './CartReview/CartReview.jsx';
 // Componente principal: Gestionan la lógica del manejo de los datos - Aca va el fetch post/put/delete
 export { default as ProductItemList } from './ProductItemList/ProductItemList.jsx';
 export { default as DataForm } from './DataForm/DataForm.jsx';
-export { default as Footer } from './Footer/Footer.jsx';
-export { default as NavBar } from './NavBar/NavBar.jsx';
+export { default as UserPad } from './UserPad/UserPad.jsx';
 
 // Contenedores: Carga de datos y variables generales - Aca va el fetch get
+export { default as Footer } from './Footer/Footer.jsx';
+export { default as NavBar } from './NavBar/NavBar.jsx';
 export { default as ProductItemListConteiner } from './ProductItemListConteiner/ProductItemListConteiner.jsx';
 export { default as LogDataFormConteiner } from './LogDataFormConteiner/LogDataFormConteiner.jsx';
 

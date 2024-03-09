@@ -1,5 +1,5 @@
 // Componentes de React
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState } from 'react';
 
 //Componentes propios
 
@@ -11,7 +11,7 @@ export const UserProvider = (props) => {
 
   // Logica
   const userSetter = (logData) => {
-    console.log("check params of userProvider is userSetter", logData);
+    console.log('check params of userProvider is userSetter', logData);
     const { payload, token } = logData;
 
     const userObject = {
@@ -24,8 +24,9 @@ export const UserProvider = (props) => {
     };
     setUser(userObject);
   };
+
   useEffect(() => {
-    console.log("check user in userSetter of User Povider Context", user);
+    console.log('check user in userSetter of User Povider Context', user);
   }, [user]);
   // Renderizado
   return (
