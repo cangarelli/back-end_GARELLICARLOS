@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useId } from "react";
 
 // Estilos
-import './style.css';
-import { ButtonOption, SubTitle } from '../componentsBarrel';
+import "./style.css";
+import { ButtonOption, SubTitle } from "../componentsBarrel";
 
 const SearchBar = (props) => {
   const { categories } = props;
@@ -13,8 +13,11 @@ const SearchBar = (props) => {
         <div className="SearchBar__prodCategories--option">
           {categories.map((categorie) => {
             return (
-              <div className="SearchBar__prodCategories--optionMenu">
-                <label for={categorie}> {categorie.toUpperCase()} </label>
+              <div
+                key={categorie}
+                className="SearchBar__prodCategories--optionMenu"
+              >
+                <label htmlFor={categorie}> {categorie.toUpperCase()} </label>
                 <input type="checkbox" name={categorie} id={categorie} />
               </div>
             );
@@ -24,21 +27,21 @@ const SearchBar = (props) => {
       <div className="SearchBar__order">
         <SubTitle texto="Orden" />
         <div>
-          <label for="orderHigh">Mayor precio</label>
+          <label htmlFor="orderHigh">Mayor precio</label>
           <input type="checkbox" name="orderHeigh" id="orderHeigh" />
-          <label for="orderLow">Menor precio</label>
+          <label htmlFor="orderLow">Menor precio</label>
           <input type="checkbox" name="orderLow" id="orderLow" />
         </div>
       </div>
       <div className="SearchBar__disponibility">
         <SubTitle texto="Disponinilidad" />
         <div>
-          <label for="disponibility">Solo disponibles</label>
+          <label htmlFor="disponibility">Solo disponibles</label>
           <input type="checkbox" name="disponibility" id="status" />
         </div>
       </div>
       <div className="SearchBar__buttonPad">
-        <ButtonOption buttonData={{ value: 'Filter Search' }} />
+        <ButtonOption buttonData={{ value: "Filter Search" }} />
       </div>
     </form>
   );

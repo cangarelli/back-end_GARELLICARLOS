@@ -69,14 +69,14 @@ const LogDataFormConteiner = (props) => {
         {path == 'loguin'
           ? loguinAlternativesArray.map((alt) => {
               return (
-                <button type={alt.type}>
+                <button key={alt.label} type={alt.type}>
                   <Link to={alt.link}>{alt.label}</Link>
                 </button>
               );
             })
           : registerAlternativesArray.map((alt) => {
               return (
-                <button type={alt.type}>
+                <button key={alt.label} type={alt.type}>
                   <Link to={alt.link}>{alt.label}</Link>
                 </button>
               );

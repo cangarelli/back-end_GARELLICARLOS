@@ -1,5 +1,5 @@
 // Componentes de React
-import { createContext, useState } from 'react';
+import { createContext, useEffect, useState } from "react";
 
 //Componentes propios
 
@@ -7,23 +7,26 @@ export const UserContext = createContext();
 
 export const UserProvider = (props) => {
   // Parametros
-  const [user, setUser] = useState([]);
+  const [user, setUser] = useState({});
 
   // Logica
-  // User
-  const userSetter = (userData, token) => {
-    setUser(...token, userData);
-    console.log('check user in userSetter of User Povider Context', user);
-  };
-  const getUserName = () => {
-    
-  };
+  const userSetter = (logData) => {
+    console.log("check params of userProvider is userSetter", logData);
+    const { payload, token } = logData;
 
-  //Carrito of user
-  const getUserCartId = () => {};
-  const getUserCartQuantitys = () => {};
-  const tokenManager = () => {};
-
+    const userObject = {
+      Uid: payload.id,
+      cartId: payload.cartId,
+      email: payload.email,
+      name: payload.full_name,
+      role: payload.role,
+      token,
+    };
+    setUser(userObject);
+  };
+  useEffect(() => {
+    console.log("check user in userSetter of User Povider Context", user);
+  }, [user]);
   // Renderizado
   return (
     <UserContext.Provider
@@ -31,10 +34,6 @@ export const UserProvider = (props) => {
         user,
         setUser,
         userSetter,
-        getUserName,
-        getUserCartId,
-        getUserCartQuantitys,
-        tokenManager,
       }}
     >
       {props.children}

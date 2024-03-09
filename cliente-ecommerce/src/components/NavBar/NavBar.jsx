@@ -1,26 +1,30 @@
 // Estilos
-import './style.css';
+import "./style.css";
 
-import { Link } from 'react-router-dom';
-import { useContext, useEffect, useState } from 'react';
+import { Link } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
 
-import { CartWidget, Logo, SearchBar, SubTitle } from '../componentsBarrel';
-import { devHost, fetchData } from '../../hooks/hooksBarrel';
+import { CartWidget, Logo, SearchBar, SubTitle } from "../componentsBarrel";
+import { devHost, fetchData } from "../../hooks/hooksBarrel";
 
-import logoMarca from '../../assets/png/Logo-marca.png';
-import { UserContext } from '../../context/userContext';
+import logoMarca from "../../assets/png/Logo-marca.png";
+import { UserContext } from "../../context/UserContext.jsx";
 
-const hostDev = 'http://localhost:8080';
+const hostDev = "http://localhost:8080";
 const NavBar = (props) => {
   // Variables
   const [categoryOptions, setCategoryOptions] = useState([]);
-  //Logica 
-  const { getUserName, getUserCartId, getUserCartQuantitys } = useContext (UserContext);
-
-
+  //Logica
+  const { getUserName, getUserCartId, getUserCartQuantitys } =
+    useContext(UserContext);
+  // const { userSetter } = useContext(UserContext);
+  // userSetter(data.payload, data.token);
   useEffect(() => {
     // Con mi backend
-    fetchData({ route: `${devHost()}/api/products/daokeydata/category`, method: 'get' }).then((res) => {
+    fetchData({
+      route: `${devHost()}/api/products/daokeydata/category`,
+      method: "get",
+    }).then((res) => {
       setCategoryOptions(res.payload);
     });
   }, []);
@@ -29,10 +33,12 @@ const NavBar = (props) => {
     <div className="navMarco">
       <div className="navBar">
         <div className="conteiner">
-          <Link to={'/'}>
+          <Link to={"/"}>
             <Logo src={logoMarca} alt="Icono de acceso a pagina princial" />
           </Link>
-          <SearchBar categories={categoryOptions.length > 0 ? categoryOptions : ['']} />
+          <SearchBar
+            categories={categoryOptions.length > 0 ? categoryOptions : [""]}
+          />
 
           <Link to="/contacto">
             <SubTitle texto="Chat" />

@@ -3,8 +3,7 @@ import React from 'react';
 import './App.css';
 import NavegationMap from './routes/NavegationMap';
 import socketRoutes from './socketConfig/socketRoutes';
-import { UserContext, UserProvider } from './context/userContext';
-
+import { UserProvider } from './context/UserContext.jsx';
 function App() {
   // const [count, setCount] = useState(0)
 
