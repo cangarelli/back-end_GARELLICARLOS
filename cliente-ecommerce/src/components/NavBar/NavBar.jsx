@@ -2,19 +2,22 @@
 import './style.css';
 
 import { Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import { CartWidget, Logo, SearchBar, SubTitle } from '../componentsBarrel';
 import { devHost, fetchData } from '../../hooks/hooksBarrel';
 
 import logoMarca from '../../assets/png/Logo-marca.png';
+import { UserContext } from '../../context/userContext';
 
 const hostDev = 'http://localhost:8080';
 const NavBar = (props) => {
   // Variables
   const [categoryOptions, setCategoryOptions] = useState([]);
+  //Logica 
+  const { getUserName, getUserCartId, getUserCartQuantitys } = useContext (UserContext);
 
-  //Logica
+
   useEffect(() => {
     // Con mi backend
     fetchData({ route: `${devHost()}/api/products/daokeydata/category`, method: 'get' }).then((res) => {

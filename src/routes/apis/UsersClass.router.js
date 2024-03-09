@@ -13,27 +13,32 @@ class userClassRouter extends CustomRouter {
             // OK TODA LA RUTA Y SUS CAPAS
             try {
                 const result = await userManager.getUser(req.params.uid);
-                req.logger.Info('check result of user Class Rotuer is get route', result);
+                req.logger.Debug('check result of user Class Rotuer is get route', result);
                 return result.status == 'error' ? res.sendUserError(result.payload) : res.sendSuccess(result);
             } catch (error) {
                 req.logger.Fatal('check get error of user class router is get method user', error);
                 return res.sendServerError(`${error}`);
             }
         });
+
+        this.post('/premium/:uid', ['user', 'premium'], async (req, res) => {
+            //Cambiar el rol de usuario de user a premium
+        });
+
+        // OK TODA LA RUTA Y SUS CAPAS
         this.post('/', async (req, res) => {
-            // OK TODA LA RUTA Y SUS CAPAS
             try {
                 const response = await userManager.createUser(req.body);
                 return response.status == 'error'
                     ? res.sendUserError(response.payload)
                     : res.sendSuccess(response);
             } catch (error) {
-                req.logger.Fatal('check error of user class router is post method ', error);
+                req.logger.Fatal('check error of user class router is post method /', error);
                 cartManager.cleanCartsWhitOutUser();
                 return res.sendServerError(`${error}`);
             }
         });
-        this.put('/:uid', async (req, res) => {
+        this.put('/:uid', ['user', 'admin'], async (req, res) => {
             try {
                 const response = await userManager.updateUser(req.params.uid, req.body);
                 return response.status == 'error'

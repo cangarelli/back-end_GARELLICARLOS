@@ -1,20 +1,20 @@
-import { useEffect, useId, useState } from "react";
+import { useEffect, useId, useState } from 'react';
 
 // Estilos
-import "./style.css";
-import { dataUploader, handleSubmit } from "../../hooks/hooksBarrel.js";
-import { dv } from "@faker-js/faker";
-import { Link } from "react-router-dom";
+import './style.css';
+import { dataUploader, handleSubmit } from '../../hooks/hooksBarrel.js';
+import { dv } from '@faker-js/faker';
+import { Link } from 'react-router-dom';
 
 const DataForm = (props) => {
   // Parametros
   const { dataQuestions, fetchRoute } = props;
 
   // Logica
-  console.log("check dataQuestions at data form", dataQuestions);
+  console.log('check dataQuestions at data form', dataQuestions);
   const [dataToUpdate, setDataToUpdate] = useState(
     dataQuestions.reduce((obj, element) => {
-      obj[element.id] = "";
+      obj[element.id] = '';
       return obj;
     }, {})
   );
@@ -24,21 +24,18 @@ const DataForm = (props) => {
 
     dataUploader({
       apiRoute: fetchRoute,
-      method: "post",
+      method: 'post',
       updatableData: Object.keys(dataToUpdate),
     });
   };
 
   // Renderizado
   return (
-    <form className="requestDataForm">
+    <form id={useId('loguinForm')} className="requestDataForm">
       {dataQuestions.map((point) => {
         return (
           <div key={useId(point.id)} className="requestDataForm__option">
-            <label
-              htmlFor={point.id}
-              className="requestDataForm__option--label"
-            >
+            <label htmlFor={point.id} className="requestDataForm__option--label">
               {point.label}
             </label>
             <input
@@ -52,7 +49,7 @@ const DataForm = (props) => {
         );
       })}
       <button
-        key={useId("Aceptar")}
+        key={useId('Aceptar')}
         onClick={handleSubmit}
         className="requestDataForm--formButton"
         type="submit"

@@ -1,4 +1,4 @@
-import React from 'react';
+import cookieGetter from './cookieGetter';
 
 const fetchData = async ({ route, info, method, token }) => {
   return new Promise((resolve, reject) => {
@@ -12,12 +12,16 @@ const fetchData = async ({ route, info, method, token }) => {
       },
       body: JSON.stringify(info),
     })
-      .then((response) => response.json())
+      .then((response) => {
+        return response.json();
+      })
       .then((data) => {
         console.log(`Respuesta del servidor en ruta ${route} con method ${method} and info ${info}:`, data);
-        if (data.token) {
-          document.cookie = `token=${data.token}; expires=${new Date(Date.now() + 60 * 60 * 1000).toUTCString()}; path=/`
-        }
+        // if (data.token) {
+        //   document.cookie = `token=${data.token}; expires=${new Date(
+        //     Date.now() + 60 * 60 * 1000
+        //   ).toUTCString()}; path=/`;
+        // }
         resolve(data);
       })
       .catch((error) => {

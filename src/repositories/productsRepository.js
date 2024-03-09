@@ -9,7 +9,7 @@ class productRepository {
 
     getProductsById = async (pid) => await this.daoService.getProductsById(pid);
 
-    productCreate = async ({ title, price, category, description, stock, code, thumbnail, status }) =>
+    productCreate = async ({ title, price, category, description, stock, code, thumbnail, status, owner }) =>
         await this.daoService.productCreate({
             title,
             price,
@@ -19,6 +19,7 @@ class productRepository {
             code,
             thumbnail,
             status,
+            owner,
         });
 
     productUpdate = async (pid, productArray) => await this.daoService.productUpdate(pid, productArray);

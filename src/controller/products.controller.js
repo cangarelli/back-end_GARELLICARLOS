@@ -77,9 +77,9 @@ class productController {
         return response;
     };
     createProduct = async (productArray) => {
-        const { title, price, category, description, stock, code, thumbnail } = productArray;
+        const { title, price, category, description, stock, code, thumbnail, owner } = productArray;
         try {
-            userDataTester({ title, price, category, description, stock, code, thumbnail }, this.service);
+            userDataTester({ title, price, category, description, stock, code, thumbnail, owner }, this.service);
             const response = await this.service.productCreate({
                 title,
                 price,
@@ -89,6 +89,7 @@ class productController {
                 code,
                 thumbnail,
                 status: true,
+                owner,
             });
             return response;
         } catch (error) {

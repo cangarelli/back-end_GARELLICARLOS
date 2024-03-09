@@ -26,27 +26,32 @@ const expressConfig = (app) => {
     // Seguridad y optimización de manejo de datos
     app.use(
         cors({
-            origin: '*',
+            origin: [`http://localhost:${app.locals.port}`, 'http://localhost:5173'],
             credentials: true,
             methods: ['GET', 'POST', 'PUT'],
         })
     );
 
     // Cookies y session
-    // app.use(cookieParser('SecretWords'));
     app.use(
+        cookieParser('SecretWords')
+    ); // Local .Cookies
+
+    app.use(
+        // Global: req.session
         session({
             store: MongoStore.create({
+                // Acá configuro donde y como se guardaron los datos de la session
                 mongoUrl:
                     'mongodb+srv://agarelli91:5d8a6fsFWa6@anlugamescluster.mgh6ee1.mongodb.net/ecommerce',
                 ttl: 60 * 60 * 1000, // Tiempo de expiración en milisegundos (1 hora)
             }),
             cookie: {
+                // Aca configuro la cookie que se guardara en el navegador web
                 maxAge: 60 * 60 * 1000, // Tiempo de expiración en milisegundos (1 hora)
-                SameSite: 'none',
-                domain: 'http://localhost:5173',
+                httpOnly: true,
             },
-            secret: 'coderSecret', // Encriptado
+            secret: 'SecretWords', // Encriptado dentro del servidor
             resave: false,
             saveUninitialized: false,
         })

@@ -23,6 +23,7 @@ class SessionClassRouter extends CustomRouter {
                     return res.sendUserError(response.payload);
                 } else {
                     const token = createToken(response);
+                    req.session.token = token;
                     return res.sendTokenSucces(response, nameCookie, token);
                 }
             } catch (error) {
