@@ -7,7 +7,7 @@ import { dv } from '@faker-js/faker';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../../context/UserContext.jsx';
 
-const DataForm = (props) => {
+const FormData = (props) => {
   // Parametros
   const { dataQuestions, fetchRoute } = props;
   const { userSetter } = useContext(UserContext);
@@ -67,4 +67,4 @@ const DataForm = (props) => {
   );
 };
 
-export default DataForm;
+export default FormData;

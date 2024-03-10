@@ -10,10 +10,10 @@ const ProductDetail = (props) => {
   // Logica para botonera
 
   const buttonsData = [
-    { value: 'addProduct', modo: 'option', media: '' },
-    { value: 'removeProduct', modo: 'option', media: '' },
-    { value: 'Purchase', modo: 'option', media: '' },
-    { value: 'Voler', modo: 'option', media: '' },
+    { onclick: '', value: 'addProduct', modo: 'option', media: '' },
+    { onclick: '', value: 'removeProduct', modo: 'option', media: '' },
+    { onclick: '', value: 'Purchase', modo: 'option', media: '' },
+    { onclick: '', value: 'Voler', modo: 'option', media: '' },
   ];
 
   return (

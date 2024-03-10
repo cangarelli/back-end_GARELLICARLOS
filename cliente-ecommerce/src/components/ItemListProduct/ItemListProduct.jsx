@@ -1,10 +1,10 @@
 // Estilos
-import "./style.css";
+import './style.css';
 
 // Importacion de componentes
-import { ProductCard } from "../componentsBarrel";
+import { ProductCard } from '../componentsBarrel';
 
-import React from "react";
+import React from 'react';
 
 const ItemListProduct = (props) => {
   //Parametros
@@ -17,7 +17,7 @@ const ItemListProduct = (props) => {
   return (
     <div className="productItemList">
       {productlist.map((product) => {
-        return <ProductCard key={product._id} productData={product} />;
+        return <CardProduct key={product._id} productData={product} />;
       })}
     </div>
   );

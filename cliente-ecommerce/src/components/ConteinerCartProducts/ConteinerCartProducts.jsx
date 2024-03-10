@@ -1,19 +1,29 @@
 // Estilos
-import "./style.css";
-import { UserContext } from "../../context/UserContext";
-import { fetchData } from "../../hooks/hooksBarrel";
+import './style.css';
 
-import { useContext, useEffect, useState } from "react";
+// Componentes de react
+import { useContext, useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+
+// Componentes propios
+import { UserContext } from '../../context/UserContext';
+import { devHost, fetchData } from '../../hooks/hooksBarrel';
+import { AnimationLoading, CheckCart } from '../componentsBarrel';
 
 const ConteinerCartProducts = (props) => {
   const [uCart, setUCart] = useState({});
-
-  const data = useContext(UserContext);
+  const { cid } = useParams();
+  const user = useContext(UserContext);
   useEffect(() => {
-    fetchData;
+    fetchData({
+      route: `${devHost()}/api/carts/${queryString}`,
+      method: 'GET',
+      token,
+    });
   }, []);
 
-  return <div></div>;
+  //Renderizado
+  return <div>{isLoading ? <AnimationLoading /> : <CheckCart cData={uCart} />}</div>;
 };
 
 export default ConteinerCartProducts;

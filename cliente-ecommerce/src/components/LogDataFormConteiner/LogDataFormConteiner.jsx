@@ -1,10 +1,10 @@
 // Estilos
 import './style.css';
 
-import React from 'react';
-import { ButtonPanel, DataForm } from '../componentsBarrel';
-import { devHost, handleSubmit } from '../../hooks/hooksBarrel';
 import { Link } from 'react-router-dom';
+
+import { ButtonPanel, FormData } from '../componentsBarrel';
+import { devHost } from '../../hooks/hooksBarrel';
 
 const LogDataFormConteiner = (props) => {
   const { path } = props;
@@ -61,9 +61,9 @@ const LogDataFormConteiner = (props) => {
   return (
     <div className="LogDataFormConteiner">
       {path == 'loguin' ? (
-        <DataForm fetchRoute={`${devHost()}/api/sessions/loguin`} dataQuestions={dataLoguinQuestions} />
+        <FormData fetchRoute={`${devHost()}/api/sessions/loguin`} dataQuestions={dataLoguinQuestions} />
       ) : (
-        <DataForm fetchRoute={`${devHost()}/api/sessions/register`} dataQuestions={dataRegisterQuestions} />
+        <FormData fetchRoute={`${devHost()}/api/sessions/register`} dataQuestions={dataRegisterQuestions} />
       )}
       <div className="buttonPanel">
         {path == 'loguin'

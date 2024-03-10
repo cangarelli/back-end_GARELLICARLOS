@@ -9,7 +9,7 @@ import { SubTitle, Title } from '../componentsBarrel';
 
 import React from 'react';
 
-const ProductCard = (props) => {
+const CardProduct = (props) => {
   const { productData } = props;
   // console.log ("check productData of ProductCard component", productData)
 
@@ -28,4 +28,4 @@ const ProductCard = (props) => {
   );
 };
 
-export default ProductCard;
+export default CardProduct;
