@@ -1,0 +1,15 @@
+.productItemListConteiner {
+  margin: 0 auto;
+  max-width: 1200px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.productItemListConteiner__butonPad {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

@@ -1,0 +1,17 @@
+.widgetConteiner {
+  display: flex;
+  justify-content: center;
+  align-items: start;
+}
+.widgetConteiner--cartWidget {
+  width: 25px;
+  height: 25px;
+}
+.widgetConteiner--quantitys {
+  font-size: 15px;
+  color: black;
+  background-color: lightcoral;
+  border-radius: 100%;
+  padding: 1px 4px;
+  margin-left: 3px;
+}

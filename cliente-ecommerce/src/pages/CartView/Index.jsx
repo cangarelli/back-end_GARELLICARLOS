@@ -1,13 +1,20 @@
 // Estilos
-import './style.css';
+import "./style.css";
 
 // Importacion de componentes
-import { Layout } from '../../components/componentsBarrel';
+import {
+  ConteinerCartProducts,
+  Layout,
+} from "../../components/componentsBarrel";
 
-import React from 'react';
+import React from "react";
 
 const CartView = () => {
-  return <Layout></Layout>;
+  return (
+    <Layout>
+      <ConteinerCartProducts />
+    </Layout>
+  );
 };
 
 export default CartView;

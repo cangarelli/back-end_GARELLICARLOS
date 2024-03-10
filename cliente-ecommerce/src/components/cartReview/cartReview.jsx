@@ -3,7 +3,7 @@ import React from 'react';
 // Estilos
 import './style.css';
 
-const CartReview = () => {
+const CartReview = (props) => {
   return <div>CartReview</div>;
 };
 

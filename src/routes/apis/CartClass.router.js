@@ -24,6 +24,18 @@ class cartClassRouter extends CustomRouter {
                 return res.sendServerError(`${error}`);
             }
         });
+        this.get("/cartHold/:cid", ["user", "admin"], async (req, res) => {
+            // retornar la cantidad de productos que hay en el carrito
+            try {
+                const response = await CartManager.getQuantity(req.params.cidf)
+                return response.status == 'error'
+                ? res.sendUserError(response.payload)
+                : res.sendSuccess(response);
+            } catch (error) {
+                req.logger.Fatal('check error of cart class router is get method /cartHold/:cid', error);
+                return res.sendServerError(`${error}`);
+            }
+        })
 
         this.get('/:cid', ['public'], async (req, res) => {
             // OK TODA LA RUTA Y SUS CAPAS

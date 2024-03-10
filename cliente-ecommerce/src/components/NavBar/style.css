@@ -1,0 +1,9 @@
+.navBar {
+  margin: 0 auto;
+  max-width: 1200px;
+}
+.navBar__conteiner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

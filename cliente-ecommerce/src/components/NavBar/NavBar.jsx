@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
 
 // Componentes propios
-import { Logo, SearchBar, UserPad } from '../componentsBarrel';
+import { Logo, SearchBar, PadUser } from '../componentsBarrel';
 import { devHost, fetchData } from '../../hooks/hooksBarrel';
 import { UserContext } from '../../context/UserContext.jsx';
 
@@ -27,6 +27,7 @@ const NavBar = (props) => {
       userInfo = {
         uId: user.Uid,
         cart: user.cartId,
+        name: user.name,
       };
     } else {
       userInfo = null;
@@ -47,15 +48,13 @@ const NavBar = (props) => {
 
   //Renderización
   return (
-    <div className="navMarco">
-      <div className="navBar">
-        <div className="conteiner">
-          <Link to={'/'}>
-            <Logo src={logoMarca} alt="Icono de acceso a pagina princial" />
-          </Link>
-          <SearchBar categories={categoryOptions.length > 0 ? categoryOptions : ['']} />
-          <UserPad userData={UData} />
-        </div>
+    <div className="navBar">
+      <div className="navBar__conteiner">
+        <Link to={'/'}>
+          <Logo src={logoMarca} alt="Icono de acceso a pagina princial" />
+        </Link>
+        <SearchBar categories={categoryOptions.length > 0 ? categoryOptions : ['']} />
+        <PadUser userData={UData} />
       </div>
     </div>
   );

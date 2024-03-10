@@ -1,0 +1,23 @@
+.UserPad {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin: 5px;
+}
+
+.UserPad__logedOptions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.UserPad__logedOptions--opt {
+  /* color: black; */
+  /* text-decoration: none; */
+
+  margin: 0 5px;
+}
+.UserPad__logedOptions--optWidget {
+  width: 25px;
+  height: 25px;
+}

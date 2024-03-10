@@ -1,12 +1,12 @@
 // Estilos
-import './style.css';
+import "./style.css";
 
 // Importacion de componentes
-import { ProductCard } from '../componentsBarrel';
+import { ProductCard } from "../componentsBarrel";
 
-import React from 'react';
+import React from "react";
 
-const ProductItemList = (props) => {
+const ItemListProduct = (props) => {
   //Parametros
   const { productlist } = props;
 
@@ -23,4 +23,4 @@ const ProductItemList = (props) => {
   );
 };
 
-export default ProductItemList;
+export default ItemListProduct;

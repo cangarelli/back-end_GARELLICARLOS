@@ -68,6 +68,7 @@ class cartController {
         this.userManager = userService;
         this.ticketManager = ticketService;
     }
+
     purchase = async ({ purchaseList, purchaser, cid }) => {
         // Chequear stock
         const virtualProductList = await stockReviewer(this.productManager, purchaseList);
@@ -96,10 +97,27 @@ class cartController {
 
     tiketGetter = () => {};
 
+    getQuantity = async (cid) => {
+        const response = await this.service.getCartById(cid);
+        console.log('Check response of cart controller is get Quantity method', response);
+        let quantity
+        if (response && response > 0) {
+        quantity = response.reduce((acc, product) => {
+            acc + product.quantity, 0;
+        });
+        console.log('Check quantity of cart controller is get Quantity method', quantity);
+        } else {
+            quantity = 0
+        }
+
+        return quantity
+    };
+
     createCart = async () => {
         const response = await this.service.createCart();
         return response;
     };
+    
     getOneCart = async (cid) => {
         const response = await this.service.getCartById(cid);
         return response;
@@ -118,6 +136,7 @@ class cartController {
         // Respuesta
         return response;
     };
+
     updateCart = async (pid, cid, quantity) => {
         if (quantity > 0) {
             const response = addProductToCart(pid, cid, quantity);
@@ -137,6 +156,7 @@ class cartController {
         const response = await this.service.deleteCart(cid);
         return response;
     };
+
     cleanCartsWhitOutUser = async () => {
         try {
             // Recuperar todos los id de carritos de usuarios
@@ -145,7 +165,7 @@ class cartController {
             const cartsWhitOutUserIds = cidsArray.filter((elemento) => !userCids.includes(elemento));
             cartsWhitOutUserIds.forEach((cid) => this.service.deleteCart(cid));
         } catch (error) {
-           logger.Fatal('cleanCartsWhitOutUser of carts controller is catch', error);
+            logger.Fatal('cleanCartsWhitOutUser of carts controller is catch', error);
         }
     };
 }

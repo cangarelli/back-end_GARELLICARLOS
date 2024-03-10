@@ -4,13 +4,15 @@ import "./style.css";
 // Componentes de react
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { FaRocketchat } from "react-icons/fa";
+import { AiOutlineLogin, AiOutlineLogout } from "react-icons/ai";
 
 //Componentes propios
 import { UserContext } from "../../context/UserContext";
 import { devHost, fetchData } from "../../hooks/hooksBarrel";
 import { CartWidget, SubTitle } from "../componentsBarrel";
 
-const UserPad = (props) => {
+const PadUser = (props) => {
   const { userData } = props;
   const { user, setUser } = useContext(UserContext);
 
@@ -26,26 +28,33 @@ const UserPad = (props) => {
   };
 
   return (
-    <div>
+    <div className="UserPad">
       {userData === null ? (
         <Link to="/loguin">
-          <SubTitle texto="Loguin" />
+          <AiOutlineLogin className="UserPad__logedOptions--optWidget" />
         </Link>
       ) : (
-        <div>
-          <Link to={`/contacto/${userData.uId}`}>
-            <SubTitle texto="Chat" />
+        <div className="UserPad__logedOptions">
+          <SubTitle texto={`Bienvenido ${userData.name}`} />
+          <Link
+            className="UserPad__logedOptions--opt"
+            to={`/contacto/${userData.uId}`}
+          >
+            <FaRocketchat className="UserPad__logedOptions--optWidget" />
           </Link>
-          <Link to={`/carrito/${userData.cart}`}>
+          <Link
+            className="UserPad__logedOptions--opt"
+            to={`/carrito/${userData.cart}`}
+          >
             <CartWidget />
           </Link>
-          <button onClick={logOut}>
-            <SubTitle texto="Logout" />
-          </button>
+          <div className="UserPad__logedOptions--opt" onClick={logOut}>
+            <AiOutlineLogout className="UserPad__logedOptions--optWidget" />
+          </div>
         </div>
       )}
     </div>
   );
 };
 
-export default UserPad;
+export default PadUser;

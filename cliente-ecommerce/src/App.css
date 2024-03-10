@@ -1,0 +1,20 @@
+* {
+  text-decoration: none;
+  box-sizing: border-box;
+  color: black;
+  margin: 0;
+  font-family: 'GochiHand';
+  padding: 0;
+  list-style: none;
+  background-repeat: no-repeat;
+}
+
+body {
+  background-color: rgb(192, 164, 140);
+  background-size: 100% 100%;
+  background-attachment: fixed;
+}
+
+a {
+  text-decoration: none;
+}

@@ -8,7 +8,7 @@ import React from 'react';
 
 const Layout = (props) => {
   return (
-    <div>
+    <div className="layout">
       <NavBar />
       {props.children}
       <Footer />
