@@ -1,10 +1,10 @@
 // Estilos
-import './style.css';
+import "./style.css";
 
 // Importacion de componentes
-import { ProductCard } from '../componentsBarrel';
+import { CardProduct } from "../componentsBarrel";
 
-import React from 'react';
+import React from "react";
 
 const ItemListProduct = (props) => {
   //Parametros

@@ -1,0 +1,9 @@
+.padPagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.padPagination--button {
+  margin: 10px;
+  padding: 3px;
+}

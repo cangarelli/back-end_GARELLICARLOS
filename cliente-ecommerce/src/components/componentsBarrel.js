@@ -14,6 +14,7 @@ export { default as ProductDetail } from './ProductDetail/ProductDetail.jsx';
 export { default as ButtonPanel } from './ButtonPanel/ButtonPanel.jsx';
 export { default as ChatBox } from './ChatBox/ChatBox.jsx';
 export { default as CardCartProduct } from './CardCartProduct/CardCartProduct.jsx';
+export { default as PadPagination } from './PadPagination/PadPagination.jsx';
 
 // Componente principal: Gestionan la lógica del manejo de los datos - Aca va el fetch post/put/delete
 export { default as ItemListProduct } from './ItemListProduct/ItemListProduct.jsx';
