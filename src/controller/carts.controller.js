@@ -1,3 +1,4 @@
+const { log } = require('winston');
 const {
     ticketCodeGenerator,
     timeGetter,
@@ -8,39 +9,40 @@ const {
 } = require('../helpers/helpersBarrel.js');
 const { productService, cartService, userService, ticketService } = require('../repositories/service.js');
 
-const addProductToCart = async (pid, cid, quantity) => {
-    const sellerData = await stockReviewer(this.productManager, [{ prod: pid, quantity }]);
+// const addProductToCart = async ({pid, cid, quantity, pManager, cManager}) => {
+//     const sellerData = await stockReviewer(pManager, [{ prod: pid, quantity }]);
 
-    // Chequeo si hay stock del producto.
-    if (sellerData.quantity > 0) {
-        const cartData = await cartReviewer(this.service, cid, pid);
+//     // Chequeo si hay stock del producto.
+//     if (sellerData.quantity > 0) {
+//         const virtualCart = await serviceManager.getCartById(cid);
+//         const cartData = await cartReviewer(cManager, cid, pid);
 
-        // Si ya hay en el carrito agrego 1 al paquete
-        if (cartData.prodIndex != -1) {
-            // Manejo de cantidades en carrtio
-            const fullRequest = cartData.quantityOnCart + parseInt(quantity);
-            const newSellerData = await stockReviewer(this.productManager, [{ prod: pid, fullRequest }]);
-            const result = this.service.updateExistingProductQuantity(pid, newSellerData.quantity);
-            // RESPUESTA EN RELACION AL MANEJO DEL CARRITO
-            return { status: 'succes', payload: result };
-            // Si no hay agrego uno creando el paquete
-        } else {
-            // Manejo de cantidades en carrtio
-            cartData.products.push({ product: pid, quantity: parseInt(quantity) });
-            const result = await this.service.addNewProduct(cid, cartData.products);
-            // RESPUESTA EN RELACION AL MANEJO DEL CARRITO
-            return { status: 'succes', payload: result };
-        }
-        // Si no hay stock aviso
-    } else {
-        return {
-            status: 'error',
-            payload: `el producto ${pid} no existe en la base de datos o no hay stock`,
-        };
-    }
-};
+//         // Si ya hay en el carrito agrego 1 al paquete
+//         if (cartData.prodIndex != -1) {
+//             // Manejo de cantidades en carrtio
+//             const fullRequest = cartData.quantityOnCart + parseInt(quantity);
+//             const newSellerData = await stockReviewer(pManager, [{ prod: pid, fullRequest }]);
+//             const result = cManager.updateExistingProductQuantity(pid, newSellerData.quantity);
+//             // RESPUESTA EN RELACION AL MANEJO DEL CARRITO
+//             return { status: 'succes', payload: result };
+//             // Si no hay agrego uno creando el paquete
+//         } else {
+//             // Manejo de cantidades en carrtio
+//             cartData.products.push({ product: pid, quantity: parseInt(quantity) });
+//             const result = await cManager.addNewProduct(cid, cartData.products);
+//             // RESPUESTA EN RELACION AL MANEJO DEL CARRITO
+//             return { status: 'succes', payload: result };
+//         }
+//         // Si no hay stock aviso
+//     } else {
+//         return {
+//             status: 'error',
+//             payload: `el producto ${pid} no existe en la base de datos o no hay stock`,
+//         };
+//     }
+// };
 
-removeProductOfCart = async (pid, cid, quantity) => {
+removeProductOfCart = async ({ pid, cid, quantity, pManager, cManager }) => {
     // obtener datos del carrito
     const cartData = await cartReviewer(this.service, cid, pid);
 
@@ -100,24 +102,24 @@ class cartController {
     getQuantity = async (cid) => {
         const response = await this.service.getCartById(cid);
         console.log('Check response of cart controller is get Quantity method', response);
-        let quantity
+        let quantity;
         if (response && response > 0) {
-        quantity = response.reduce((acc, product) => {
-            acc + product.quantity, 0;
-        });
-        console.log('Check quantity of cart controller is get Quantity method', quantity);
+            quantity = response.reduce((acc, product) => {
+                acc + product.quantity, 0;
+            });
+            console.log('Check quantity of cart controller is get Quantity method', quantity);
         } else {
-            quantity = 0
+            quantity = 0;
         }
 
-        return quantity
+        return quantity;
     };
 
     createCart = async () => {
         const response = await this.service.createCart();
         return response;
     };
-    
+
     getOneCart = async (cid) => {
         const response = await this.service.getCartById(cid);
         return response;
@@ -136,13 +138,57 @@ class cartController {
         // Respuesta
         return response;
     };
+    addProductToCart = async ({ pid, cid, quantity }) => {
+        const sellerData = await stockReviewer(this.productManager, [{ prod: pid, quantity }]);
+        logger.Debug('check seller data in addProductToCart of cart controller', sellerData);
+const responses = []
+        for await (const prod of sellerData) {
+            // Chequeo si hay stock del producto.
+            if (prod && prod.quantity > 0) {
+                const cartData = await cartReviewer(this.service, cid, prod.pid);
+                logger.Debug("check cart data in addProductToCart of cart controller", cartData);
+                // Si ya hay en el carrito agrego 1 al paquete
+                if (cartData.prodIndex != -1) {
+                    // Manejo de cantidades en carrtio
+                    const fullRequest = cartData.quantityOnCart + parseInt(quantity);
+                    const newSellerData = await stockReviewer(this.productManager, [
+                        { prod: pid, quantity: fullRequest },
+                    ]);
+                    logger.Debug("check new Seller Data in addProductToCart of cart controller", newSellerData);
+                    const result = await this.service.updateExistingProductQuantity(pid, cid, newSellerData[0].quantity);
+                    
+                    // RESPUESTA EN RELACION AL MANEJO DEL CARRITO
+                    return { status: 'succes', payload: result };
+                    // Si no hay agrego uno creando el paquete
+                } else {
+                    // Manejo de cantidades en carrtio
+                    cartData.products.push({ product: pid, quantity: parseInt(quantity) });
+                    const result = await this.service.addNewProduct(cid, cartData.products);
+                    // RESPUESTA EN RELACION AL MANEJO DEL CARRITO
+                    return { status: 'succes', payload: result };
+                }
+                // Si no hay stock aviso
+            } else {
+                return {
+                    status: 'error',
+                    payload: `el producto ${pid} no existe en la base de datos o no hay stock`,
+                };
+            }
+        }
 
+    };
     updateCart = async (pid, cid, quantity) => {
         if (quantity > 0) {
-            const response = addProductToCart(pid, cid, quantity);
+            const response = this.addProductToCart({ pid, cid, quantity });
             return response;
         } else {
-            const response = removeProductOfCart(pid, cid, quantity);
+            const response = removeProductOfCart({
+                pid,
+                cid,
+                quantity,
+                pManager: this.productManager,
+                cManager: this.service,
+            });
             return response;
         }
     };

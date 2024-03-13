@@ -1,9 +1,11 @@
-const { logger } = require("../errorsUtils/logger.js");
+const { logger } = require('../errorsUtils/logger.js');
 
 const cartReviewer = async (serviceManager, cid, pid) => {
-    const virtualCart = await serviceManager.getOneCart(cid);
+    const virtualCart = await serviceManager.getCartById(cid);
     let existingProduct = -1;
-    const products = virtualCart.payload;
+    const { products } = virtualCart;
+    console.log(virtualCart);
+    console.log(products);
     logger.Debug('check products', products);
 
     products.length > 0 &&
@@ -14,10 +16,9 @@ const cartReviewer = async (serviceManager, cid, pid) => {
         return {
             prodIndex: existingProduct,
             quantityOnCart: parseInt(products[existingProduct].quantity),
-            products,
         };
     } else {
-        return { prodIndex: existingProduct };
+        return { prodIndex: existingProduct, products };
     }
 };
 module.exports = cartReviewer;

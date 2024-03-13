@@ -1,8 +1,8 @@
 // Estilos
-import "./style.css";
+import './style.css';
 
-import { MdNavigateNext, MdNavigateBefore } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { MdNavigateNext, MdNavigateBefore } from 'react-icons/md';
+import { Link } from 'react-router-dom';
 
 const PadPagination = (props) => {
   const { hasPrevPage, prevLink, page, nextLink, hasNextPage } = props;

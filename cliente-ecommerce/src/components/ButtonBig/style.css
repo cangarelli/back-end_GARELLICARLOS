@@ -1,0 +1,10 @@
+.buttonBig {
+  margin: 3px;
+  padding: 10px;
+  border: 0.1px solid rgb(100, 100, 238);
+  border-radius: 15px;
+  background-color: rgb(114, 114, 241);
+}
+.buttonBig:hover {
+  background-color: rgb(183, 183, 235);
+}

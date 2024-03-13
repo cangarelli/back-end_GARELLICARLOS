@@ -2,19 +2,11 @@ import React from 'react';
 
 // Estilos
 import './style.css';
-import { ButtonPanel, SubTitle, Title } from '../componentsBarrel';
+import { PadProductDetail, SubTitle, Title } from '../componentsBarrel';
 
 const ProductDetail = (props) => {
   const { productInfo } = props;
   console.log('check productData of ProductDetail component', productInfo);
-  // Logica para botonera
-
-  const buttonsData = [
-    { onclick: '', value: 'addProduct', modo: 'option', media: '' },
-    { onclick: '', value: 'removeProduct', modo: 'option', media: '' },
-    { onclick: '', value: 'Purchase', modo: 'option', media: '' },
-    { onclick: '', value: 'Voler', modo: 'option', media: '' },
-  ];
 
   return (
     <div className="productBox">
@@ -26,7 +18,7 @@ const ProductDetail = (props) => {
           <SubTitle texto={productInfo.description} />
           <p>{`Quendan ${productInfo.stock}`}</p>
         </div>
-        <ButtonPanel buttons={buttonsData} />
+        <PadProductDetail data={{ stock: productInfo.stock, id: productInfo.id }} />
       </div>
     </div>
   );

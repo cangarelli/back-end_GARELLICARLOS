@@ -1,6 +1,7 @@
 // Modulos importados
 const { cartsModel } = require('./models/carts.model.js');
 const apiCaller = require('../../helpers/productsApiUtils/apiCaller.js');
+const { log } = require('winston');
 
 // CLASE CONSTRUCTORA
 class CartMongoManager {

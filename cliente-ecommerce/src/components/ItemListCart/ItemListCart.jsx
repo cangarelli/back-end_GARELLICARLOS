@@ -10,7 +10,7 @@ const ItemListCart = (props) => {
     <div>
       <div>
         {cData.map((product) => {
-          return <CardCartProduct key={product.id} productData={product} />;
+          return <CardCartProduct key={product.product} productData={product} />;
         })}
       </div>
       <PadCart />

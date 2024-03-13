@@ -7,9 +7,9 @@ const stockReviewer = async (manager, purchaseList) => {
         let quantityBuy = 0;
         let quantityNotBuy = 0;
         let quantityStock;
-
         // Busqueda del producto con productController
-        const productInStock = await manager.getProductsById(prod.product);
+        const productInStock = await manager.getProductsById(prod.prod);
+        
         // Gestion de la informacíón del vendedor
         if (productInStock.stock > 0 && productInStock.stock >= prod.quantity) {
             quantityBuy = prod.quantity;
@@ -18,10 +18,12 @@ const stockReviewer = async (manager, purchaseList) => {
             quantityNotBuy = prod.quantity - productInStock.stock;
             quantityBuy = prod.quantity - quantityNotBuy;
             quantityStock = 0;
+        } else{
+            return null
         }
         // Resumen de la informacion del vendedor
         const productData = {
-            pid: prod.product,
+            pid: prod.prod,
             quantity: quantityBuy,
             remainingForBuying: quantityNotBuy,
             remainingStock: quantityStock,

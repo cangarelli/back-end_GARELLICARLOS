@@ -7,8 +7,10 @@ class cartRepository {
 
     getCartById = async (cid) => await this.daoService.getCartById(cid);
 
-    updateExistingProductQuantity = async (pid, newQuantity) =>
-        await this.daoService.updateExistingProductQuantity(pid, newQuantity);
+    addNewProduct = async (cid, products) => await this.daoService.addNewProduct(cid, products);
+
+    updateExistingProductQuantity = async (pid, cid, newQuantity) =>
+        await this.daoService.updateExistingProductQuantity(pid, cid, newQuantity);
 
     deleteCart = async (cid) => await this.daoService.deleteCart(cid);
 

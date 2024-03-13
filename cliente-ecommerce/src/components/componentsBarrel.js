@@ -6,6 +6,7 @@ export { default as Logo } from './Logo/Logo.jsx';
 export { default as ButtonOption } from './ButtonOption/ButtonOption.jsx';
 export { default as ButtonMain } from './ButtonMain/ButtonMain.jsx';
 export { default as AnimationLoading } from './AnimationLoading/AnimationLoading.jsx';
+export { default as ButtonBig } from './ButtonBig/ButtonBig.jsx';
 
 // Componente visual: Renderizan varios elementos sin logica de manejo de datos datos
 export { default as SearchBar } from './SearchBar/SearchBar.jsx';
