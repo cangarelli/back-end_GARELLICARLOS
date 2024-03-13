@@ -1,5 +1,6 @@
 const CustomRouter = require('../Routes');
 const cartController = require('../../controller/carts.controller');
+const { logger } = require('../../helpers/helpersBarrel');
 
 const CartManager = new cartController();
 class cartClassRouter extends CustomRouter {
@@ -38,7 +39,7 @@ class cartClassRouter extends CustomRouter {
             }
         });
         //Buscar carrito por id
-        this.get('/:cid', ['public'], async (req, res) => {
+        this.get('/:cid', ['user', "admin", "premium"], async (req, res) => {
             try {
                 const response = await CartManager.getOneCart(req.params.cid);
                 return response.status == 'error'
@@ -67,6 +68,7 @@ class cartClassRouter extends CustomRouter {
             // OK TODA LA RUTA Y SUS CAPAS
             try {
                 const { email, cartId, full_name, id, role } = req.user;
+                req.logger.Debug("check params in put route of cart class router", cartId, role, req.params.pid, req.body.quantity);
                 const {quantity} = req.body
                 quantity || 1
                 const response = await CartManager.updateCart(req.params.pid, cartId, quantity);

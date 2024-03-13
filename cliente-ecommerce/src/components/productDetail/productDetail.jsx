@@ -18,7 +18,7 @@ const ProductDetail = (props) => {
           <SubTitle texto={productInfo.description} />
           <p>{`Quendan ${productInfo.stock}`}</p>
         </div>
-        <PadProductDetail data={{ stock: productInfo.stock, id: productInfo.id }} />
+        <PadProductDetail data={{ stock: productInfo.stock, id: productInfo._id }} />
       </div>
     </div>
   );

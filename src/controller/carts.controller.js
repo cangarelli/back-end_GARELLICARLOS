@@ -42,26 +42,7 @@ const { productService, cartService, userService, ticketService } = require('../
 //     }
 // };
 
-removeProductOfCart = async ({ pid, cid, quantity, pManager, cManager }) => {
-    // obtener datos del carrito
-    const cartData = await cartReviewer(this.service, cid, pid);
 
-    if (cartData.prodIndex != -1) {
-        // si esta en el carrito que actualice
-        const newQuantity = cartData.quantityOnCart + parseInt(quantity);
-
-        if (newQuantity <= 0) {
-            const response = await this.service.deleteOneProduct(pid, cid);
-            return response;
-        } else {
-            const response = await this.service.updateExistingProductQuantity(pid, newQuantity);
-            return response;
-        }
-    } else {
-        // si no esta en el carrito que avise
-        return { status: 'error', payload: 'producto no encontrado en el carrito' };
-    }
-};
 
 class cartController {
     constructor() {
@@ -141,12 +122,13 @@ class cartController {
     addProductToCart = async ({ pid, cid, quantity }) => {
         const sellerData = await stockReviewer(this.productManager, [{ prod: pid, quantity }]);
         logger.Debug('check seller data in addProductToCart of cart controller', sellerData);
-const responses = []
         for await (const prod of sellerData) {
             // Chequeo si hay stock del producto.
             if (prod && prod.quantity > 0) {
-                const cartData = await cartReviewer(this.service, cid, prod.pid);
-                logger.Debug("check cart data in addProductToCart of cart controller", cartData);
+                const virtualCart = await this.service.getCartById(cid);
+
+                const cartData = await cartReviewer(virtualCart, pid, cid);
+                logger.Debug('check cart data in addProductToCart of cart controller', cartData);
                 // Si ya hay en el carrito agrego 1 al paquete
                 if (cartData.prodIndex != -1) {
                     // Manejo de cantidades en carrtio
@@ -154,9 +136,16 @@ const responses = []
                     const newSellerData = await stockReviewer(this.productManager, [
                         { prod: pid, quantity: fullRequest },
                     ]);
-                    logger.Debug("check new Seller Data in addProductToCart of cart controller", newSellerData);
-                    const result = await this.service.updateExistingProductQuantity(pid, cid, newSellerData[0].quantity);
-                    
+                    logger.Debug(
+                        'check new Seller Data in addProductToCart of cart controller',
+                        newSellerData
+                    );
+                    const result = await this.service.updateExistingProductQuantity(
+                        pid,
+                        cid,
+                        newSellerData[0].quantity
+                    );
+
                     // RESPUESTA EN RELACION AL MANEJO DEL CARRITO
                     return { status: 'succes', payload: result };
                     // Si no hay agrego uno creando el paquete
@@ -175,19 +164,37 @@ const responses = []
                 };
             }
         }
-
+    };
+    removeProductOfCart = async ({ pid, cid, quantity, pManager, cManager }) => {
+        // obtener datos del carrito
+        const cartData = await cartReviewer(this.service, cid, pid);
+    
+        if (cartData.prodIndex != -1) {
+            // si esta en el carrito que actualice
+            const newQuantity = cartData.quantityOnCart + parseInt(quantity);
+    
+            if (newQuantity <= 0) {
+                const response = await this.service.deleteOneProduct(pid, cid);
+                return response;
+            } else {
+                const response = await this.service.updateExistingProductQuantity(pid, newQuantity);
+                return response;
+            }
+        } else {
+            // si no esta en el carrito que avise
+            return { status: 'error', payload: 'producto no encontrado en el carrito' };
+        }
     };
     updateCart = async (pid, cid, quantity) => {
+        console.log('Check params in updateCart', pid, cid, quantity);
         if (quantity > 0) {
-            const response = this.addProductToCart({ pid, cid, quantity });
+            const response = this.addProductToCart({ pid: pid, cid: cid, quantity: quantity });
             return response;
         } else {
             const response = removeProductOfCart({
                 pid,
                 cid,
                 quantity,
-                pManager: this.productManager,
-                cManager: this.service,
             });
             return response;
         }

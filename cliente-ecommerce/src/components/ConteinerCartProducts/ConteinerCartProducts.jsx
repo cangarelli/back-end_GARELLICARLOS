@@ -11,17 +11,21 @@ import { devHost, fetchData } from '../../hooks/hooksBarrel';
 import { AnimationLoading, ItemListCart } from '../componentsBarrel';
 
 const ConteinerCartProducts = (props) => {
+  // Variables
   const [uCart, setUCart] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
   const { cid } = useParams();
   const user = useContext(UserContext);
+
+  // Logica de manejo de datos
   useEffect(() => {
     fetchData({
       route: `${devHost()}/api/carts/${cid}`,
       method: 'GET',
-      token: user.token,
+      token: user.user.token,
     }).then((res) => {
-      console.log('check response of fetch in use Efect of Conteiner Cart products', res);
       setUCart(res.payload);
+      setIsLoading(false);
     });
   }, []);
 

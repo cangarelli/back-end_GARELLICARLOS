@@ -9,7 +9,7 @@ import { devHost, fetchData } from '../../hooks/hooksBarrel';
 import { UserContext } from '../../context/UserContext';
 
 const PadProductDetail = (props) => {
-  const { stock, id } = props;
+  const { stock, id } = props.data;
   const user = useContext(UserContext).user;
   console.log('check user in padProductDetail', user);
   const cartAdd = async (e) => {
@@ -17,6 +17,9 @@ const PadProductDetail = (props) => {
     const res = await fetchData({
       route: `${devHost()}/api/carts/${user.CartId}/product/${id}`,
       token: user.token,
+      info: {
+        quantity: 1,
+      },
       method: 'PUT',
     });
     console.log('check res of fetch in cart add', res);

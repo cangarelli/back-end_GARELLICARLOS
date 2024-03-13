@@ -6,15 +6,14 @@ import { PadCard, SubTitle, Title } from '../componentsBarrel';
 
 const CardCartProduct = (props) => {
   const { productData } = props;
-  console.log('check cData of CartReview Componente');
 
   return (
-    <div className="card">
-      <div className="__infoDiv">
-        <Title texto={productData.title} />
-        <SubTitle texto={`$ ${productData.price}`} />
+    <div className="CardCartProduct">
+      <div className="CardCartProduct__infoDiv">
+        <Title texto={productData.product.title} />
+        <SubTitle texto={`$ ${productData.product.price}`} />
         <p>Hay {productData.quantity}</p>
-        <p>Es un total de ${`${productData.price * productData.quantity}`}</p>
+        <p>Es un total de ${`${productData.product.price * productData.quantity}`}</p>
       </div>
       <PadCard />
     </div>

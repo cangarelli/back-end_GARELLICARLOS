@@ -1,7 +1,8 @@
 const { logger } = require('../errorsUtils/logger.js');
 
-const cartReviewer = async (serviceManager, cid, pid) => {
-    const virtualCart = await serviceManager.getCartById(cid);
+const cartReviewer = async (virtualCart, pid, cid) => {
+    console.log('check virtualCart ', virtualCart);
+    console.log('check rest of params', pid, cid);
     let existingProduct = -1;
     const { products } = virtualCart;
     console.log(virtualCart);
