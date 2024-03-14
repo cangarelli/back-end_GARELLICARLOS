@@ -12,7 +12,6 @@ export { default as ButtonBig } from './ButtonBig/ButtonBig.jsx';
 export { default as SearchBar } from './SearchBar/SearchBar.jsx';
 export { default as CardProduct } from './CardProduct/CardProduct.jsx';
 export { default as ProductDetail } from './ProductDetail/ProductDetail.jsx';
-export { default as ButtonPanel } from './ButtonPanel/ButtonPanel.jsx';
 export { default as ChatBox } from './ChatBox/ChatBox.jsx';
 export { default as CardCartProduct } from './CardCartProduct/CardCartProduct.jsx';
 export { default as PadPagination } from './PadPagination/PadPagination.jsx';
@@ -24,7 +23,7 @@ export { default as FormData } from './FormData/FormData.jsx';
 export { default as PadUser } from './PadUser/PadUser.jsx';
 export { default as PadCart } from './PadCart/PadCart.jsx';
 export { default as PadProductDetail } from './PadProductDetail/PadProductDetail.jsx';
-export { default as PadCard } from './PadCard/PadCard.jsx';
+export { default as PadCardCart } from './PadCardCart/PadCardCart.jsx';
 
 // Contenedores: Carga de datos y variables generales - Aca va el fetch get
 export { default as Footer } from './Footer/Footer.jsx';

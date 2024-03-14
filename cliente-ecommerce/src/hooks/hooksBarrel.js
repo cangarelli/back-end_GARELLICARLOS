@@ -13,7 +13,8 @@ export { default as deleteElement } from './domManagers/deleteElement.js';
 export { default as formWindowMaker } from './domManagers/formWindowMaker.js';
 export { default as formController } from './domManagers/formController.js';
 
-// Event Managers
+// cartManagers
+export { default as handleCartAdd } from './cartManagers/handleCartAdd.js';
 
 // Session Managers
 

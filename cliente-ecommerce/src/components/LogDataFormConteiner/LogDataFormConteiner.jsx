@@ -3,7 +3,7 @@ import './style.css';
 
 import { Link } from 'react-router-dom';
 
-import { ButtonPanel, FormData } from '../componentsBarrel';
+import { FormData } from '../componentsBarrel';
 import { devHost } from '../../hooks/hooksBarrel';
 
 const LogDataFormConteiner = (props) => {

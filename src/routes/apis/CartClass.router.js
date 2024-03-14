@@ -25,6 +25,7 @@ class cartClassRouter extends CustomRouter {
                 return res.sendServerError(`${error}`);
             }
         });
+
         // Averiguar cantidad de productos en carrito por id
         this.get('/cartHold/:cid', ['user', 'admin'], async (req, res) => {
             // retornar la cantidad de productos que hay en el carrito
@@ -38,8 +39,9 @@ class cartClassRouter extends CustomRouter {
                 return res.sendServerError(`${error}`);
             }
         });
+
         //Buscar carrito por id
-        this.get('/:cid', ['user', "admin", "premium"], async (req, res) => {
+        this.get('/:cid', ['user', 'admin', 'premium'], async (req, res) => {
             try {
                 const response = await CartManager.getOneCart(req.params.cid);
                 return response.status == 'error'
@@ -50,6 +52,7 @@ class cartClassRouter extends CustomRouter {
                 return res.sendServerError(error);
             }
         });
+
         // Crear carrito
         this.post('/', ['public'], async (req, res) => {
             // OK TODA LA RUTA Y SUS CAPAS
@@ -63,14 +66,21 @@ class cartClassRouter extends CustomRouter {
                 return res.sendServerError(response.payload);
             }
         });
+
         //Agregar / Quitar producto del carrito
         this.put('/:cid/product/:pid', ['user'], async (req, res) => {
             // OK TODA LA RUTA Y SUS CAPAS
             try {
                 const { email, cartId, full_name, id, role } = req.user;
-                req.logger.Debug("check params in put route of cart class router", cartId, role, req.params.pid, req.body.quantity);
-                const {quantity} = req.body
-                quantity || 1
+                req.logger.Debug(
+                    'check params in put route of cart class router',
+                    cartId,
+                    role,
+                    req.params.pid,
+                    req.body.quantity
+                );
+                const { quantity } = req.body;
+                quantity || 1;
                 const response = await CartManager.updateCart(req.params.pid, cartId, quantity);
                 return response.status == 'error'
                     ? res.sendUserError(response.payload)
@@ -80,22 +90,34 @@ class cartClassRouter extends CustomRouter {
                 return res.sendServerError(response.payload);
             }
         });
-
+        // empty cart
         this.put('/:cid', ['user'], async (req, res) => {
-            const { email, cartId, full_name, id, role } = req.user;
+            try {
+                const { email, cartId, full_name, id, role } = req.user;
+                const response = await CartManager.emptyCart(cartId);
+                return response.status == 'error'
+                    ? res.sendUserError(response.payload)
+                    : res.sendSuccess(response);
+            } catch (error) {
+                req.logger.Fatal('check error of cart class router is put method /:cid', error);
+                return res.sendServerError(response.payload);
+            }
         });
+        // Borrar un producto del carrito
         this.delete('/:cid/product/:pid', ['user'], async (req, res) => {
             try {
                 const { email, cartId, full_name, id, role } = req.user;
+                req.logger.Debug(
+                    'check params of delete method of cart clas router is /:cid/product/:pid route',
+                    req.params.pid,
+                    cartId
+                );
                 const response = await CartManager.deleteOneProduct(req.params.pid, cartId);
                 return response.status == 'error'
                     ? res.sendUserError(response.payload)
                     : res.sendSuccess(response);
             } catch (error) {
-                req.logger.Fatal(
-                    'check error of cart class router is delete method /:cid/product/:pid',
-                    error
-                );
+                req.logger.Fatal('check error of cart class router is put method /:cid/product/:pid', error);
                 return res.sendServerError(response.payload);
             }
         });

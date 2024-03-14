@@ -42,8 +42,6 @@ const { productService, cartService, userService, ticketService } = require('../
 //     }
 // };
 
-
-
 class cartController {
     constructor() {
         this.service = cartService;
@@ -106,19 +104,8 @@ class cartController {
         return response;
     };
 
-    deleteOneProduct = async (pid, cid) => {
-        const virtualCart = await this.getCart(cid);
-        const products = virtualCart.payload;
+    deleteOneProduct = async (pid, cid) => await this.service.removeProductFromCart(cid, pid);
 
-        productIndex = products.findIndex((productObjetc) => productObjetc.product._id.equals(pid));
-
-        await uptadeStock(pid, products[productIndex].product.stock, products[productIndex].quantity);
-        // Manejo de cart
-        const response = await this.service.deleteProductById(pid, cid);
-
-        // Respuesta
-        return response;
-    };
     addProductToCart = async ({ pid, cid, quantity }) => {
         const sellerData = await stockReviewer(this.productManager, [{ prod: pid, quantity }]);
         logger.Debug('check seller data in addProductToCart of cart controller', sellerData);
@@ -165,19 +152,19 @@ class cartController {
             }
         }
     };
-    removeProductOfCart = async ({ pid, cid, quantity, pManager, cManager }) => {
+    removeProductOfCart = async ({ pid, cid, quantity }) => {
         // obtener datos del carrito
-        const cartData = await cartReviewer(this.service, cid, pid);
-    
+        const virtualCart = await this.service.getCartById(cid);
+        const cartData = await cartReviewer(virtualCart, pid, cid);
+
         if (cartData.prodIndex != -1) {
             // si esta en el carrito que actualice
             const newQuantity = cartData.quantityOnCart + parseInt(quantity);
-    
             if (newQuantity <= 0) {
                 const response = await this.service.deleteOneProduct(pid, cid);
                 return response;
             } else {
-                const response = await this.service.updateExistingProductQuantity(pid, newQuantity);
+                const response = await this.service.updateExistingProductQuantity(pid, cid, newQuantity);
                 return response;
             }
         } else {
@@ -191,7 +178,7 @@ class cartController {
             const response = this.addProductToCart({ pid: pid, cid: cid, quantity: quantity });
             return response;
         } else {
-            const response = removeProductOfCart({
+            const response = this.removeProductOfCart({
                 pid,
                 cid,
                 quantity,
@@ -202,6 +189,7 @@ class cartController {
 
     emptyCart = async (cid) => {
         const response = await this.service.emptyCart(cid);
+        console.log('chek response of empty cart controller', response);
         return response;
     };
 
