@@ -12,6 +12,8 @@ const configObject = {
     jwt_secret_key: process.env.jwt_secret_key,
     percistance: process.env.PERCISTANCE,
     logger: process.env.LOGGER,
+    mailerDir: process.env.GMAIL_APP_USER,
+    mailerPass: process.env.GMAIL_APP_PASS,
 };
 
-module.exports = configObject
+module.exports = configObject;

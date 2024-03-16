@@ -1,9 +1,9 @@
 <form action="" class="logForm" id="registerForm">
     {{#each formCamps}}
-        <div class="registerForm__camp">             
-            <label name={{this.id}}>{{this.label}}</label>
-            <input type={{this.type}} name={{this.id}} id={{this.id}}>
-        </div>
+    <div class="registerForm__camp">
+        <label name="{{this.id}}">{{this.label}}</label>
+        <input type="{{this.type}}" name="{{this.id}}" id="{{this.id}}" />
+    </div>
     {{/each}}
     <div class="registerForm__buttonPad">
         <button value="clear-form">Limpiar</button>

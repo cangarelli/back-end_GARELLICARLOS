@@ -44,42 +44,42 @@ class CartManager {
         }
     }
 
-    async updateExistingProductQuantity (pid, quantity) {
-        return ("working on it")
+    async updateExistingProductQuantity(pid, quantity) {
+        return 'working on it';
     }
 
-    async addNewProduct (cid, products){
-       // Recupero de datos del carrito en carrito virtual
-       this.carts = await recuperarDatos(this.path);
-       //
-       const cartIndex = this.carts.findIndex((cart) => parseInt(cid) === cart.id);
+    async addNewProduct(cid, products) {
+        // Recupero de datos del carrito en carrito virtual
+        this.carts = await recuperarDatos(this.path);
+        //
+        const cartIndex = this.carts.findIndex((cart) => parseInt(cid) === cart.id);
 
-       // Product set
-       if (cartIndex != -1) {
-           const cart = this.carts[cartIndex].products;
-           if (cart.length > 0) {
-               const productIndex = cart.findIndex((product) => parseInt(pid) === parseInt(product.id));
-               if (productIndex != -1) {
-                   cart[productIndex].quantity++;
-               } else {
-                   cart.push({ id: parseInt(pid), quantity: 1 });
-               }
-               this.carts[cartIndex].products = cart;
-           } else {
-               cart.push({ id: parseInt(pid), quantity: 1 });
-               this.carts[cartIndex].products = cart;
-           }
-           await persistenciaDatos(this.path, this.carts);
-           return true;
-       } else {
-           return false;
-       }    
+        // Product set
+        if (cartIndex != -1) {
+            const cart = this.carts[cartIndex].products;
+            if (cart.length > 0) {
+                const productIndex = cart.findIndex((product) => parseInt(pid) === parseInt(product.id));
+                if (productIndex != -1) {
+                    cart[productIndex].quantity++;
+                } else {
+                    cart.push({ id: parseInt(pid), quantity: 1 });
+                }
+                this.carts[cartIndex].products = cart;
+            } else {
+                cart.push({ id: parseInt(pid), quantity: 1 });
+                this.carts[cartIndex].products = cart;
+            }
+            await persistenciaDatos(this.path, this.carts);
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    async deleteCart (cid) {
-        return ("working on it")
+    async deleteCart(cid) {
+        return 'working on it';
     }
-    
+
     async removeProductById(DBP, id, cantidad) {
         // Recupero de datos del carrito en carrito virtual
         this.products = await recuperarDatos(this.path);
@@ -105,6 +105,6 @@ class CartManager {
               })();
     }
 
-    getAllKeyValues = async (key) => "woroking on it"
+    getAllKeyValues = async (key) => 'woroking on it';
 }
 module.exports = CartManager;

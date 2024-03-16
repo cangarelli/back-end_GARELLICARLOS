@@ -13,6 +13,9 @@ const passportCall = require('./sessionApiUtils/passportCall.js');
 // User api utils
 const { createHash, passwordValidator } = require('./userApiUtils/hashPasswordManager.js');
 
+// Mailing api utils
+const { sendMail } = require('./mailingApiUtils/sendMail.js');
+
 // Views api utils
 const sessionLoader = require('./viewsApiUtils/sessionLoader.js');
 
@@ -54,4 +57,5 @@ module.exports = {
     userDataErrorInfo,
     logger,
     addLogger,
+    sendMail,
 };

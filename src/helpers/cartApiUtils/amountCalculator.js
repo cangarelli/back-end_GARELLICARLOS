@@ -1,4 +1,4 @@
-const { logger } = require("../errorsUtils/logger.js");
+const { logger } = require('../errorsUtils/logger.js');
 
 const amountCalculator = (purchaseList) => {
     let cuenta = [];

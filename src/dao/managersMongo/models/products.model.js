@@ -38,7 +38,7 @@ const productsSchema = new Schema({
     },
     owner: {
         type: String,
-        default: "admin",
+        default: 'admin',
     },
 });
 

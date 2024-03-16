@@ -24,7 +24,7 @@ class CustomRouter {
         res.sendUserError = (error) => res.status(400).send({ status: 'error', payload: error });
         res.sendTokenSucces = (data, cookieName, token) =>
             res
-                .cookie(cookieName, token, { signed: true, maxAge: 60 * 60 * 1000, /* httpOnly: true, */ })
+                .cookie(cookieName, token, { signed: true, maxAge: 60 * 60 * 1000, httpOnly: true })
                 .send({ status: 'succes', payload: data, token });
         next();
     };

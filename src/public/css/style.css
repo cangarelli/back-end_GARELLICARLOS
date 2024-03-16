@@ -1,4 +1,4 @@
-*{ 
+* {
     text-decoration: none;
     box-sizing: border-box;
     margin: 0;
@@ -6,75 +6,75 @@
     list-style: none;
     background-repeat: no-repeat;
 }
-body{
+body {
     background-color: black;
     margin: 20 auto;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    color: white
+    color: white;
 }
 a {
     display: inline-block;
     color: black;
 }
-#root{
+#root {
     max-width: 80%;
 }
-.form{
- background-color: white;
- color: black;
+.form {
+    background-color: white;
+    color: black;
 
- margin: 20px 0px; 
- padding: 20px;
- border-radius: 10px;
+    margin: 20px 0px;
+    padding: 20px;
+    border-radius: 10px;
 
- display: flex;
- flex-direction: column;
- align-items: center;
- justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 
- transform-origin: center center;
- translate: 0% -50%;
- position: absolute;
- left: 25%;
- top: 50%;
- 
- box-shadow: 8px 8px 16px red;
+    transform-origin: center center;
+    translate: 0% -50%;
+    position: absolute;
+    left: 25%;
+    top: 50%;
+
+    box-shadow: 8px 8px 16px red;
 }
-.form__box{
-display: flex;
-flex-direction: column;
-align-items: center;
-justify-content: center;
-margin: 5px 0px;
+.form__box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 5px 0px;
 }
 button {
     margin: 5px;
     padding: 10px;
 }
-.gondola{
+.gondola {
     background-color: lightskyblue;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
 }
-.gondola__productCard{
+.gondola__productCard {
     background-color: white;
     color: black;
-   
-    margin: 5px 5px; 
+
+    margin: 5px 5px;
     padding: 20px;
-   border-radius: 10px;
+    border-radius: 10px;
 
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
-.chat{
+.chat {
     background-color: lightskyblue;
     height: 90vh;
     width: 70vw;
@@ -94,9 +94,9 @@ button {
     align-items: flex-end;
     justify-content: center;
 }
-.chat__box--userMessage{
+.chat__box--userMessage {
     width: max-content;
-    
+
     display: flex;
     flex-direction: column;
     text-align: end;
@@ -105,19 +105,19 @@ button {
 
     color: black;
 }
-.elnombrequesemeantoja{
+.elnombrequesemeantoja {
     background-color: white;
     color: black;
-   
-    margin: 20px 0px; 
+
+    margin: 20px 0px;
     padding: 20px;
     border-radius: 10px;
-   
+
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-   
+
     transform-origin: center center;
     translate: 0% -50%;
     position: absolute;
@@ -128,4 +128,3 @@ button {
 
 .chat__postman{}
 .chat__postman--letter{} */
-

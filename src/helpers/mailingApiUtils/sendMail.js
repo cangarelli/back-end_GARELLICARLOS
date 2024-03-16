@@ -1,25 +1,31 @@
 const nodemailer = require('nodemailer');
+const configObject = require('../../config/configBarrel');
 
 const transport = nodemailer.createTransport({
-    serice: 'gmail',
+    service: configObject.mailerDir,
     port: 587,
     auth: {
-        user: 'poner el mail que uso desde .env',
-        pass: 'poner el pass configurado desde .env',
+        user: configObject.mailerDir,
+        pass: configObject.mailerPass,
     },
 });
-exports.sendMail = async ({ destination, subject, html }) => {
-    return await transport.sendMail({
-        from: 'Este mail lo envia <mail de env.>',
+exports.sendMail = async ({ destination, subject, html, attachments }) => {
+    const mailObject = {
+        from: configObject.mailerDir,
         to: destination,
         subject: subject,
         html: html,
-        attachments: [
-            {
-                filename: 'nodejs.png',
-                path: __dirname + '/nodejs.png',
-                cid: 'node',
-            },
-        ],
-    });
+    };
+    if (attachments.length > 0) {
+        mailObject.attachments = []
+        for (const element of attachments) {
+            mailObject.attachments.push ({
+                filename: element.filename,
+                path: __dirname + element.path,
+                cid: element.cid,
+            })
+        }
+    }
+
+    return await transport.sendMail(mailObject);
 };

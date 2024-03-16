@@ -79,7 +79,10 @@ class productController {
     createProduct = async (productArray) => {
         const { title, price, category, description, stock, code, thumbnail, owner } = productArray;
         try {
-            userDataTester({ title, price, category, description, stock, code, thumbnail, owner }, this.service);
+            userDataTester(
+                { title, price, category, description, stock, code, thumbnail, owner },
+                this.service
+            );
             const response = await this.service.productCreate({
                 title,
                 price,

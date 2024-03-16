@@ -3,7 +3,6 @@ const { connect } = require('mongoose');
 const { logger } = require('../helpers/helpersBarrel.js');
 const configObject = require('./configObjetc.js');
 
-
 // Cración de conección
 const connectDB = async () => {
     await connect(configObject.mongo_url);

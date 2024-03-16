@@ -7,7 +7,6 @@ const { connectDB } = require('./mongoose-config.js');
 const { initializePassportJWT } = require('./passport-config.js');
 const initializeSoketServer = require('./socket-config.js');
 
-
 module.exports = {
     program,
     expressConfig,

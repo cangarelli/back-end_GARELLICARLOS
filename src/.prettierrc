@@ -1,17 +1,17 @@
 {
-  "useTabs": false,
-  "overrides": [
-    {
-      "files": "*.hbs",
-      "options": {
-        "parser": "html",
-        "embeddedLanguageFormatting": "auto"
-      }
-    }
-  ],
-  "trailingComma": "es5",
-  "tabWidth": 4,
-  "semi": true,
-  "singleQuote": true,
-  "printWidth": 110
+    "useTabs": false,
+    "overrides": [
+        {
+            "files": "*.hbs",
+            "options": {
+                "parser": "html",
+                "embeddedLanguageFormatting": "auto"
+            }
+        }
+    ],
+    "trailingComma": "es5",
+    "tabWidth": 4,
+    "semi": true,
+    "singleQuote": true,
+    "printWidth": 110
 }
