@@ -1,15 +1,17 @@
 const UserMongoManager = require('../dao/managersMongo/UserMongoManager');
 const passport = require('passport');
+const jwt = require('jsonwebtoken');
 const { createToken, validateToken } = require('../helpers/jwt.js');
 const { passportCall } = require('../helpers/passportCall.js');
 const { authorizationJWT } = require('../helpers/middleware/jwt-passport.middleware.js');
 const { logger } = require('../helpers/helpersBarrel.js');
+const { jwt_secret_key } = require('../config/configObjetc.js');
 
 class sessionController {
     constructor() {
         this.service = new UserMongoManager();
     }
-    register = async (gi) => {
+    register = async () => {
         try {
             logger.Debug('check result del middlework de register route', req.user);
             if (typeof req.user == 'object') {
@@ -50,7 +52,7 @@ class sessionController {
         }
     };
     logout = async () => {};
-    authorization = async () => {};
+    valitor = async (req, res, next) => {};
 }
 
 module.exports = sessionController;

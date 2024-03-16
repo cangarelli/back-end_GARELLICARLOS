@@ -18,10 +18,24 @@ const NavBar = (props) => {
   // Variables
   const [categoryOptions, setCategoryOptions] = useState([]);
   const [UData, setUData] = useState({});
-  const { user } = useContext(UserContext);
+  const { user, userSetter } = useContext(UserContext);
 
   // Gestión de datos de session
   useEffect(() => {
+    // Check de session by cookies and set user context if needed
+    (async () => {
+      if (user != {}) {
+        const logResponse = await fetchData({
+          route: `${devHost()}/api/sessions/loguinValidator`,
+          method: 'get',
+        });
+        userSetter(logResponse);
+      }
+    })();
+  }, []);
+
+  useEffect(() => {
+    //SETEO DE UDATA SI HAY SESION EN USER CONTEXT
     let userInfo;
     if (user && user.Uid) {
       userInfo = {

@@ -2,7 +2,7 @@ const { Router } = require('express');
 // Modulos para que interprete el body del request
 const bodyParser = require('body-parser');
 
-const { validateToken, json_private_key, CustomErrors, EErrors } = require('../helpers/helpersBarrel.js');
+const { validateToken, json_private_key, CustomErrors, EErrors, logger } = require('../helpers/helpersBarrel.js');
 const jwt = require('jsonwebtoken');
 
 class CustomRouter {
@@ -67,7 +67,7 @@ class CustomRouter {
             try {
                 await callback.apply(this, params);
             } catch (error) {
-                console.log(error);
+                logger.Fatal(error);
                 params[1].status(500).send(error);
             }
         });

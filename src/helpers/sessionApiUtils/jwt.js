@@ -1,8 +1,8 @@
 const jwt = require('jsonwebtoken');
 const { logger } = require('../errorsUtils/logger.js');
-const json_private_key = 'laClaveQueMásMeGustaAMi';
+const { jwt_secret_key } = require('../../config/configObjetc.js');
 
-const createToken = (user) => jwt.sign({ user }, json_private_key, { expiresIn: '1d' });
+const createToken = (user) => jwt.sign({ user }, jwt_secret_key, { expiresIn: '1d' });
 
 const validateToken = (req, res, next) => {
     const authHeader = req.headers['authorization'];
@@ -10,8 +10,8 @@ const validateToken = (req, res, next) => {
     if (!authHeader) {
         res.status(401).send({ status: 'error', error: 'not authenticated' });
     } else {
-        const token = authHeader.split(' ')[1];
-        jwt.verify(token, json_private_key, (err, userDecode) => {
+        const token = authHeader.split(' ')[1]; jso
+        jwt.verify(token, jwt_secret_key, (err, userDecode) => {
             if (err) return res.status(401).send({ status: 'error', error: 'not authorized' });
             logger.Debug('check userDecode in validateToken helper', userDecode);
             req.user = userDecode;
@@ -23,5 +23,4 @@ const validateToken = (req, res, next) => {
 module.exports = {
     createToken,
     validateToken,
-    json_private_key,
 };

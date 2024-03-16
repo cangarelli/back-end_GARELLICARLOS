@@ -1,5 +1,5 @@
 const nodemailer = require('nodemailer');
-const configObject = require('../../config/configBarrel');
+const configObject = require('../../config/configObjetc');
 
 const transport = nodemailer.createTransport({
     service: configObject.mailerDir,

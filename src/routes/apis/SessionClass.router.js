@@ -1,8 +1,8 @@
 const CustomRouter = require('../Routes.js');
 
 const passport = require('passport');
-const { createToken } = require('../../helpers/sessionApiUtils/jwt.js');
-const { authorizationJWT, passportCall } = require('../../helpers/helpersBarrel.js');
+const { createToken, validateToken } = require('../../helpers/sessionApiUtils/jwt.js');
+const { authorizationJWT, passportCall, logCheck } = require('../../helpers/helpersBarrel.js');
 const userController = require('../../controller/users.controller.js');
 
 // Creación de instancias de managers
@@ -12,6 +12,18 @@ const nameCookie = 'token';
 class SessionClassRouter extends CustomRouter {
     init() {
         //seteo de rutas
+        this.get('/loguinValidator', ['public'], logCheck(), async (req, res) => {
+            try {
+                req.logger.Debug('check req.user in login validator', req.user);
+                req.user.status == 'error' ? res.sendUserError(req.user.payload) : res.sendTokenSucces (req.user, nameCookie, req.session.token);
+            } catch (error) {
+                req.logger.Fatal(
+                    'check error of SessionClassRouter is get method of /loguinValidator route',
+                    error
+                );
+                return res.sendServerError(`${error}`);
+            }
+        });
         this.post('/loguin', ['public'], async (req, res) => {
             try {
                 req.logger.Debug(

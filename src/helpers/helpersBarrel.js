@@ -9,6 +9,9 @@ const { generateProduct } = require('./productsApiUtils/mokingUtils.js');
 const { createToken, validateToken, json_private_key } = require('./sessionApiUtils/jwt.js');
 const authorizationJWT = require('./sessionApiUtils/authorizationJWT.middleware.js');
 const passportCall = require('./sessionApiUtils/passportCall.js');
+const logCheck  = require('./sessionApiUtils/logCheck.js');
+
+
 
 // User api utils
 const { createHash, passwordValidator } = require('./userApiUtils/hashPasswordManager.js');
@@ -58,4 +61,5 @@ module.exports = {
     logger,
     addLogger,
     sendMail,
+    logCheck,
 };

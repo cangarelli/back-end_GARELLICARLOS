@@ -3,9 +3,9 @@ const passport = require('passport');
 const local = require('passport-local');
 const jwt = require('passport-jwt');
 // Importación de modulos propios
-const { json_private_key } = require('../helpers/sessionApiUtils/jwt.js');
 const userController = require('../controller/users.controller.js');
 const { logger } = require('../helpers/helpersBarrel.js');
+const { jwt_secret_key } = require('./configObjetc.js');
 
 //Creacion de instancias de managers
 const userManager = new userController();
@@ -27,7 +27,7 @@ exports.initializePassportJWT = () => {
         new JWTStrategy(
             {
                 jwtFromRequest: ExtractJWT.fromExtractors([cookieExtractor]),
-                secretOrKey: json_private_key,
+                secretOrKey: jwt_secret_key,
             },
             async (jwt_payload, done) => {
                 try {
