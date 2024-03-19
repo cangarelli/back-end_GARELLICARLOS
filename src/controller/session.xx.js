@@ -1,4 +1,4 @@
-const UserMongoManager = require('../dao/managersMongo/UserMongoManager');
+const UserMongoManager = require('../dao/managersMongo/UserMongoManager.js');
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const { createToken, validateToken } = require('../helpers/jwt.js');

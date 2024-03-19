@@ -2,7 +2,12 @@ const CustomRouter = require('../Routes.js');
 
 const passport = require('passport');
 const { createToken, validateToken } = require('../../helpers/sessionApiUtils/jwt.js');
-const { authorizationJWT, passportCall, logCheck } = require('../../helpers/helpersBarrel.js');
+const {
+    authorizationJWT,
+    passportCall,
+    logCheck,
+    tokenLinkValidator,
+} = require('../../helpers/helpersBarrel.js');
 const userController = require('../../controller/users.controller.js');
 
 // Creación de instancias de managers
@@ -12,10 +17,13 @@ const nameCookie = 'token';
 class SessionClassRouter extends CustomRouter {
     init() {
         //seteo de rutas
-        this.get('/loguinValidator', ['public'], logCheck(), async (req, res) => {
+
+        // Validación de link por medio de token
+        this.get('/tokenLinkValidator/:token', ['public'], tokenLinkValidator(), async (req, res) => {
             try {
-                req.logger.Debug('check req.user in login validator', req.user);
-                req.user.status == 'error' ? res.sendUserError(req.user.payload) : res.sendTokenSucces (req.user, nameCookie, req.session.token);
+                req.middleware.status == 'error'
+                    ? res.sendUserError(req.middleware.payload)
+                    : res.sendSuccess(req.middleware.payload);
             } catch (error) {
                 req.logger.Fatal(
                     'check error of SessionClassRouter is get method of /loguinValidator route',
@@ -24,6 +32,22 @@ class SessionClassRouter extends CustomRouter {
                 return res.sendServerError(`${error}`);
             }
         });
+        // Validación de loguin por token
+        this.get('/loguinValidator', ['public'], logCheck(), async (req, res) => {
+            try {
+                req.logger.Debug('check req.user in login validator', req.user);
+                req.user.status == 'error'
+                    ? res.sendUserError(req.user.payload)
+                    : res.sendTokenSucces(req.user, nameCookie, req.session.token);
+            } catch (error) {
+                req.logger.Fatal(
+                    'check error of SessionClassRouter is get method of /loguinValidator route',
+                    error
+                );
+                return res.sendServerError(`${error}`);
+            }
+        });
+        // Creación de loguin
         this.post('/loguin', ['public'], async (req, res) => {
             try {
                 req.logger.Debug(
@@ -43,6 +67,7 @@ class SessionClassRouter extends CustomRouter {
                 return res.sendServerError(`${error}`);
             }
         });
+        // Registro de usuario nuevo
         this.post('/register', async (req, res) => {
             try {
                 const response = await userManager.createUser(req.body);

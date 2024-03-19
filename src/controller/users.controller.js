@@ -1,7 +1,9 @@
+const configObject = require('../config/configObjetc.js');
 const userGetterDto = require('../dto/userGetterDto.js');
-const { logger } = require('../helpers/helpersBarrel.js');
+const { logger, retrievePassLinkGenerator, sendMail } = require('../helpers/helpersBarrel.js');
 const { passwordValidator } = require('../helpers/userApiUtils/hashPasswordManager.js');
 const { userService, cartService } = require('../repositories/service.js');
+const jwt = require('jsonwebtoken');
 
 // Helpers del controller
 const emptyFieldDetector = (object) => {
@@ -33,7 +35,47 @@ class userController {
         this.service = userService;
         this.cartManager = cartService;
     }
+    sendMailLink = async (email) => {
+        // Chequear correo electronico en la base de datos
+        const userExistance = await this.getUser(email);
+        // Si esta en la base de datos Generar Token Temporal y enviarlo por mail
+        if (userExistance.email === email) {
+            const link = retrievePassLinkGenerator(email);
+            const response = sendMail({
+                destination: email,
+                subject: 'Mail de recupero de contraseña',
+                html: `<h1>Recuperar contraseña</h1>
+            <p>Por motivos de seguridad nunca se le solicitara datos de acceso a través del correo electronico ni se enviaran los mismos. Haciendo click en el siguiente link podrá generar una nueva contraseña para acceder a su cuenta.</p>
+            <a href=${link}>Hace click acá</a>
+            <p>Este link caducara en las próximas 24hs, luego tendra que volver a iniciar el proceso`,
+            });
+            return response;
+        } else {
+            return { status: 'error', payload: 'El correo electronico no esta en la base de datos' };
+        }
+    };
 
+    retrieveUpdatePass = async (password, token) => {
+        // Check que el token sea valido
+
+        const emailObjetc = jwt.verify(token, configObject.jwt_secret_key, (err, emailDecode) => {
+            if (err) return null;
+            return emailDecode;
+        });
+        if (emailObjetc) {
+            // Check que el password sea valido
+            if (password.length < 2) password = null;
+            if (password) {
+                // Actualizar usuario
+                const response = await this.service.updatePassword(emailObjetc.user, password);
+                return response;
+            } else {
+                return { status: 'error', payload: 'Password incorrect' };
+            }
+        } else {
+            return { status: 'error', payload: 'Unauthorized to update' };
+        }
+    };
     getUser = async (uid) => {
         let response;
         // Seleccion de metodo a usar

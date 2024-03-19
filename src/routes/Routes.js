@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 
 const { validateToken, json_private_key, CustomErrors, EErrors, logger } = require('../helpers/helpersBarrel.js');
 const jwt = require('jsonwebtoken');
+const configObject = require('../config/configObjetc.js');
 
 class CustomRouter {
     constructor() {
@@ -45,7 +46,7 @@ class CustomRouter {
 
         const token = authHeaders.split(' ')[1];
 
-        let user = jwt.verify(token, json_private_key);
+        let user = jwt.verify(token, configObject.jwt_secret_key);
 
         if (!politics.includes(user.user.role))
             return res.status(400).send({

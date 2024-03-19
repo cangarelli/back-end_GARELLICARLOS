@@ -8,13 +8,13 @@ const { generateProduct } = require('./productsApiUtils/mokingUtils.js');
 // Session api utils
 const { createToken, validateToken, json_private_key } = require('./sessionApiUtils/jwt.js');
 const authorizationJWT = require('./sessionApiUtils/authorizationJWT.middleware.js');
-const passportCall = require('./sessionApiUtils/passportCall.js');
-const logCheck  = require('./sessionApiUtils/logCheck.js');
-
-
+const passportCall = require('./sessionApiUtils/passportCall.middleware.js');
+const logCheck = require('./sessionApiUtils/logCheck.middleware.js');
+const tokenLinkValidator = require('./sessionApiUtils/tokenLinkValidator.js');
 
 // User api utils
 const { createHash, passwordValidator } = require('./userApiUtils/hashPasswordManager.js');
+const retrievePassLinkGenerator = require('./userApiUtils/retrievePassLinkGenerator.js');
 
 // Mailing api utils
 const { sendMail } = require('./mailingApiUtils/sendMail.js');
@@ -62,4 +62,6 @@ module.exports = {
     addLogger,
     sendMail,
     logCheck,
+    retrievePassLinkGenerator,
+    tokenLinkValidator,
 };

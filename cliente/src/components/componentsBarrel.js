@@ -24,6 +24,7 @@ export { default as PadUser } from './PadUser/PadUser.jsx';
 export { default as PadCart } from './PadCart/PadCart.jsx';
 export { default as PadProductDetail } from './PadProductDetail/PadProductDetail.jsx';
 export { default as PadCardCart } from './PadCardCart/PadCardCart.jsx';
+export { default as PadConteinerFormLogData } from './PadConteinerFormLogData/PadConteinerFormLogData.jsx';
 
 // Contenedores: Carga de datos y variables generales - Aca va el fetch get
 export { default as Footer } from './Footer/Footer.jsx';
@@ -31,7 +32,8 @@ export { default as NavBar } from './NavBar/NavBar.jsx';
 export { default as ConteinerProductDetail } from './ConteinerProductDetail/ConteinerProductDetail.jsx';
 export { default as ConteinerCartProducts } from './ConteinerCartProducts/ConteinerCartProducts.jsx';
 export { default as ConteinerProductItemList } from './ConteinerProductItemList/ConteinerProductItemList.jsx';
-export { default as LogDataFormConteiner } from './LogDataFormConteiner/LogDataFormConteiner.jsx';
+export { default as ConteinerFormLogData } from './ConteinerFormLogData/ConteinerFormLogData.jsx';
+export { default as ConteinerFormRetrievePass } from './ConteinerFormRetrievePass/ConteinerFormRetrievePass.jsx';
 
 // Macro: Contenedor de contedores
 export { default as Layout } from './Layout/Layout.jsx';

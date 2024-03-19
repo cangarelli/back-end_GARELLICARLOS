@@ -9,6 +9,38 @@ const cartManager = new cartController();
 class userClassRouter extends CustomRouter {
     init() {
         //seteo de rutas
+        //Enviar mail con link para recupero de clave
+        this.post('/temporalRetrieveAtempt/sendLinkMail', ['public'], async (req, res) => {
+            try {
+                const result = await userManager.sendMailLink(req.body.email);
+                return result.status == 'error' ? res.sendUserError(result.payload) : res.sendSuccess(result);
+            } catch (error) {
+                req.logger.Fatal('check get error of user class router is post method user', error);
+                return res.sendServerError(`${error}`);
+            }
+        });
+        // Actualizar contraseña en recupero de clave
+        this.post('/temporalRetrieveAtempt/uptdatePassword/:token', ['public'], async (req, res) => {
+            try {
+                const result = await userManager.retrieveUpdatePass(req.body.password, req.params.token);
+                req.logger.Debug('check result of user Class Rotuer is get route', result);
+                return result.status == 'error' ? res.sendUserError(result.payload) : res.sendSuccess(result);
+            } catch (error) {
+                req.logger.Fatal('check get error of user class router is post method user', error);
+                return res.sendServerError(`${error}`);
+            }
+        });
+        // this.post('/temporalRetriveAtempt/:token', ['public'], async (req, res) => {
+        //     try {
+        //         const result = await userManager.getUser(req.params.uid);
+        //         req.logger.Debug('check result of user Class Rotuer is get route', result);
+        //         return result.status == 'error' ? res.sendUserError(result.payload) : res.sendSuccess(result);
+        //     } catch (error) {
+        //         req.logger.Fatal('check get error of user class router is post method user', error);
+        //         return res.sendServerError(`${error}`);
+        //     }
+        // })
+        //GET USER
         this.get('/:uid', ['public'], async (req, res) => {
             // OK TODA LA RUTA Y SUS CAPAS
             try {

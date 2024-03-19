@@ -1,5 +1,6 @@
 const userCreateDto = require('../dto/userCreateDto');
 const userGetterDto = require('../dto/userGetterDto');
+const { createHash } = require('../helpers/userApiUtils/hashPasswordManager');
 
 class usersRepository {
     constructor(dao) {
@@ -14,6 +15,12 @@ class usersRepository {
     update = async (userId, data) => await this.daoService.update(userId, data);
 
     userSearch = async (uid) => await this.daoService.userSearch(uid);
+
+    updatePassword = async (email, password) => {
+        const passwordHashed = createHash(password.trimEnd());
+        const response = await this.daoService.updatePassword(email, passwordHashed);
+        if (response) return 'Password successfully updated';
+    };
 
     userSearchByEmail = async (email) => await this.daoService.userSearchByEmail(email);
 

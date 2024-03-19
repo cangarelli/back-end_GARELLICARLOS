@@ -16,7 +16,8 @@ exports.sendMail = async ({ destination, subject, html, attachments }) => {
         subject: subject,
         html: html,
     };
-    if (attachments.length > 0) {
+    console.log("check  attachments in send mail helper", attachments);
+    if (attachments && attachments.length > 0) {
         mailObject.attachments = []
         for (const element of attachments) {
             mailObject.attachments.push ({

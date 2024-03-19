@@ -14,8 +14,6 @@ const FormData = (props) => {
   const navigate = useNavigate();
 
   // Logica
-  console.log('check dataQuestions at data form', dataQuestions);
-
   const [dataToUpdate, setDataToUpdate] = useState(
     dataQuestions.reduce((obj, element) => {
       obj[element.id] = '';
@@ -41,7 +39,7 @@ const FormData = (props) => {
     <form id={useId('loguinForm')} className="requestDataForm">
       {dataQuestions.map((point) => {
         return (
-          <div key={useId(point.id)} className="requestDataForm__option">
+          <div key={point.id} className="requestDataForm__option">
             <label htmlFor={point.id} className="requestDataForm__option--label">
               {point.label}
             </label>

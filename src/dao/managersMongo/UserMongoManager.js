@@ -10,6 +10,9 @@ class UserMongoManager {
 
     update = async (userId, data) => 'working on it';
 
+    updatePassword = async (email, passwordHashed) =>
+        await usersModel.findOneAndUpdate({ email }, { password: passwordHashed }, { new: true });
+
     userSearch = async (uid) => await usersModel.findOne({ _id: uid });
 
     userSearchByEmail = async (userEmail) => await usersModel.findOne({ email: userEmail });
