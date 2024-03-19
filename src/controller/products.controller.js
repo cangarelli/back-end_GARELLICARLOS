@@ -76,9 +76,16 @@ class productController {
         const response = await this.service.getOneKeyData(key);
         return response;
     };
-    createProduct = async (productArray) => {
-        const { title, price, category, description, stock, code, thumbnail, owner } = productArray;
+
+    createProduct = async (productArray, userRole, userEmail) => {
+        const { title, price, category, description, stock, code, thumbnail } = productArray;
         try {
+            let owner;
+            if (userRole === 'premium') {
+                owner = userEmail;
+            } else {
+                owner = 'admin';
+            }
             userDataTester(
                 { title, price, category, description, stock, code, thumbnail, owner },
                 this.service
@@ -99,11 +106,31 @@ class productController {
             throw error;
         }
     };
-    updateProduct = async (pid, data) => {
+    updateProduct = async (pid, data, userRole, userEmail) => {
+        // check of role
+        if (userRole === 'premium') {
+            const result = this.service.checkProduct(pid, userEmail);
+            if (result)
+                return {
+                    status: 'error',
+                    payload: 'El usuario no puede modificar este producto ya que no le pertenece',
+                };
+        }
+
         const result = await this.service.productUpdate(pid, data);
         return result;
     };
-    deleteProduct = async (pid) => {
+    deleteProduct = async (pid, userRole, userEmail) => {
+        // check of role
+        if (userRole === 'premium') {
+            const result = this.service.checkProduct(pid, userEmail);
+            if (result)
+                return {
+                    status: 'error',
+                    payload: 'El usuario no puede modificar este producto ya que no le pertenece',
+                };
+        }
+
         const result = await this.service.productDelete(pid);
         return result;
     };

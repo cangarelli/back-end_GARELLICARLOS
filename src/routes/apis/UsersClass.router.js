@@ -9,13 +9,27 @@ const cartManager = new cartController();
 class userClassRouter extends CustomRouter {
     init() {
         //seteo de rutas
+        // Cambio de rol de user a premium y viceversa
+        this.post('/premium/:uid', ['user', 'premium'], async (req, res) => {
+            try {
+                req.logger.Debug("check req.user in user class router is post /premium/:uid ruoute", req.user)
+                const result = await userManager.changeUserRole(req.user.email, req.user.role);
+                return result.status == 'error' ? res.sendUserError(result.payload) : res.sendSuccess(result);
+            } catch (error) {
+                req.logger.Fatal('check error of user class router is post /premium/:uid route', error);
+                return res.sendServerError(`${error}`);
+            }
+        });
         //Enviar mail con link para recupero de clave
         this.post('/temporalRetrieveAtempt/sendLinkMail', ['public'], async (req, res) => {
             try {
                 const result = await userManager.sendMailLink(req.body.email);
                 return result.status == 'error' ? res.sendUserError(result.payload) : res.sendSuccess(result);
             } catch (error) {
-                req.logger.Fatal('check get error of user class router is post method user', error);
+                req.logger.Fatal(
+                    'check error of user class router is post /temporalRetrieveAtempt/sendLinkMail route',
+                    error
+                );
                 return res.sendServerError(`${error}`);
             }
         });

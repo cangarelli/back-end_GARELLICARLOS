@@ -8,6 +8,9 @@ class UserMongoManager {
 
     create = async (userData) => await usersModel.create(userData);
 
+    changeRole = async (email, role) =>
+        await usersModel.findOneAndUpdate({ email }, { role: role }, { new: true });
+
     update = async (userId, data) => 'working on it';
 
     updatePassword = async (email, passwordHashed) =>

@@ -35,6 +35,17 @@ class userController {
         this.service = userService;
         this.cartManager = cartService;
     }
+
+    changeUserRole = async (email, role) => {
+        let response;
+        if (role === 'premium') {
+            response = await this.service.changeRole(email, 'user');
+        } else if (role === 'user') {
+            response = await this.service.changeRole(email, 'premium');
+        }
+        return response;
+    };
+
     sendMailLink = async (email) => {
         // Chequear correo electronico en la base de datos
         const userExistance = await this.getUser(email);

@@ -15,7 +15,7 @@ class usersRepository {
     update = async (userId, data) => await this.daoService.update(userId, data);
 
     userSearch = async (uid) => await this.daoService.userSearch(uid);
-
+    changeRole = async (email, role) => await this.daoService.changeRole (email, role)
     updatePassword = async (email, password) => {
         const passwordHashed = createHash(password.trimEnd());
         const response = await this.daoService.updatePassword(email, passwordHashed);

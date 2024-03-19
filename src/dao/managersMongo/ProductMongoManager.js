@@ -10,6 +10,9 @@ class ProductMongoManager {
 
     getProductsById = async (pid) => await productsModel.findOne({ _id: pid });
 
+    checkProduct = async (productId, ownerEmail) =>
+        await productsModel.findOne({ _id: productId, owner: ownerEmail });
+
     productCreate = async ({ title, price, category, description, stock, code, thumbnail, status, owner }) =>
         await productsModel.create({
             title,

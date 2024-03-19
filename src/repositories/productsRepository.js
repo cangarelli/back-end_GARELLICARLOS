@@ -22,6 +22,8 @@ class productRepository {
             owner,
         });
 
+    checkProduct = async (productId, ownerEmail) => await this.daoService.checkProduct (productId, ownerEmail) 
+
     productUpdate = async (pid, productArray) => await this.daoService.productUpdate(pid, productArray);
 
     productDelete = async (pid) => await this.daoService.productDelete(pid);
