@@ -6,7 +6,7 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { FaRocketchat } from 'react-icons/fa';
 import { AiOutlineLogin, AiOutlineLogout } from 'react-icons/ai';
-
+import { FaUserCircle } from 'react-icons/fa';
 //Componentes propios
 import { UserContext } from '../../context/UserContext';
 import { devHost, fetchData } from '../../hooks/hooksBarrel';
@@ -36,6 +36,9 @@ const PadUser = (props) => {
       ) : (
         <div className="UserPad__logedOptions">
           <SubTitle texto={`Bienvenido ${userData.name}`} />
+          <Link className="UserPad__logedOptions--opt" to={`/userprofile/${userData.uId}`}>
+            <FaUserCircle className="UserPad__logedOptions--optWidget" />
+          </Link>
           <Link className="UserPad__logedOptions--opt" to={`/contacto/${userData.uId}`}>
             <FaRocketchat className="UserPad__logedOptions--optWidget" />
           </Link>

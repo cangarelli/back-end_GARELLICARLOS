@@ -10,7 +10,9 @@
 }
 
 body {
-  background-color: rgb(192, 164, 140);
+  background-image: linear-gradient(to top, #fff5f5 0%, #42c2fe 100%);
+
+  /* background-color: rgb(192, 164, 140); */
   background-size: 100% 100%;
   background-attachment: fixed;
 }

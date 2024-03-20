@@ -10,6 +10,7 @@ import Loguin from '../pages/Loguin/Index.jsx';
 import CartView from '../pages/CartView/Index.jsx';
 import CheckOut from '../pages/CheckOut/Index.jsx';
 import RetrievePass from '../pages/RetrievePass/Index.jsx';
+import UserProfile from '../pages/UserProfile/index.jsx';
 const routes = createBrowserRouter([
   {
     path: '/',
@@ -38,6 +39,10 @@ const routes = createBrowserRouter([
   {
     path: '/retrievepass/:token',
     element: <RetrievePass />,
+  },
+  {
+    path: '/userprofile/:uid',
+    element: <UserProfile />,
   },
 ]);
 

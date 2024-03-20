@@ -13,7 +13,6 @@ const PadProductDetail = (props) => {
   const user = useContext(UserContext).user;
   console.log('check user in padProductDetail', user);
   const cartAdd = async (e) => {
-    console.log('check if click', e);
     const res = await fetchData({
       route: `${devHost()}/api/carts/${user.CartId}/product/${id}`,
       token: user.token,
@@ -22,7 +21,6 @@ const PadProductDetail = (props) => {
       },
       method: 'PUT',
     });
-    console.log('check res of fetch in cart add', res);
   };
 
   const cartRemove = () => {
