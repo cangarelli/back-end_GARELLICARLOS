@@ -8,6 +8,9 @@ const MongoStore = require('connect-mongo'); /* Para generar storage de la sesio
 const cors = require('cors'); /* Permite que la base de datos se use desde otros puertos */
 const compression = require('express-compression'); /* Modulos para comprimir response: Gzip y Brotli*/
 const { logger, addLogger } = require('../helpers/helpersBarrel.js');
+const swaggerJSDoc = require('swagger-jsdoc');
+const swaggerUiExpress = require('swagger-ui-express');
+const swaggerOptions = require('../docs/swagger-config.js');
 
 // Config express
 const expressConfig = (app) => {
@@ -19,7 +22,6 @@ const expressConfig = (app) => {
     app.use(express.static(path.resolve(__dirname, '../public')));
     app.use(bodyParser.urlencoded({ extended: false }));
     app.use(bodyParser.json());
-
     // Puerto
     app.locals.port = configObject.PORT;
 
@@ -60,9 +62,12 @@ const expressConfig = (app) => {
             brotli: { enabled: true, zlib: {} },
         })
     );
-
     // Manejo de logs
     app.use(addLogger);
+
+    // Swagger
+    const specs = swaggerJSDoc(swaggerOptions);
+    app.use('/apidocs', swaggerUiExpress.serve, swaggerUiExpress.setup(specs));
 };
 
 module.exports = expressConfig;

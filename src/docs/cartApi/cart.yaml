@@ -1,0 +1,139 @@
+openapi: 3.0.1
+info:
+    title: Ecommerce API - Carts
+    description: API endpoints for managing carts in an ecommerce application.
+    version: 1.0.0
+
+paths:
+  /api/carts:
+    # Create a new cart
+    post:
+      summary: Create a new cart
+      tags:
+        - Carts
+      responses:
+        "201":
+          description: "Cart created successfully"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  # Define properties for the response object (e.g., cart ID)
+                  cartId:
+                    type: string
+                    description: ID of the newly created cart
+        "400":
+          description: "Bad request (e.g., invalid data)"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  # Define properties for the error response object (e.g., error message)
+                  error:
+                    type: string
+                    description: Error message details
+
+    # Get all carts (likely for admins only)
+    get:
+      summary: Get all carts (admin only)
+      tags:
+        - Carts
+
+      responses:
+        "200":
+          description: "List of carts"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  # Define properties for each cart object in the response
+                  type: object
+                  properties:
+                    cartId:
+                      type: string
+                      description: ID of the cart
+                    # Add other cart properties (e.g., products, total amount)
+        "401":
+          description: "Unauthorized access (requires admin role)"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message indicating unauthorized access
+
+  /api/carts/{cid}:
+    # Get a specific cart by ID
+    get:
+      summary: Get a specific cart by ID
+      tags:
+        - Carts
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: ID of the cart to retrieve
+          schema:
+            type: string
+      responses:
+        "200":
+          description: "Cart details"
+          content:
+            application/json:
+              schema:
+                type: object
+                # Same properties as for individual cart in `/api/carts` response
+        "404":
+          description: "Cart not found"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message indicating cart not found
+
+    # Update a cart (e.g., add/remove products, change quantities)
+    put:
+      summary: Update a cart
+      tags:
+        - Carts
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: ID of the cart to update
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              # Define the schema for the update request body (e.g., product ID and quantity)
+              type: object
+
+      responses:
+        "200":
+          description: "Cart updated successfully"
+          content:
+            application/json:
+              schema:
+                type: object
+                # Same properties as for individual cart in `/api/carts` response
+        "400":
+          description: "Bad request (e.g., invalid update data)"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message details

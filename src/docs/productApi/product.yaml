@@ -1,0 +1,14 @@
+path:
+  /api/products:
+    get:
+      summary: Se obtienen los datos de un carrito de compras en particular
+      tags: - Products
+    post:
+      summary: Se obtienen los datos de un carrito de compras en particular
+      tags: - Products
+    put:
+      summary: Se obtienen los datos de un carrito de compras en particular
+      tags: - Products
+    delete:
+      summary: Se obtienen los datos de un carrito de compras en particular
+      tags: - Products  
