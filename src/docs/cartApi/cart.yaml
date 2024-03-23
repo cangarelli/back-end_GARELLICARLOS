@@ -1,114 +1,96 @@
 openapi: 3.0.1
 info:
-    title: Ecommerce API - Carts
-    description: API endpoints for managing carts in an ecommerce application.
-    version: 1.0.0
+  title: Ecommerce API - Carts
+  description: API endpoints for managing carts in an ecommerce application.
+  version: 1.0.0
 
 paths:
   /api/carts:
-    # Create a new cart
     post:
-      summary: Create a new cart
+      summary: Crear nuevo carrito
       tags:
         - Carts
-      responses:
-        "201":
-          description: "Cart created successfully"
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  # Define properties for the response object (e.g., cart ID)
-                  cartId:
-                    type: string
-                    description: ID of the newly created cart
-        "400":
-          description: "Bad request (e.g., invalid data)"
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  # Define properties for the error response object (e.g., error message)
-                  error:
-                    type: string
-                    description: Error message details
-
-    # Get all carts (likely for admins only)
-    get:
-      summary: Get all carts (admin only)
-      tags:
-        - Carts
-
       responses:
         "200":
-          description: "List of carts"
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  # Define properties for each cart object in the response
-                  type: object
-                  properties:
-                    cartId:
-                      type: string
-                      description: ID of the cart
-                    # Add other cart properties (e.g., products, total amount)
-        "401":
-          description: "Unauthorized access (requires admin role)"
+          description: "Carrito creado exitosamente"
           content:
             application/json:
               schema:
                 type: object
                 properties:
-                  error:
+                  status:
                     type: string
-                    description: Error message indicating unauthorized access
+                    description: success como estado del request.
+                  payload:
+                    type: object
+                    description: _id y array de productos del carrito.
+        "400":
+          description: "Bad request (no autorizado, datos invalidos)"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Error
+                  payload:
+                    type: string
+                    description: Detalles del error.
+        "500":
+          description: "Server error. Inconsistencia de datos"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Error
+                  payload:
+                    type: string
+                    description: Detalles del error.
 
   /api/carts/{cid}:
-    # Get a specific cart by ID
     get:
-      summary: Get a specific cart by ID
+      summary: (Solo user, admin o premium) Obtener un carrito especifico por ID
       tags:
         - Carts
       parameters:
         - name: cid
           in: path
           required: true
-          description: ID of the cart to retrieve
+          description: ID del carrito a obtener.
           schema:
             type: string
       responses:
         "200":
-          description: "Cart details"
+          description: Datos del carrito (con populate a products collection)
           content:
             application/json:
               schema:
                 type: object
-                # Same properties as for individual cart in `/api/carts` response
-        "404":
-          description: "Cart not found"
+        "400":
+          description: Bad request, no autorizado o inconsistencia de datos
           content:
             application/json:
               schema:
                 type: object
-                properties:
-                  error:
-                    type: string
-                    description: Error message indicating cart not found
-
-    # Update a cart (e.g., add/remove products, change quantities)
+        "500":
+          description: Server error, generalmente por inconsistencia de datos.
+          content:
+            application/json:
+              schema:
+                type: object
     put:
-      summary: Update a cart
+      summary: (Solo user, premium o admin) Actualizar carrito
       tags:
         - Carts
       parameters:
         - name: cid
           in: path
           required: true
-          description: ID of the cart to update
+          description: ID del carrito a actualizar
           schema:
             type: string
       requestBody:
@@ -116,24 +98,203 @@ paths:
         content:
           application/json:
             schema:
-              # Define the schema for the update request body (e.g., product ID and quantity)
               type: object
-
       responses:
         "200":
-          description: "Cart updated successfully"
+          description: Carrito actualizado exitosamente.
           content:
             application/json:
               schema:
                 type: object
-                # Same properties as for individual cart in `/api/carts` response
         "400":
-          description: "Bad request (e.g., invalid update data)"
+          description: Bad request, sin autorización o inconsistencia de datos.
           content:
             application/json:
               schema:
                 type: object
-                properties:
-                  error:
-                    type: string
-                    description: Error message details
+        "500":
+          description: Server error, generalmente por inconsistencia de datos
+          content:
+            application/json:
+              schema:
+                type: object
+    delete:
+      summary: (Solo admin) Elimina un carrito por Id
+      tags:
+        - Carts
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: ID del carrito a actualizar.
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Carrito eliminado de la colección carts.
+          content:
+            application/json:
+              schema:
+                type: object
+        "400":
+          description: Bad request, sin autorización o inconsistencia de datos.
+          content:
+            application/json:
+              schema:
+                type: object
+        "500":
+          description: Server error, generalmente por inconsistencia de datos
+          content:
+            application/json:
+              schema:
+                type: object
+  
+  /api/carts/{cid}/product/{pid}:
+    put:
+      summary: (Solo user, premium o admin) Actualizar solo un producto por id del carrito
+      tags:
+        - Carts
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: ID del carrito a actualizare.
+          schema:
+            type: string
+        - name: pid
+          in: path
+          required: true
+          description: ID del producto en el carrito a actualizar.
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Producto del carrito actualizado exitosamente.
+          content:
+            application/json:
+              schema:
+                type: object
+        "400":
+          description: Bad request, sin autorizacióno o inconsistencia de datos.
+          content:
+            application/json:
+              schema:
+                type: object
+        "500":
+          description: Server error, generalmente por inconsistenca de datos
+          content:
+            application/json:
+              schema:
+                type: object        
+    delete:
+      summary: (Solo user, premium) Elimina un producto del carrito por ID
+      tags:
+        - Carts
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: ID del carrito a actualizare.
+          schema:
+            type: string
+        - name: pid
+          in: path
+          required: true
+          description: ID del producto en el carrito a Eliminar.
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Producto eliminado del documento / carrito especificado.
+          content:
+            application/json:
+              schema:
+                type: object
+        "400":
+          description: Bad request, sin autorizacióno o inconsistencia de datos.
+          content:
+            application/json:
+              schema:
+                type: object
+        "500":
+          description: Server error, generalmente por inconsistenca de datos
+          content:
+            application/json:
+              schema:
+                type: object    
+  
+  /api/carts/{cid}/purchase:
+    post:
+      summary: (Solo user, premium) Genera un ticket de compra y actualiza stock del producto en base a un carrito seleccionado por ID
+      tags:
+        - Carts
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: ID del carrito a tomar de referencia y actualizar.
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Tickect generado.
+          content:
+            application/json:
+              schema:
+                type: object
+        "400":
+          description: Bad request, sin autorizacióno o inconsistencia de datos.
+          content:
+            application/json:
+              schema:
+                type: object
+        "500":
+          description: Server error, generalmente por inconsistenca de datos
+          content:
+            application/json:
+              schema:
+                type: object    
+  
+  /api/carts/cartHold/{cid}:
+    get:
+      summary: (Solo user, premium y admin) Retorna la cantidad de productos dentro de un carrito segun su ID
+      tags:
+        - Carts
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: ID del carrito a tomar de referencia y actualizar.
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Cantidad de productos que hay en el carrito.
+          content:
+            application/json:
+              schema:
+                type: object
+        "400":
+          description: Bad request, sin autorizacióno o inconsistencia de datos.
+          content:
+            application/json:
+              schema:
+                type: object
+        "500":
+          description: Server error, generalmente por inconsistenca de datos
+          content:
+            application/json:
+              schema:
+                type: object    

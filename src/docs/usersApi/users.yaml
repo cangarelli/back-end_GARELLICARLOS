@@ -1,0 +1,9 @@
+openapi: 3.0.1
+info:
+    title: Ecommerce API - Products
+    description: API endpoints for managing products in an ecommerce application.
+    version: 1.0.0
+
+path:
+    /api/users:
+        get:

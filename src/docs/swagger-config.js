@@ -11,6 +11,7 @@ const swaggerOptions = {
     apis: [
         `${path.resolve(__dirname, `../docs/cartApi/cart.yaml${path.sep}`)}`,
         `${path.resolve(__dirname, `../docs/productApi/product.yaml${path.sep}`)}`,
+        `${path.resolve(__dirname, `../docs/usersApi/users.yaml${path.sep}`)}`,
     ],
 };
 

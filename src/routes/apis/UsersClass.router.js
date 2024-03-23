@@ -12,7 +12,10 @@ class userClassRouter extends CustomRouter {
         // Cambio de rol de user a premium y viceversa
         this.post('/premium/:uid', ['user', 'premium'], async (req, res) => {
             try {
-                req.logger.Debug("check req.user in user class router is post /premium/:uid ruoute", req.user)
+                req.logger.Debug(
+                    'check req.user in user class router is post /premium/:uid ruoute',
+                    req.user
+                );
                 const result = await userManager.changeUserRole(req.user.email, req.user.role);
                 return result.status == 'error' ? res.sendUserError(result.payload) : res.sendSuccess(result);
             } catch (error) {

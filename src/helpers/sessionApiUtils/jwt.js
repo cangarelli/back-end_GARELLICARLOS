@@ -10,7 +10,8 @@ const validateToken = (req, res, next) => {
     if (!authHeader) {
         res.status(401).send({ status: 'error', error: 'not authenticated' });
     } else {
-        const token = authHeader.split(' ')[1]; jso
+        const token = authHeader.split(' ')[1];
+        jso;
         jwt.verify(token, jwt_secret_key, (err, userDecode) => {
             if (err) return res.status(401).send({ status: 'error', error: 'not authorized' });
             logger.Debug('check userDecode in validateToken helper', userDecode);

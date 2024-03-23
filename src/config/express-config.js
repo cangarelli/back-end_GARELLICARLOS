@@ -66,6 +66,8 @@ const expressConfig = (app) => {
     app.use(addLogger);
 
     // Swagger
+
+    console.log(swaggerOptions);
     const specs = swaggerJSDoc(swaggerOptions);
     app.use('/apidocs', swaggerUiExpress.serve, swaggerUiExpress.setup(specs));
 };

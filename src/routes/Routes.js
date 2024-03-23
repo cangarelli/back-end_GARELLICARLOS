@@ -2,7 +2,13 @@ const { Router } = require('express');
 // Modulos para que interprete el body del request
 const bodyParser = require('body-parser');
 
-const { validateToken, json_private_key, CustomErrors, EErrors, logger } = require('../helpers/helpersBarrel.js');
+const {
+    validateToken,
+    json_private_key,
+    CustomErrors,
+    EErrors,
+    logger,
+} = require('../helpers/helpersBarrel.js');
 const jwt = require('jsonwebtoken');
 const configObject = require('../config/configObjetc.js');
 

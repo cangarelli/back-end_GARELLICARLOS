@@ -1,14 +1,390 @@
-path:
+openapi: 3.0.1
+info:
+    title: Ecommerce API - Products
+    description: API endpoints for managing products in an ecommerce application.
+    version: 1.0.0
+
+paths:
   /api/products:
     get:
-      summary: Se obtienen los datos de un carrito de compras en particular
-      tags: - Products
+      summary: Obtiene array con documentos especificados de la coleccion products junto con los valores de las propiedades de paginate segun query.
+      tags:
+        - Products
+      responses:
+        '200':
+          description: Array de documentos de la coleccion products y datos de paginate.
+          content:
+            aplication/json:
+              schema: 
+                type: object
+                items:
+                  type: object
+                  properties:
+                    _id:
+                      type: string
+                      description: Identificación unica del documento en la base de dato   de mongo.
+                    title:
+                      type: string
+                      description: Nombre del producto.
+                    category:
+                      type: string
+                      description: Nombre de la categoria producto.
+                    description:
+                      type: string
+                      description: Descripción del producto.
+                    price:
+                      type: number
+                      description: Precio del producto.
+                    stock:
+                      type: number
+                      description: Canditdad de unidades restantes del producto.
+                    code:
+                      type: string
+                      description: Codigo identificatorio unico del producto.
+                    thumbnail:
+                      type: string
+                      description: Ruta a una imagen de ilustración del producto.
+                    status:
+                      type: boolean
+                      description: Disponibilidad del producto.
+                    owner:
+                      type: string
+                      description: Identidad (email o admin) del usuario que lo creo.
+        '400':
+          description: User error, generalmente inconcisistencia en los datos o el token.
+          content:
+            aplication/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado del request, error.
+                  payload:
+                    type: string
+                    description: Detalle del error
+        '500':
+          description: Server error, generalmente por inconsistencia en los datos enviados.
+          content:
+            aplication/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado del request, error.
+                  payload:
+                    type: string
+                    description: Detalle del error
     post:
-      summary: Se obtienen los datos de un carrito de compras en particular
-      tags: - Products
+      summary: (Solo admin y premium) Se crea un nuevo documento / producto en la coleccion products de la base de datos de mongo.
+      tags:
+        - Products
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Producto (datos del producto) creado correctamente.
+          content:
+              aplication/json:
+                  schema: 
+                    type: object
+                    properties:
+                        status:
+                            type: string
+                            description: Success como estado del request.
+                        payload:
+                            type: object
+                            description: Object with new product data.
+        '400':
+          description: Sin autorización (admin / premium only) o inconsistencia de datos
+          content:
+            aplication/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado del request, error.
+                  payload:
+                    type: string
+                    description: Detalle del error
+        '500':
+          description: Server error, generalmente por inconsistencia en los datos enviados.
+          content:
+            aplication/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado del request, error.
+                  payload:
+                    type: string
+                    description: Detalle del error
+  
+  /api/products/{pid}:
+    get:
+      summary: Se obtienen los datos de un documento / producto especifico  de la coleccion de products de la base de datos de mongo.
+      tags:
+        - Products
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          description: ID del producto a obtener
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Exito - Datos del producto solicitado.
+          content:
+            aplication/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: succes como estado del request.
+                  payload:
+                    type: object
+                    description: object con datos del documento / producto requerido.
+        '400':
+          description: Error del lado del cliente, generalmente por inconsistencia de datos
+          content:
+            aplication/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado del request, error.
+                  payload:
+                    type: string
+                    description: Detalle del error
+        '500':
+          description: Server error, generalmente por inconsistencia en los datos enviados.
+          content:
+            aplication/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado del request, error.
+                  payload:
+                    type: string
+                    description: Detalle del error
     put:
-      summary: Se obtienen los datos de un carrito de compras en particular
-      tags: - Products
+      summary: (Solo admin y premium) Se modifican alguno o todos los datos de un documento / producto ya existente en la base de datos de mongo.
+      tags:
+        - Products
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          description: ID del producto a actualizare
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Documento / producto actualizado correctamente.
+          content:
+            aplication/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: success como estado del request.
+                  payload:
+                    type: object
+                    description: Datos completos actualizados del documento / producto.
+        '400':
+          description: Sin autorización (admin / premium only) o inconsistencia de datos
+          content:
+            aplication/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado del request, error.
+                  payload:
+                    type: string
+                    description: Detalle del error
+        '500':
+          description: Server error, generalmente por inconsistencia en los datos enviados.
+          content:
+            aplication/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado del request, error.
+                  payload:
+                    type: string
+                    description: Detalle del error
     delete:
-      summary: Se obtienen los datos de un carrito de compras en particular
-      tags: - Products  
+      summary: (Solo admin y premium) Se elimina un documento / producto especifico de la base de datos de mongo.
+      tags:
+          - Products
+      parameters:
+          - name: pid
+            in: path
+            required: true
+            description: ID del producto a eliminarse
+            schema:
+              type: string
+      responses:
+        '200':
+          description: Documento / producto eliminado.
+          content:
+            aplication/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: success como estado del request.
+                  payload:
+                    type: object
+                    description: Respuesta de mongo al pedido de eliminar el documento / producto.
+        '400':
+          description: Sin autorización (admin / premium only) o inconsistencia de datos
+          content:
+            aplication/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado del request, error.
+                  payload:
+                    type: string
+                    description: Detalle del error
+        '500':
+          description: Server error, generalmente por inconsistencia en los datos enviados.
+          content:
+            aplication/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado del request, error.
+                  payload:
+                    type: string
+                    description: Detalle del error
+  
+  /api/products/daokeydata/{key}:
+    get:
+      summary: Se obtiene un array con los una sintesis de los valores (sin repetir) de una key especifica del schema de los documentos de la coleccion de products de la base de datos de mongo.
+      tags:
+        - Products
+      parameters:
+        - name: key
+          in: path
+          required: true
+          description: key del schema productos de las que se requieren los values.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Lista de key values
+          content:
+            aplication/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: success como estado del request.
+                  payload:
+                    type: array
+                    items:
+                      type: string
+        '400':
+          description: Error del lado del cliente, generalmente por inconsistencia de datos
+          content:
+            aplication/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado del request, error.
+                  payload:
+                    type: string
+                    description: Detalle del error
+        '500':
+          description: Server error, generalmente por inconsistencia en los datos enviados.
+          content:
+            aplication/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado del request, error.
+                  payload:
+                    type: string
+                    description: Detalle del error
+
+  /api/products/mockingproducts:
+    get:
+      summary: Se crea y se obtiene un array de 100 objetos que contiene los datos referidos a productos ficticios creados con mocking api.
+      tags:
+        - Products
+      responses:
+        '200':
+          description: Array de documentos de la coleccion products y datos de paginate.
+          content:
+            aplication/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    _id:
+                      type: string
+                      description: Identificación unica del documento en la base de dato de mongo.
+                    title:
+                      type: string
+                      description: Nombre del producto.
+                    description:
+                      type: string
+                      description: Descripción del producto.
+                    price:
+                      type: number
+                      description: Precio del producto.
+                    stock:
+                      type: number
+                      description: Canditdad de unidades restantes del producto.
+                    image:
+                      type: string
+                      description: Ruta a una imagen de ilustración del producto.
+        '500':
+          description: Server error, generalmente por inconsistencia en los datos enviados.
+          content:
+            aplication/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado del request, error.
+                  payload:
+                    type: string
+                    description: Detalle del error

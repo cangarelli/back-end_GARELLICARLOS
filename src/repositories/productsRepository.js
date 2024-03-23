@@ -22,7 +22,7 @@ class productRepository {
             owner,
         });
 
-    checkProduct = async (productId, ownerEmail) => await this.daoService.checkProduct (productId, ownerEmail) 
+    checkProduct = async (productId, ownerEmail) => await this.daoService.checkProduct(productId, ownerEmail);
 
     productUpdate = async (pid, productArray) => await this.daoService.productUpdate(pid, productArray);
 

@@ -11,7 +11,7 @@ const logCheck = () => {
             } else {
                 const session = req.session.token;
                 jwt.verify(session, configObjetc.jwt_secret_key, (err, userDecode) => {
-                    if (err) return req.user = {status: "error", payload: "not logued"};
+                    if (err) return (req.user = { status: 'error', payload: 'not logued' });
                     req.user = userDecode.user;
                 });
                 next();
