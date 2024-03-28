@@ -39,16 +39,17 @@ class CustomRouter {
     handdlePolitics = (politics) => (req, res, next) => {
         if (politics[0] == 'public') return next();
         const authHeaders = req.headers.authorization;
-        if (!authHeaders)
+        if (!authHeaders) {
             return res.status(401).send({
                 status: 'error',
-                error: CustomErrors.createError({
+                payload: CustomErrors.createError({
                     name: 'Credentials error',
                     cause: 'Didn`t send credentials to authenticate',
                     message: 'Credentials error: Inexistent loguin',
                     code: EErrors.USER__NULL_CREDENTIALS__ERROR,
                 }),
             });
+        }
 
         const token = authHeaders.split(' ')[1];
 
@@ -57,7 +58,7 @@ class CustomRouter {
         if (!politics.includes(user.user.role))
             return res.status(400).send({
                 status: 'error',
-                error: CustomErrors.createError({
+                payload: CustomErrors.createError({
                     name: 'Credentials error',
                     cause: 'No authorized',
                     message: 'Don`t have permision to access to this data',
@@ -74,7 +75,7 @@ class CustomRouter {
             try {
                 await callback.apply(this, params);
             } catch (error) {
-                logger.Fatal(error);
+                logger.Fatal('check error of middlewares in aplyCallBacks routes class', `${error}`);
                 params[1].status(500).send(error);
             }
         });

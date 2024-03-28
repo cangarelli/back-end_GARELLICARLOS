@@ -57,7 +57,8 @@ class cartClassRouter extends CustomRouter {
 
         this.get('/:cid', ['user', 'admin', 'premium'], async (req, res) => {
             try {
-                const response = await CartManager.getOneCart(req.params.cid);
+                const { email, cartId, full_name, id, role } = req.user;
+                const response = await CartManager.getOneCart(cartId);
                 return response.status == 'error'
                     ? res.sendUserError(response.payload)
                     : res.sendSuccess(response);

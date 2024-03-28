@@ -59,7 +59,7 @@ class SessionClassRouter extends CustomRouter {
                     return res.sendUserError(response.payload);
                 } else {
                     const token = createToken(response);
-                    req.session.token = token;
+                    // req.session.token = token;
                     return res.sendTokenSucces(response, nameCookie, token);
                 }
             } catch (error) {
@@ -68,7 +68,7 @@ class SessionClassRouter extends CustomRouter {
             }
         });
         // Registro de usuario nuevo
-        this.post('/register', async (req, res) => {
+        this.post('/register',["public"], async (req, res) => {
             try {
                 const response = await userManager.createUser(req.body);
 

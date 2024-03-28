@@ -67,7 +67,6 @@ const expressConfig = (app) => {
 
     // Swagger
 
-    console.log(swaggerOptions);
     const specs = swaggerJSDoc(swaggerOptions);
     app.use('/apidocs', swaggerUiExpress.serve, swaggerUiExpress.setup(specs));
 };

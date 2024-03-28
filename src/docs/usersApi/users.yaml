@@ -4,6 +4,80 @@ info:
     description: API endpoints for managing products in an ecommerce application.
     version: 1.0.0
 
-path:
+paths:
     /api/users:
+        post:
+            summary: Creación de nuevo usuario.
+            tags:
+              - Users
+            requestBody:
+                required: true
+    /api/users/{uid}:
         get:
+            summary: (user, premium, admin only) Datos "seguros" de un usuario segun su ID
+            tags:
+              - Users
+            parameters:
+              - name: uid
+                in: path
+                required: true
+                description: ID del usuario a obtener.
+                schema:
+                  type: string
+        put:
+            summary: (user, premium and admin only) Datos "seguros" de un usuario segun su ID
+            tags:
+              - Users
+            parameters:
+              - name: uid
+                in: path
+                required: true
+                description: ID del usuario a actualizar.
+                schema:
+                  type: string
+            requestBody:
+                required: true                  
+        delete:
+            summary: (user, premium and admin only) Elimina un usario segun su ID
+            tags:
+              - Users
+            parameters:
+              - name: uid
+                in: path
+                required: true
+                description: ID del usuario a eliminar.
+                schema:
+                  type: string                 
+    /api/users/premium/{uid}:
+        post:
+            summary: (user and premium only) Cambia el rol de un usuario particular (por ID) de user a premium o viceversa.
+            tags:
+              - Users
+            parameters:
+              - name: uid
+                in: path
+                required: true
+                description: ID del usuario a actualizar.
+                schema:
+                  type: string                 
+    /api/users/temporalRetrieveAtempt/sendLinkMail:
+        post:
+            summary: Genera un link temporal de regeneración de contraseña que se envia al mail del usuario requerido.
+            tags:
+              - Users
+            requestBody:
+                required: true                  
+    /api/users/temporalRetrieveAtempt/uptdatePassword/{token}:
+        post:
+            summary: (user and premium only) Cambia el rol de un usuario particular (por ID) de user a premium o viceversa.
+            tags:
+              - Users
+            parameters:
+              - name: token
+                in: path
+                required: true
+                description: Token de validación de autorización y cuenta para actualizar contraseña de usuario.
+                schema:
+                  type: string
+            requestBody:
+                required: true                                     

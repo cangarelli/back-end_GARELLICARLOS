@@ -4,10 +4,10 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "node --trace-warnings --watch src/app.js --mode development",
     "prod": "node --trace-warnings --watch src/app.js --mode production",
-    "nodemon-desde-node": "node --watch src/app.js"
+    "nodemon-desde-node": "node --watch src/app.js",
+    "supertest": "mocha src/tests/routesSupertest.test.mjs"
   },
   "keywords": [],
   "author": "",
@@ -45,6 +45,8 @@
     "winston": "^3.11.0"
   },
   "devDependencies": {
-    "mocha": "^10.3.0"
+    "chai": "^5.1.0",
+    "mocha": "^10.3.0",
+    "supertest": "^6.3.4"
   }
 }

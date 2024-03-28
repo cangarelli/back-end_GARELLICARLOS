@@ -47,16 +47,7 @@ class userClassRouter extends CustomRouter {
                 return res.sendServerError(`${error}`);
             }
         });
-        // this.post('/temporalRetriveAtempt/:token', ['public'], async (req, res) => {
-        //     try {
-        //         const result = await userManager.getUser(req.params.uid);
-        //         req.logger.Debug('check result of user Class Rotuer is get route', result);
-        //         return result.status == 'error' ? res.sendUserError(result.payload) : res.sendSuccess(result);
-        //     } catch (error) {
-        //         req.logger.Fatal('check get error of user class router is post method user', error);
-        //         return res.sendServerError(`${error}`);
-        //     }
-        // })
+
         //GET USER
         this.get('/:uid', ['public'], async (req, res) => {
             // OK TODA LA RUTA Y SUS CAPAS
@@ -70,12 +61,9 @@ class userClassRouter extends CustomRouter {
             }
         });
 
-        this.post('/premium/:uid', ['user', 'premium'], async (req, res) => {
-            //Cambiar el rol de usuario de user a premium
-        });
 
         // OK TODA LA RUTA Y SUS CAPAS
-        this.post('/', async (req, res) => {
+        this.post('/', ["public"], async (req, res) => {
             try {
                 const response = await userManager.createUser(req.body);
                 return response.status == 'error'
@@ -87,7 +75,7 @@ class userClassRouter extends CustomRouter {
                 return res.sendServerError(`${error}`);
             }
         });
-        this.put('/:uid', ['user', 'admin'], async (req, res) => {
+        this.put('/:uid', ['user', 'admin', "premium"], async (req, res) => {
             try {
                 const response = await userManager.updateUser(req.params.uid, req.body);
                 return response.status == 'error'
@@ -98,7 +86,7 @@ class userClassRouter extends CustomRouter {
                 return res.sendServerError(`${error}`);
             }
         });
-        this.delete('/:uid', async (req, res) => {
+        this.delete('/:uid', ['user', 'admin', "premium"], async (req, res) => {
             try {
                 const response = await userManager.deleteUser(req.params.uid);
                 return response.status == 'error'
