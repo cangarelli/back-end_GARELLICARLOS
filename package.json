@@ -4,15 +4,12 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "dev": "node --trace-warnings --watch src/app.js --mode development",
     "prod": "node --trace-warnings --watch src/app.js --mode production",
     "nodemon-desde-node": "node --watch src/app.js",
     "supertest": "mocha src/tests/routesSupertest.test.mjs",
-
     "start": "concurrently \"npm run dev\" \"npm run client\"",
+    "dev": "node --trace-warnings --watch src/app.js --mode development",
     "client": "cd cliente && npm run dev"
-
-
   },
   "keywords": [],
   "author": "",
@@ -54,6 +51,7 @@
   "devDependencies": {
     "chai": "^5.1.0",
     "mocha": "^10.3.0",
-    "supertest": "^6.3.4"
+    "supertest": "^6.3.4",
+    "vite": "^5.2.11"
   }
 }
