@@ -9,7 +9,7 @@
     "supertest": "mocha src/tests/routesSupertest.test.mjs",
     "start": "concurrently \"npm run dev\" \"npm run client\"",
     "dev": "node --trace-warnings --watch src/app.js --mode development",
-    "client": "cd cliente && npm run dev"
+    "client": "cd cliente && npm install && npm run dev"
   },
   "keywords": [],
   "author": "",
@@ -51,7 +51,6 @@
   "devDependencies": {
     "chai": "^5.1.0",
     "mocha": "^10.3.0",
-    "supertest": "^6.3.4",
-    "vite": "^5.2.11"
+    "supertest": "^6.3.4"
   }
 }
