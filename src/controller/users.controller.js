@@ -92,8 +92,11 @@ class userController {
         // Seleccion de metodo a usar
         if (uid.includes('@')) {
             response = await this.service.userSearchByEmail(uid.trimEnd());
-        } else {
+        } else if (uid === undefined) {
+            response = await this.service.getAll();   
+        } else{
             response = await this.service.userSearch(uid.trimEnd());
+
         }
         // Gestion de respuesta
         if (response == null) {
@@ -102,6 +105,7 @@ class userController {
             return response;
         }
     };
+
     createUser = async (userData) => {
         // Seteo de variables iniciales
         const { first_name, last_name, email, age, password } = userData;

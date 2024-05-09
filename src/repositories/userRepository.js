@@ -22,6 +22,8 @@ class usersRepository {
         if (response) return 'Password successfully updated';
     };
 
+    getAll = async () => await this.daoService.getAll()
+
     userSearchByEmail = async (email) => await this.daoService.userSearchByEmail(email);
 
     delete = async (uid) => await this.daoService.delete(uid);

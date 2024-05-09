@@ -48,15 +48,32 @@ class userClassRouter extends CustomRouter {
             }
         });
 
+                //GET USERes
+                this.get('/:uid', ['public'], async (req, res) => {
+try {
+    const result = await userManager.getUser(undefined);
+    req.logger.Debug('check result of user Class Rotuer is get users route', result);
+    return result.status == 'error' ? res.sendUserError(result.payload) : res.sendSuccess(result);
+} catch (error) {
+    req.logger.Fatal('check error of user class router is get users method user', error);
+    return res.sendServerError(`${error}`);
+}
+                })
         //GET USER
+        
         this.get('/:uid', ['public'], async (req, res) => {
             // OK TODA LA RUTA Y SUS CAPAS
             try {
-                const result = await userManager.getUser(req.params.uid);
-                req.logger.Debug('check result of user Class Rotuer is get route', result);
-                return result.status == 'error' ? res.sendUserError(result.payload) : res.sendSuccess(result);
+                if (uid) {
+                    const result = await userManager.getUser(req.params.uid);
+                    req.logger.Debug('check result of user Class Rotuer is get route', result);
+                    return result.status == 'error' ? res.sendUserError(result.payload) : res.sendSuccess(result);
+                } else {
+                    return res.sendUserError("Dont sent user id data")
+                }
+
             } catch (error) {
-                req.logger.Fatal('check get error of user class router is get method user', error);
+                req.logger.Fatal('check error of user class router is get user method user', error);
                 return res.sendServerError(`${error}`);
             }
         });

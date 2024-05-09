@@ -17,6 +17,8 @@ class UserMongoManager {
         await usersModel.findOneAndUpdate({ email }, { password: passwordHashed }, { new: true });
 
     userSearch = async (uid) => await usersModel.findOne({ _id: uid });
+    
+    getAll = async () => await usersModel.find({})
 
     userSearchByEmail = async (userEmail) => await usersModel.findOne({ email: userEmail });
 
