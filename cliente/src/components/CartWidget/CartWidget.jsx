@@ -1,4 +1,3 @@
-import React from 'react';
 import { BsCart } from 'react-icons/bs';
 
 // Estilos

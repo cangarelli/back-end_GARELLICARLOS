@@ -1,13 +1,11 @@
 // Estilos
 import './style.css';
 
-import { Link } from 'react-router-dom';
-
 import { FormData, PadConteinerFormLogData } from '../componentsBarrel';
 import { devHost } from '../../hooks/hooksBarrel';
 import { useState } from 'react';
 
-const ConteinerFormLogData = (props) => {
+const ConteinerFormLogData = () => {
   const [utility, setUtility] = useState('loguin');
 
   const dataLoguinQuestions = [

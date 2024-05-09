@@ -1,5 +1,3 @@
-import React from 'react';
-
 import './App.css';
 import NavegationMap from './routes/NavegationMap';
 import socketRoutes from './socketConfig/socketRoutes';

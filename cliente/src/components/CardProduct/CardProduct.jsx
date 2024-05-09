@@ -7,8 +7,6 @@ import './style.css';
 // Importacion de componentes
 import { SubTitle, Title } from '../componentsBarrel';
 
-import React from 'react';
-
 const CardProduct = (props) => {
   const { productData } = props;
   // console.log ("check productData of ProductCard component", productData)

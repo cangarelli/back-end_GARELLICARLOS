@@ -1,16 +1,15 @@
 // Estilos
 import { Link } from 'react-router-dom';
 import './style.css';
-import { devHost, fetchData } from '../../hooks/hooksBarrel';
 
 const PadConteinerFormLogData = (props) => {
   const { setter, getter } = props;
   const handleUtility = () => {
     getter === 'loguin' ? setter('register') : setter('loguin');
   };
-  const handleRetrievePass = () => {
-    // fetchData({ route: `${devHost()}/`, method: 'GET' });
-  };
+  // const handleRetrievePass = () => {
+  //   // fetchData({ route: `${devHost()}/`, method: 'GET' });
+  // };
   return (
     <div>
       <div>

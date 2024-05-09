@@ -1,8 +1,8 @@
 // Estilos
 import './style.css';
 
-import React, { useContext, useState } from 'react';
-import { Link, Navigate } from 'react-router-dom';
+import { useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { devHost, fetchData } from '../../hooks/hooksBarrel';
 import { UserContext } from '../../context/UserContext';
 import { ButtonBig } from '../componentsBarrel';

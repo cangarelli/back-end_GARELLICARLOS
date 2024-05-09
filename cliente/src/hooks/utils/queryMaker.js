@@ -1,10 +1,8 @@
-import React from 'react';
-
 const queryMaker = ({ category, status, order, limit, onPage }) => {
   const query = ['?'];
   console.log('check category of query Maker', category);
   // Procesamiento logico
-  category != null && query.push(`category=${categorie}`);
+  category != null && query.push(`category=${category}`);
   status != null && query.push(`status=true`);
   onPage != null && query.push(`onPage=${onPage}`);
   order != null &&

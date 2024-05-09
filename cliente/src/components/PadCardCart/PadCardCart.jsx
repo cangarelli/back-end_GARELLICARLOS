@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from 'react';
 import { useContext } from 'react';
 import { UserContext } from '../../context/UserContext';
 import { ButtonBig } from '../componentsBarrel';
-import { Navigate, useParams } from 'react-router-dom';
 import { devHost, fetchData } from '../../hooks/hooksBarrel';
 
 const PadCardCart = (props) => {

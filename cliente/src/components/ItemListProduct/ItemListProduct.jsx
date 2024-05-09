@@ -4,8 +4,6 @@ import './style.css';
 // Importacion de componentes
 import { CardProduct } from '../componentsBarrel';
 
-import React from 'react';
-
 const ItemListProduct = (props) => {
   //Parametros
   const { productlist } = props;

@@ -1,8 +1,6 @@
 // Estilos
 import './style.css';
 
-import React from 'react';
-
 const Footer = () => {
   return <div>Footer</div>;
 };

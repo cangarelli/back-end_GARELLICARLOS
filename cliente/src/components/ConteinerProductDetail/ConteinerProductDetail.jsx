@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { devHost, fetchData } from '../../hooks/hooksBarrel';
 import { AnimationLoading, ProductDetail } from '../componentsBarrel';
 
-const ConteinerProductDetail = (props) => {
+const ConteinerProductDetail = () => {
   // Variables
   const { pid } = useParams();
   console.log('check pid of ProductDetailViewer component', pid);

@@ -1,5 +1,3 @@
-import cookieGetter from './cookieGetter';
-
 const fetchData = async ({ route, info, method, token }) => {
   return new Promise((resolve, reject) => {
     fetch(route, {

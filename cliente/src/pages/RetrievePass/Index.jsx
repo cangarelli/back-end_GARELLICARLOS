@@ -1,7 +1,6 @@
 // Estilos
 import './style.css';
 
-import React from 'react';
 import { ConteinerFormRetrievePass, Layout } from '../../components/componentsBarrel';
 
 const RetrievePass = () => {

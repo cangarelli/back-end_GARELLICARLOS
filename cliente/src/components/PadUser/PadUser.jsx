@@ -2,7 +2,7 @@
 import './style.css';
 
 // Componentes de react
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { FaRocketchat } from 'react-icons/fa';
 import { AiOutlineLogin, AiOutlineLogout } from 'react-icons/ai';

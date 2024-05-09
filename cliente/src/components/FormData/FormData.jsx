@@ -1,9 +1,8 @@
-import { useContext, useEffect, useId, useState } from 'react';
+import { useContext, useId, useState } from 'react';
 
 // Estilos
 import './style.css';
 import { dataUploader } from '../../hooks/hooksBarrel.js';
-import { dv } from '@faker-js/faker';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../../context/UserContext.jsx';
 

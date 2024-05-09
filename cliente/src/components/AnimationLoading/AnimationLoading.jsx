@@ -1,9 +1,7 @@
 // Estilos
 import './style.css';
 
-import React from 'react';
-
-const AnimationLoading = (props) => {
+const AnimationLoading = () => {
   return <div>AnimationLoading</div>;
 };
 

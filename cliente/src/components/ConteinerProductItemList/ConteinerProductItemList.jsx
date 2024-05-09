@@ -8,10 +8,9 @@ import { useEffect, useState } from 'react';
 import { devHost, fetchData, queryGetter, queryMaker } from '../../hooks/hooksBarrel';
 import { useLocation, useSearchParams } from 'react-router-dom';
 
-const ConteinerProductItemList = (props) => {
+const ConteinerProductItemList = () => {
   const [pageData, setPageData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
-  const { pathname, search } = useLocation();
   const [searchParams] = useSearchParams();
 
   const pagination = searchParams.get('onPage');
@@ -41,7 +40,7 @@ const ConteinerProductItemList = (props) => {
       });
     return () => {};
   }, [pagination]);
-  const { hasNextPage, hasPrevPage, nextLink, nextPage, page, prevLink, prevPage, totalPages } = pageData;
+  const { hasNextPage, hasPrevPage, nextLink, page, prevLink} = pageData;
 
   // console.log ("check pageData of ProductItemListConteiner component" , pageData)
   // Renderización  de componente

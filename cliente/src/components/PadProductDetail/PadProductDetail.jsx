@@ -1,7 +1,7 @@
 // Estilos
 import './style.css';
 
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { RiArrowGoBackLine } from 'react-icons/ri';
 import { ButtonBig } from '../componentsBarrel';
@@ -13,7 +13,7 @@ const PadProductDetail = (props) => {
   const user = useContext(UserContext).user;
   console.log('check user in padProductDetail', user);
   const cartAdd = async (e) => {
-    const res = await fetchData({
+   fetchData({
       route: `${devHost()}/api/carts/${user.CartId}/product/${id}`,
       token: user.token,
       info: {

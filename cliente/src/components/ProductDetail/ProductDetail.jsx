@@ -1,5 +1,3 @@
-import React from 'react';
-
 // Estilos
 import './style.css';
 import { PadProductDetail, SubTitle, Title } from '../componentsBarrel';

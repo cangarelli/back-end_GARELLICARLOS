@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { ButtonBig } from '../componentsBarrel';
 import { UserContext } from '../../context/UserContext';
 

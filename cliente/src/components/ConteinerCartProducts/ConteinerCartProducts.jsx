@@ -10,7 +10,7 @@ import { UserContext } from '../../context/UserContext';
 import { devHost, fetchData } from '../../hooks/hooksBarrel';
 import { AnimationLoading, ItemListCart } from '../componentsBarrel';
 
-const ConteinerCartProducts = (props) => {
+const ConteinerCartProducts = () => {
   // Variables
   const [uCart, setUCart] = useState({});
   const [isLoading, setIsLoading] = useState(true);

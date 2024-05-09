@@ -1,4 +1,3 @@
-import React from 'react';
 import { PadUserProfile } from '../componentsBarrel';
 
 const ConteinerUserProfile = () => {

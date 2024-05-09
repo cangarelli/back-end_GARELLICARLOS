@@ -1,5 +1,3 @@
-import React, { useId } from 'react';
-
 // Estilos
 import './style.css';
 import { ButtonOption, SubTitle } from '../componentsBarrel';

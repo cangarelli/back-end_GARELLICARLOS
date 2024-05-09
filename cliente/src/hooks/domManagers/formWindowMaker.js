@@ -1,5 +1,3 @@
-import deleteElement from './deleteElement';
-
 const formWindowMaker = ({ formId, parentNode, optionsObjectsArray, buttonValue, prodId }) => {
   //Seleccionar nodo padre
   const father = document.getElementById(parentNode);

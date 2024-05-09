@@ -13,7 +13,6 @@ import { UserContext } from '../../context/UserContext.jsx';
 // Assets
 import logoMarca from '../../assets/png/Logo-marca.png';
 
-const hostDev = 'http://localhost:8080';
 const NavBar = (props) => {
   // Variables
   const [categoryOptions, setCategoryOptions] = useState([]);

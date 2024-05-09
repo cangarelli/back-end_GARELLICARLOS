@@ -2,7 +2,7 @@
 import { CardCartProduct, PadCart, SubTitle } from '../componentsBarrel';
 import './style.css';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 const ItemListCart = (props) => {
   const { cData } = props;
